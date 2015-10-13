@@ -5,4 +5,5 @@
 /.idea
 Homestead.yaml
 Homestead.json
+.DS_Store
 .env
