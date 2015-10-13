@@ -1,14 +1,14 @@
 module.exports = function (grunt) {
 
-    var less_src = 'less/admin.less';
+    var less = grunt.option('less');
 
     grunt.config('less', {
 
         dev: {
             files: [
                 {
-                    src: less_src,
-                    dest: 'public/build/admin.dev.css'
+                    src: less.src,
+                    dest: less.dest_dev
                 }
             ],
             options: {
@@ -19,8 +19,8 @@ module.exports = function (grunt) {
         production: {
             files: [
                 {
-                    src: less_src,
-                    dest: 'public/build/admin.min.css'
+                    src: less.src,
+                    dest: less.dest_production
                 }
             ],
             options: {
