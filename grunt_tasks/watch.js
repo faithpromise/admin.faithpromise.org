@@ -10,9 +10,14 @@ module.exports = function (grunt) {
             tasks: ['css_dev']
         },
 
-        js: {
+        ng: {
             files: [ng_root + '/**/*.js'],
             tasks: ['concat:js_dev']
+        },
+
+        ng_templates: {
+            files: [ng_root + '/**/*.html'],
+            tasks: ['copy:ng_templates']
         }
 
     });
