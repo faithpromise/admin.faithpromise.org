@@ -1,0 +1,25 @@
+@Breadcrumbs-font-size: 14;
+
+.Breadcrumbs {
+  .to-em(font-size, @Breadcrumbs-font-size, @font-size);
+  background-color: #fff;
+}
+
+.Breadcrumbs-container {
+  .to-em(padding, @font-size @Container-padding, @Breadcrumbs-font-size);
+}
+
+.Breadcrumbs-link {
+  .to-em(margin-left, 5, @Breadcrumbs-font-size);
+  .to-em(margin-right, 5, @Breadcrumbs-font-size);
+  display:         inline-block;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
