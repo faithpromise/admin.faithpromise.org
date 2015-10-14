@@ -1,0 +1,77 @@
+@Nav-font-size: 14;
+@Nav-height: 60;
+@Nav-bg-color: #363636;
+@Nav-text-color: #fff;
+@Nav-logo-height: 28;
+@Nav-profile-image-height: (@Nav-height - 20);
+
+.Nav {
+  .to-em(font-size, @Nav-font-size, @font-size);
+  background-color: @Nav-bg-color;
+}
+
+.Nav-container {
+  .to-em(height, @Nav-height, @Nav-font-size);
+  .to-em(padding, 0 20, @Nav-font-size);
+  display:     flex;
+  align-items: center;
+}
+
+.Nav-logoWrap,
+.Nav-menu,
+.Nav-account,
+.Nav-profile {
+  display: flex;
+}
+
+.Nav-logoWrap {
+  .to-em(width, 135, @Nav-font-size);
+}
+
+.Nav-logo {
+  .to-em(height, @Nav-logo-height, @Nav-font-size);
+  width: 100%;
+  fill:  @Nav-text-color;
+}
+
+.Nav-menu {
+  .to-em(padding-left, 34, @Nav-font-size);
+  margin:     0;
+  list-style: none;
+  flex:       1;
+}
+
+.Nav-item {
+  position: relative;
+  display:  inline-block;
+  margin:   0;
+}
+
+.Nav-link {
+  .link-color(@Nav-text-color);
+  .to-em(padding, 10 11, @Nav-font-size);
+  display:                block;
+  text-transform:         uppercase;
+  text-decoration:        none;
+  font-weight:            @font-weight-myriad-semi-bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+.Nav-linkIcon {
+
+}
+
+.Nav-profile {
+  .to-em(padding-left, 10, @Nav-font-size);
+  cursor: pointer;
+}
+
+.Nav-profileImage {
+  .to-em(height, @Nav-profile-image-height, @Nav-font-size);
+  .to-em(border-radius, 4, @Nav-font-size);
+  vertical-align: middle;
+}
+
+.NavDropdown {
+  display: none;
+}
