@@ -19,56 +19,72 @@
 
     <body>
 
-        <div class="Layout">
+        <div class="Nav">
+            <div class="Nav-container">
+                <a class="Nav-logoWrap" href="">
+                    <svg class="Nav-logo" role="img" title="Faith Promise Church Logo">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/build/general.svg#logo-faith-promise"></use>
+                    </svg>
+                </a>
+                <ul class="Nav-menu">
+                    <li class="Nav-item">
+                        <a nav-button class="Nav-link" href="/admin/events">Events</a>
+                    </li>
+                    <li class="Nav-item">
+                        <a nav-button class="Nav-link" href="/admin/series">Series</a>
+                    </li>
+                    <li class="Nav-item">
+                        <a nav-button class="Nav-link" href="/admin/staff">Staff</a>
+                    </li>
+                    <li class="Nav-item" uib-dropdown>
+                        <span nav-button class="Nav-link Nav-link--dropdown" uib-dropdown-toggle>More</span>
+                        <ul class="NavDropdown">
+                            <li class="NavDropdown-item">
+                                <a nav-button class="NavDropdown-link" href="/admin/ministries">Ministries</a>
+                            </li>
+                            <li class="NavDropdown-item">
+                                <a nav-button class="NavDropdown-link" href="/admin/missions">Missions</a>
+                            </li>
+                            <li class="NavDropdown-item">
+                                <a nav-button class="NavDropdown-link" href="/admin/topics">Topics</a>
+                            </li>
+                            <li class="NavDropdown-item">
+                                <a nav-button class="NavDropdown-link" href="/admin/campuses">Campuses</a>
+                            </li>
+                            <li class="NavDropdown-item">
+                                <a nav-button class="NavDropdown-link" href="/admin/studies">Studies</a>
+                            </li>
+                            <li class="NavDropdown-item">
+                                <a nav-button class="NavDropdown-link" href="/admin/volunteer-positions">Vol Positions</a>
+                            </li>
+                        </ul>
+                    </li>
 
-            <div class="Layout-nav">
-
-                <div class="Nav">
-
-                    <a class="Nav-logoWrap" href="">
-                        <svg class="Nav-logo" role="img" title="Faith Promise Church Logo">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/build/general.svg#logo-faith-promise"></use>
-                        </svg>
-                    </a>
-
-                    <ul class="Nav-menu">
-                        <li class="Nav-item">
-                            <a nav-button class="Nav-link" href="/admin/events">Events</a>
-                        </li>
-                        <li class="Nav-item">
-                            <a nav-button class="Nav-link" href="/admin/series">Series</a>
-                        </li>
-                        <li class="Nav-item">
-                            <a nav-button class="Nav-link" href="/admin/staff">Staff</a>
-                        </li>
-                        <li class="Nav-item" uib-dropdown>
-                            <span nav-button class="Nav-link Nav-link--dropdown" uib-dropdown-toggle>More</span>
-                            <ul class="NavDropdown">
-                                <li class="NavDropdown-item">
-                                    <a nav-button class="NavDropdown-link" href="/admin/ministries">Ministries</a>
-                                </li>
-                                <li class="NavDropdown-item">
-                                    <a nav-button class="NavDropdown-link" href="/admin/missions">Missions</a>
-                                </li>
-                                <li class="NavDropdown-item">
-                                    <a nav-button class="NavDropdown-link" href="/admin/topics">Topics</a>
-                                </li>
-                                <li class="NavDropdown-item">
-                                    <a nav-button class="NavDropdown-link" href="/admin/campuses">Campuses</a>
-                                </li>
-                                <li class="NavDropdown-item">
-                                    <a nav-button class="NavDropdown-link" href="/admin/studies">Studies</a>
-                                </li>
-                                <li class="NavDropdown-item">
-                                    <a nav-button class="NavDropdown-link" href="/admin/volunteer-positions">Vol Positions</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                    </ul>
+                </ul>
+                <div class="Nav-account">
+                    <div class="Nav-item">
+                        <a class="Nav-link" href="/requests/new">
+                            <i class="icon-paper-plane"></i> Request
+                        </a>
+                    </div>
+                    <div class="Nav-item">
+                        <a class="Nav-link" href="http://faithpromise.zendesk.com">
+                            <i class="Nav-linkIcon icon-lifebuoy"></i> Help Desk
+                        </a>
+                    </div>
                 </div>
-
+                <div class="Nav-profile">
+                    <div class="Nav-item">
+                        <span class="Nav-link">
+                            <img class="Nav-profileImage" src="http://d3m6gouty6q7nm.cloudfront.net/sm/quarter/images/staff/brandon-dunford-square.jpg?v=1438638001&">
+                            <i class="Nav-linkIcon icon-down-open"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div class="Layout">
 
             <div class="Layout-content">
                 <ng-view></ng-view>
