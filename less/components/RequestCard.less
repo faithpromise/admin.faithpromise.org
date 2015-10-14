@@ -13,7 +13,7 @@
 }
 
 .RequestCard-item {
-  .to-em(max-width, 260, @RequestCard-font-size);
+  .to-em(max-width, 320, @RequestCard-font-size);
   .to-em(padding-left, 20, @RequestCard-font-size);
   .to-em(padding-bottom, 20, @RequestCard-font-size);
   display: flex;
@@ -33,7 +33,7 @@
 .RequestCard-header {
   position:    relative;
   height:      0;
-  padding-top: 56.25%;
+  padding-top: 47%;
   overflow:    hidden;
 
   &:before {
@@ -47,7 +47,7 @@
     width:            150%;
     background-color: #fff;
 
-    transform:        rotate(-13deg);
+    transform:        rotate(-9deg);
     transform-origin: top left;
   }
 }
@@ -64,14 +64,14 @@
   .to-em(height, 50, @RequestCard-font-size);
   .to-em(width, 50, @RequestCard-font-size);
   position:      absolute;
-  top:           47%;
+  top:           54%;
   right:         3.8461538%;
   z-index:       1;
   border-radius: 50%;
 }
 
 .RequestCard-body {
-  .to-em(padding, @RequestCard-padding, @RequestCard-font-size);
+  .to-em(padding, 15 @RequestCard-padding @RequestCard-padding, @RequestCard-font-size);
   flex: 1;
 }
 

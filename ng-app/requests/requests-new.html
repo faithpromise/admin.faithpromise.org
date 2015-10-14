@@ -5,7 +5,8 @@
     <li class="RequestCard-item" ng-repeat="card in vm.cards">
       <a class="RequestCard" href="/requests/new/{{ card.type }}">
         <div class="RequestCard-header">
-          <img class="RequestCard-image" src="//assets.faithpromise.192.168.10.10.xip.io/images/requests/tech-tall.jpg">
+          <!-- TODO: Link to optimized image -->
+          <img class="RequestCard-image" ng-src="//assets.faithpromise.192.168.10.10.xip.io/images/requests/{{ card.type }}-tall.jpg">
           <img class="RequestCard-staffImage" ng-src="//assets.faithpromise.192.168.10.10.xip.io/images/staff/{{ card.staffer }}-square.jpg">
         </div>
         <div class="RequestCard-body">

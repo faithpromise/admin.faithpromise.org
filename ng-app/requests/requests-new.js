@@ -50,7 +50,7 @@
                 staffer: 'adam-chapman'
             },
             {
-                type: 'tech',
+                type: 'photo',
                 title: 'Photo',
                 description: 'Request a photographer for your event or project.',
                 image: '',
