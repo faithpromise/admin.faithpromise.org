@@ -1,0 +1,23 @@
+<div class="Container Strip">
+
+  <ul class="RequestCard-list">
+
+    <li class="RequestCard-item" ng-repeat="card in vm.cards">
+      <a class="RequestCard" href="/requests/new/{{ card.type }}">
+        <div class="RequestCard-header">
+          <img class="RequestCard-image" src="//assets.faithpromise.192.168.10.10.xip.io/images/requests/tech-tall.jpg">
+          <img class="RequestCard-staffImage" ng-src="//assets.faithpromise.192.168.10.10.xip.io/images/staff/{{ card.staffer }}-square.jpg">
+        </div>
+        <div class="RequestCard-body">
+          <h2 class="RequestCard-title">{{ card.title }}</h2>
+          <p class="RequestCard-description">{{ card.description }}</p>
+        </div>
+        <div class="RequestCard-footer">
+          <span class="RequestCard-action">Submit Request <i class="icon-right-open"></i></span>
+        </div>
+      </a>
+    </li>
+
+  </ul>
+
+</div>
