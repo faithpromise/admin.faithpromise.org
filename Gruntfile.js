@@ -9,6 +9,10 @@ module.exports = function (grunt) {
         dest_production: 'public/build/admin.min.css'
     });
 
+    grunt.option('ng', {
+        root: 'ng-app'
+    });
+
     // Load NPM tasks
     require('load-grunt-tasks')(grunt);
 
