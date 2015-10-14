@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'MainController@index');
+Route::get('{path?}', 'MainController@index')->where('path', '.+');
