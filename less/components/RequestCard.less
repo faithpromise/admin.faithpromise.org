@@ -1,0 +1,109 @@
+@RequestCard-font-size: @font-size;
+@RequestCard-padding: 25;
+
+.RequestCard-list {
+  .to-em(font-size, @RequestCard-font-size, @font-size);
+  .to-em(margin-left, -20, @RequestCard-font-size);
+  display:         flex;
+  flex-wrap:       wrap;
+  justify-content: center;
+  margin-bottom:   0;
+  list-style:      none;
+  user-select:     none;
+}
+
+.RequestCard-item {
+  .to-em(max-width, 260, @RequestCard-font-size);
+  .to-em(padding-left, 20, @RequestCard-font-size);
+  .to-em(padding-bottom, 20, @RequestCard-font-size);
+  display: flex;
+  width:   100%;
+  margin:  0;
+}
+
+.RequestCard {
+  .link-color(@root-text-color);
+  display:          flex;
+  flex-direction:   column;
+  background-color: #fff;
+  box-shadow:       0 0 5px 0 rgba(0, 0, 0, 0.35);
+  text-decoration:  none;
+}
+
+.RequestCard-header {
+  position:    relative;
+  height:      0;
+  padding-top: 56.25%;
+  overflow:    hidden;
+
+  &:before {
+    content:          "";
+    display:          block;
+    position:         absolute;
+    z-index:          1;
+    top:              100%;
+    left:             0;
+    height:           100%;
+    width:            150%;
+    background-color: #fff;
+
+    transform:        rotate(-13deg);
+    transform-origin: top left;
+  }
+}
+
+.RequestCard-image {
+  position: absolute;
+  z-index:  0;
+  top:      0;
+  left:     0;
+  width:    100%;
+}
+
+.RequestCard-staffImage {
+  .to-em(height, 50, @RequestCard-font-size);
+  .to-em(width, 50, @RequestCard-font-size);
+  position:      absolute;
+  top:           47%;
+  right:         3.8461538%;
+  z-index:       1;
+  border-radius: 50%;
+}
+
+.RequestCard-body {
+  .to-em(padding, @RequestCard-padding, @RequestCard-font-size);
+  flex: 1;
+}
+
+.RequestCard-title {
+  .to-em(font-size, 22, @RequestCard-font-size);
+  .to-em(margin-bottom, 10, 22);
+  line-height:            1;
+  font-weight:            normal;
+  text-transform:         uppercase;
+  color:                  inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+.RequestCard-description {
+  .to-em(font-size, 15, @RequestCard-font-size);
+  margin:                 0;
+  line-height:            1.2;
+  -webkit-font-smoothing: antialiased;
+}
+
+.RequestCard-footer {
+  .to-em(padding, 0 @RequestCard-padding @RequestCard-padding, @RequestCard-font-size);
+}
+
+.RequestCard-action {
+  .to-em(font-size, 15, @RequestCard-font-size);
+  font-weight:            normal;
+  text-transform:         uppercase;
+  color:                  inherit;
+  -webkit-font-smoothing: antialiased;
+
+  .RequestCard:hover & {
+    color: @anchor-text-color;
+  }
+}
