@@ -1,3 +1,4 @@
+@Hero-font-size: @font-size;
 @Hero-pointer-height: 38;
 
 .Hero {
@@ -8,7 +9,7 @@
   // Pointer
   &:before,
   &:after {
-    .to-em(bottom, -@Hero-pointer-height, @font-size);
+    .to-em(bottom, -@Hero-pointer-height, @Hero-font-size);
     content:          '';
     display:          block;
     position:         absolute;
@@ -32,8 +33,8 @@
 }
 
 .Hero-container {
-  .to-em(max-width, 860, @font-size);
-  .to-em(padding, 0 20 @Hero-pointer-height, @font-size);
+  .to-em(max-width, 860, @Hero-font-size);
+  .to-em(padding, 0 20 @Hero-pointer-height, @Hero-font-size);
   margin:      0 auto;
   line-height: 1;
   font-weight: @font-weight-myriad-semi-bold;
@@ -49,6 +50,7 @@
 }
 
 .Hero-content {
+  .to-em(padding, 90 0, @Hero-font-size);
   display:        inline-block;
   vertical-align: middle;
 }
@@ -70,7 +72,7 @@
 
 .Hero-title {
   .antialiasing();
-  .to-em(font-size, 45, @font-size);
+  .to-em(font-size, 45, @Hero-font-size);
   .to-em(max-width, 620, 45);
   margin-left:            auto;
   margin-right:           auto;
@@ -79,6 +81,6 @@
 
 .Hero-text {
   .antialiasing();
-  .to-em(font-size, 24, @font-size);
+  .to-em(font-size, 24, @Hero-font-size);
   font-weight:            normal;
 }
