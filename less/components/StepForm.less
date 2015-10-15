@@ -1,0 +1,163 @@
+@StepForm-font-size: 16;
+@StepForm-input-font-size: 16;
+@StepForm-input-height: 60;
+
+.StepForm {
+  .to-em(font-size, @StepForm-font-size, @font-size);
+}
+
+.StepForm-section {
+
+  .to-em(padding, 90, @StepForm-font-size);
+  border-bottom: 1px solid #e6e6e6;
+  max-height:    2000em;
+
+  &:nth-child(even) {
+    background-color: #fff;
+  }
+
+  &.ng-hide-add,
+  &.ng-hide-remove {
+    transition: max-height 10s linear;
+    overflow:   hidden;
+  }
+
+  &.ng-hide,
+  &.ng-hide-add-active {
+    max-height: 0;
+    overflow:   hidden;
+  }
+
+}
+
+.StepForm-submitSection {
+  .to-em(padding, 90, @StepForm-font-size);
+  text-align:       center;
+  background-color: #fff;
+}
+
+.StepForm-submit {
+  &:extend(.Button all);
+  &:extend(.Button--primary all);
+  .to-em(font-size, 28, @StepForm-font-size);
+  .to-em(padding, 23 34, 28);
+  border-radius: 8px;
+  font-weight:   normal;
+
+  > i {
+    vertical-align: middle;
+  }
+}
+
+// These help us control zebra striping with hidden elements
+.StepForm-section--stripe {
+  display: none;
+}
+
+.StepForm-fieldset {
+  .clearfix();
+  .to-em(max-width, 840, @StepForm-font-size);
+  margin: 0 auto;
+}
+
+.StepForm-legend {
+  .antialiasing();
+  .to-em(font-size, 27, @StepForm-font-size);
+  .to-em(padding, 20, 27);
+  display:        block;
+  float:          left;
+  width:          40%;
+  line-height:    1;
+  text-transform: uppercase;
+  font-weight:    normal;
+  color:          #6d6d6d;
+
+  > strong {
+    .to-em(font-size, 38, 27);
+    display:     block;
+    font-weight: @font-weight-myriad-semi-bold;
+  }
+}
+
+.StepForm-fields {
+  float: left;
+  width: 60%;
+}
+
+.StepForm-group {
+  .to-em(margin-bottom, 40, @StepForm-font-size);
+}
+
+.StepForm-label {
+  .antialiasing();
+  .to-em(font-size, 20, @StepForm-font-size);
+  .to-em(margin-bottom, 5, 20);
+  display: block;
+  color:   #4c4c4c;
+
+  &:after {
+    content: '\A';
+  }
+}
+
+.StepForm-input,
+.StepForm-select,
+.StepForm-textarea {
+  .to-em(font-size, @StepForm-input-font-size, @StepForm-font-size);
+  .to-em(margin-bottom, 10, @StepForm-input-font-size);
+  .to-em(height, @StepForm-input-height, @StepForm-input-font-size);
+  .to-em(padding, 8 12, @StepForm-input-font-size);
+  .to-em(border, @form-input-border-width, @StepForm-input-font-size);
+  display:       inline-block;
+  width:         100%;
+  border-style:  @form-input-border-style;
+  border-color:  @form-input-border-color;
+  border-radius: 6px;
+  line-height:   @form-input-line-height;
+  color:         @form-input-text-color;
+  outline:       0 none;
+  &:focus {
+    border-color: @form-input-focus-border-color;
+    outline:      0 none;
+  }
+}
+
+.StepForm-input--date {
+  .to-em(max-width, 200, @StepForm-input-font-size);
+}
+
+.StepForm-input--number {
+  .to-em(max-width, 100, @StepForm-input-font-size);
+}
+
+.StepForm-textarea {
+  .to-em(height, 120, @StepForm-font-size)
+}
+
+.StepForm-checkboxList {
+  .to-rem(margin, 0 0 0 -10);
+  padding:    0;
+  list-style: none;
+  font-size:  @font-size-0;
+}
+
+.StepForm-checkboxItem {
+  .to-rem(font-size, 20);
+  .to-em(margin, 0 0 20, 20);
+  .to-rem(padding-left, 10);
+  display:        inline-block;
+  width:          33.3333333%;
+  vertical-align: middle;
+  white-space:    nowrap;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+  cursor:         pointer;
+}
+
+.StepForm-checkbox {
+  vertical-align: middle;
+
+  &.icon-check {
+    color: @anchor-text-color;
+  }
+}

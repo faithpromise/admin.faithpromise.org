@@ -2,7 +2,9 @@
 @Hero-pointer-height: 38;
 
 .Hero {
+  .to-em(margin-bottom, @Hero-pointer-height, @Hero-font-size);
   position:   relative;
+  overflow:   hidden;
   text-align: center;
   color:      #fff;
 
@@ -74,13 +76,13 @@
   .antialiasing();
   .to-em(font-size, 45, @Hero-font-size);
   .to-em(max-width, 620, 45);
-  margin-left:            auto;
-  margin-right:           auto;
-  color:                  inherit;
+  margin-left:  auto;
+  margin-right: auto;
+  color:        inherit;
 }
 
 .Hero-text {
   .antialiasing();
   .to-em(font-size, 24, @Hero-font-size);
-  font-weight:            normal;
+  font-weight: normal;
 }
