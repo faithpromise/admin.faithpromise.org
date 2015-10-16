@@ -1,6 +1,7 @@
 @StepForm-font-size: 16;
 @StepForm-input-font-size: 16;
 @StepForm-input-height: 60;
+@StepForm-legend-font-size: 27;
 
 .slide-toggle {
   overflow:   hidden;
@@ -14,23 +15,11 @@
 .StepForm-section {
 
   .to-em(padding, 90, @StepForm-font-size);
-  border-bottom: 1px solid #e6e6e6;
-  max-height:    2000em;
+  border-bottom:    1px solid #e6e6e6;
 
+  background-color: #fff;
   &:nth-child(even) {
     background-color: #fff;
-  }
-
-  &.ng-hide-add,
-  &.ng-hide-remove {
-    transition: max-height 10s linear;
-    overflow:   hidden;
-  }
-
-  &.ng-hide,
-  &.ng-hide-add-active {
-    max-height: 0;
-    overflow:   hidden;
   }
 
 }
@@ -54,11 +43,6 @@
   }
 }
 
-// These help us control zebra striping with hidden elements
-.StepForm-section--stripe {
-  display: none;
-}
-
 .StepForm-fieldset {
   .clearfix();
   .to-em(max-width, 840, @StepForm-font-size);
@@ -67,8 +51,9 @@
 
 .StepForm-legend {
   .antialiasing();
-  .to-em(font-size, 27, @StepForm-font-size);
-  .to-em(padding, 20, 27);
+  .to-em(font-size, @StepForm-legend-font-size, @StepForm-font-size);
+  .to-em(margin-top, 6, @StepForm-legend-font-size);
+  .to-em(padding-right, 40, @StepForm-legend-font-size);
   display:        block;
   float:          left;
   width:          40%;
@@ -78,10 +63,18 @@
   color:          #6d6d6d;
 
   > strong {
-    .to-em(font-size, 38, 27);
+    .to-em(font-size, 38, @StepForm-legend-font-size);
     display:     block;
     font-weight: @font-weight-myriad-semi-bold;
   }
+}
+
+.StepForm-legendHelp {
+  .to-em(font-size, 16, @StepForm-legend-font-size);
+  .to-em(margin, 6 0, 16);
+  line-height:    1.2;
+  display:        block;
+  text-transform: none;
 }
 
 .StepForm-fields {
@@ -147,6 +140,7 @@
 }
 
 .StepForm-checkboxItem {
+  .antialiasing();
   .to-rem(font-size, 20);
   .to-em(margin, 0 0 20, 20);
   .to-rem(padding-left, 10);

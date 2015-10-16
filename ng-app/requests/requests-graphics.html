@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<div class="Hero">
+<div class="Hero Hero--white">
   <img class="Hero-image" src="//assets.faithpromise.192.168.10.10.xip.io/images/requests/graphics-wide.jpg">
 
   <div class="Hero-container">
@@ -20,7 +20,7 @@
 
   <div class="StepForm-section">
     <div class="StepForm-fieldset">
-      <h2 class="StepForm-legend">What is it for?</h2>
+      <h2 class="StepForm-legend">What's cookin'?</h2>
 
       <div class="StepForm-fields">
         <div class="StepForm-group">
@@ -37,7 +37,11 @@
 
   <div class="StepForm-section">
     <div class="StepForm-fieldset">
-      <h2 class="StepForm-legend">How can we help?</h2>
+      <h2 class="StepForm-legend">
+        How can we help?
+        <span class="StepForm-legendHelp">Check what you need, then scroll down and give us a few details...</span>
+      </h2>
+
       <div class="StepForm-fields">
         <ul class="StepForm-checkboxList">
           <li class="StepForm-checkboxItem" ng-repeat="item in vm.items" ng-click="vm.toggle_item(item)">
@@ -50,48 +54,50 @@
     </div>
   </div>
 
-  <div class="StepForm-section" ng-show="vm.is_item_selected('invite_card')">
-    <div class="StepForm-fieldset">
-      <h2 class="StepForm-legend">Tell us about your <strong>invite card</strong></h2>
+  <div class="slide-toggle" ng-show="vm.is_item_selected('invite_card')">
+    <div class="StepForm-section">
+      <div class="StepForm-fieldset">
+        <h2 class="StepForm-legend">Tell us about your <strong>invite card</strong></h2>
 
-      <div class="StepForm-fields">
-        <div class="StepForm-group">
-          <label class="StepForm-label">How many do you need?</label>
-          <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100">
-          test
-        </div>
-        <div class="StepForm-group">
-          <label class="StepForm-label">When do you need it delivered?</label>
-          <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016">
+        <div class="StepForm-fields">
+          <div class="StepForm-group">
+            <label class="StepForm-label">How many do you need?</label>
+            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100">
+            test
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">When do you need it delivered?</label>
+            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016">
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="StepForm-section StepForm-section--stripe" ng-if="!vm.is_item_selected('invite_card')"></div>
 
-  <div class="StepForm-section" ng-show="vm.is_item_selected('flyer')">
-    <div class="StepForm-fieldset">
-      <h2 class="StepForm-legend">Tell us about your <strong>flyer</strong></h2>
+  <div class="slide-toggle" ng-show="vm.is_item_selected('flyer')">
+    <div class="StepForm-section">
+      <div class="StepForm-fieldset">
+        <h2 class="StepForm-legend">Tell us about your <strong>flyer</strong></h2>
 
-      <div class="StepForm-fields">
-        <div class="StepForm-group">
-          <label class="StepForm-label">How many do you need?</label>
-          <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100" ng-bind="vm.selected_items.flyer.quantity">
-        </div>
-        <div class="StepForm-group">
-          <label class="StepForm-label">When do you need it delivered?</label>
-          <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-bind="vm.selected_items.flyer.deliver_by">
-        </div>
-        <div class="StepForm-group">
-          <label class="StepForm-label">What should it say?</label>
-          <textarea class="StepForm-textarea" ng-bind="vm.selected_items.flyer.deliver_by"></textarea>
+        <div class="StepForm-fields">
+          <div class="StepForm-group">
+            <label class="StepForm-label">How many do you need?</label>
+            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100" ng-bind="vm.selected_items.flyer.quantity">
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">When do you need it delivered?</label>
+            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-bind="vm.selected_items.flyer.deliver_by">
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">What should it say?</label>
+            <textarea class="StepForm-textarea" ng-bind="vm.selected_items.flyer.deliver_by"></textarea>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="StepForm-section StepForm-section--stripe" ng-if="!vm.is_item_selected('flyer')"></div>
 
-  <div class="StepForm-submitSection">
+  <div class="StepForm-submitSection" ng-show="vm.has_items_selected()">
     <button class="StepForm-submit" type="submit">Send Your Request <i class="icon-right-open"></i></button>
   </div>
 </form>

@@ -2,11 +2,16 @@
 @Hero-pointer-height: 38;
 
 .Hero {
-  .to-em(margin-bottom, @Hero-pointer-height, @Hero-font-size);
-  position:   relative;
-  overflow:   hidden;
-  text-align: center;
-  color:      #fff;
+  //.to-em(margin-bottom, @Hero-pointer-height, @Hero-font-size);
+  position:         relative;
+  overflow:         hidden;
+  text-align:       center;
+  background-color: @root-background-color;
+  color:            #fff;
+
+  &--white {
+    background-color: #fff;
+  }
 
   // Pointer
   &:before,
@@ -18,7 +23,7 @@
     z-index:          1;
     height:           80px;
     width:            80%;
-    background-color: @root-background-color;
+    background-color: inherit;
   }
 
   // Pointer - left side
