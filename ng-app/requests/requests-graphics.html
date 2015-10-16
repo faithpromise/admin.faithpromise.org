@@ -29,7 +29,7 @@
         </div>
         <div class="StepForm-group">
           <label class="StepForm-label">When is your event (if applicable)?</label>
-          <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016">
+          <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.event_date">
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <div class="slide-toggle" ng-show="vm.is_item_selected('invite_card')">
+  <div class="slide-toggle ng-hide" ng-show="vm.is_item_selected('invite_card')">
     <div class="StepForm-section">
       <div class="StepForm-fieldset">
         <h2 class="StepForm-legend">Tell us about your <strong>invite card</strong></h2>
@@ -63,18 +63,29 @@
           <div class="StepForm-group">
             <label class="StepForm-label">How many do you need?</label>
             <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100">
-            test
           </div>
           <div class="StepForm-group">
-            <label class="StepForm-label">When do you need it delivered?</label>
-            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016">
+            <label class="StepForm-label">When do you need it delivered?
+              <span class="StepForm-required">*</span></label>
+            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.selected_items.invite_card.deliver_by">
+            <delivery-dates
+                    items="vm.selected_items"
+                    event-date="vm.event_date"
+                    exclude="invite_card"
+                    deliver-by="vm.selected_items.invite_card.deliver_by">
+            </delivery-dates>
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">What should your invite card say?</label>
+            <textarea class="StepForm-textarea" ng-model="vm.selected_items.invite_card.description"></textarea>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
-  <div class="slide-toggle" ng-show="vm.is_item_selected('flyer')">
+  <div class="slide-toggle ng-hide" ng-show="vm.is_item_selected('flyer')">
     <div class="StepForm-section">
       <div class="StepForm-fieldset">
         <h2 class="StepForm-legend">Tell us about your <strong>flyer</strong></h2>
@@ -82,15 +93,53 @@
         <div class="StepForm-fields">
           <div class="StepForm-group">
             <label class="StepForm-label">How many do you need?</label>
-            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100" ng-bind="vm.selected_items.flyer.quantity">
+            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100" ng-model="vm.selected_items.flyer.quantity">
           </div>
           <div class="StepForm-group">
-            <label class="StepForm-label">When do you need it delivered?</label>
-            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-bind="vm.selected_items.flyer.deliver_by">
+            <label class="StepForm-label">When do you need it delivered?
+              <span class="StepForm-required">*</span></label>
+            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.selected_items.flyer.deliver_by" required>
+            <delivery-dates
+                    items="vm.selected_items"
+                    event-date="vm.event_date"
+                    exclude="flyer"
+                    deliver-by="vm.selected_items.flyer.deliver_by">
+            </delivery-dates>
+
           </div>
           <div class="StepForm-group">
             <label class="StepForm-label">What should it say?</label>
-            <textarea class="StepForm-textarea" ng-bind="vm.selected_items.flyer.deliver_by"></textarea>
+            <textarea class="StepForm-textarea" ng-model="vm.selected_items.flyer.description"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-toggle ng-hide" ng-show="vm.is_item_selected('t_shirt')">
+    <div class="StepForm-section">
+      <div class="StepForm-fieldset">
+        <h2 class="StepForm-legend">Tell us about your <strong>T-Shirt</strong></h2>
+
+        <div class="StepForm-fields">
+          <div class="StepForm-group">
+            <label class="StepForm-label">How many do you need?</label>
+            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100" ng-model="vm.selected_items.t_shirt.quantity">
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">When do you need it delivered?
+              <span class="StepForm-required">*</span></label>
+            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.selected_items.t_shirt.deliver_by" required>
+            <delivery-dates
+                    items="vm.selected_items"
+                    event-date="vm.event_date"
+                    exclude="t_shirt"
+                    deliver-by="vm.selected_items.t_shirt.deliver_by">
+            </delivery-dates>
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">Briefly describe your t-shirt idea.</label>
+            <textarea class="StepForm-textarea" ng-model="vm.selected_items.t_shirt.description"></textarea>
           </div>
         </div>
       </div>

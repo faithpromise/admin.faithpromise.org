@@ -1,0 +1,14 @@
+<span class="Dropdown" uib-dropdown>
+  <span class="Dropdown-toggle" uib-dropdown-toggle>Common dates</span>
+  <ul class="Dropdown-menu">
+    <li class="Dropdown-item" ng-repeat="item in vm.items" ng-if="item.deliver_by && item.slug !== vm.exclude">
+      <span class="Dropdown-link" ng-click="vm.set_date(item.deliver_by)">Same as {{ item.title }} &nbsp; ({{ item.deliver_by | date : 'EEE MMM d' }})</span>
+    </li>
+    <li class="Dropdown-item" ng-if="vm.eventDate">
+      <span class="Dropdown-link" ng-click="vm.set_date(7)">1 week before event &nbsp; ({{ vm.subtract_days_from_event_date(7) | date : 'EEE MMM d' }})</span>
+    </li>
+    <li class="Dropdown-item" ng-if="vm.eventDate">
+      <span class="Dropdown-link" ng-click="vm.set_date(14)">2 weeks before event &nbsp; ({{ vm.subtract_days_from_event_date(14) | date : 'EEE MMM d' }})</span>
+    </li>
+  </ul>
+</span>

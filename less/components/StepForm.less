@@ -64,8 +64,8 @@
 
   > strong {
     .to-em(font-size, 38, @StepForm-legend-font-size);
-    display:     block;
     font-weight: @font-weight-myriad-semi-bold;
+    white-space: nowrap;
   }
 }
 
@@ -96,6 +96,10 @@
   &:after {
     content: '\A';
   }
+}
+
+.StepForm-required {
+  color: red;
 }
 
 .StepForm-input,
