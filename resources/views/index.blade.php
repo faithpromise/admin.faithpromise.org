@@ -87,7 +87,7 @@
         <div class="Layout">
 
             <div class="Layout-content">
-                <ng-view></ng-view>
+                <ng-view autoscroll="true"></ng-view>
             </div>
         </div>
 
