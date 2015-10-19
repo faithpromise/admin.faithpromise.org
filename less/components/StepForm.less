@@ -90,8 +90,9 @@
   .antialiasing();
   .to-em(font-size, 20, @StepForm-font-size);
   .to-em(margin-bottom, 5, 20);
-  display: block;
-  color:   #4c4c4c;
+  display:     block;
+  color:       #4c4c4c;
+  user-select: none;
 
   &:after {
     content: '\A';
@@ -155,6 +156,7 @@
   overflow:       hidden;
   text-overflow:  ellipsis;
   cursor:         pointer;
+  user-select:    none;
 }
 
 .StepForm-checkbox {
@@ -163,4 +165,9 @@
   &.icon-check {
     color: @anchor-text-color;
   }
+}
+
+.RequestForm-presets {
+  display:     inline-block;
+  margin-left: .5em;
 }

@@ -14,9 +14,9 @@
         };
     }
 
-    Controller.$inject = [];
+    Controller.$inject = ['$scope'];
 
-    function Controller() {
+    function Controller($scope) {
 
         var vm = this;
         vm.toggle_item = toggle_item;
@@ -35,6 +35,7 @@
 
         vm.selected_items = {};
         vm.num_items_selected = 0;
+        vm.helper_dates = [];
 
         function toggle_item(item) {
 
@@ -67,6 +68,22 @@
         function set_date(date_string) {
             vm.selected_items.flyer.deliver_by = new Date(date_string);
         }
+
+        function update_helper_dates() {
+            var helper_dates = [];
+            angular.forEach(vm.selected_items, function(value) {
+                if (value.deliver_by && value.active) {
+                    helper_dates.push({
+                        slug: value.slug,
+                        title: value.title,
+                        deliver_by: value.deliver_by
+                    });
+                }
+            });
+            vm.helper_dates = helper_dates;
+        }
+
+        $scope.$watch('vm.selected_items', update_helper_dates, true);
 
     }
 

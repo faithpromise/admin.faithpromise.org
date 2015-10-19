@@ -61,15 +61,11 @@
 
         <div class="StepForm-fields">
           <div class="StepForm-group">
-            <label class="StepForm-label">How many do you need?</label>
-            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100">
-          </div>
-          <div class="StepForm-group">
             <label class="StepForm-label">When do you need it delivered?
               <span class="StepForm-required">*</span></label>
             <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.selected_items.invite_card.deliver_by">
             <delivery-dates
-                    items="vm.selected_items"
+                    dates="vm.helper_dates"
                     event-date="vm.event_date"
                     exclude="invite_card"
                     deliver-by="vm.selected_items.invite_card.deliver_by">
@@ -92,15 +88,11 @@
 
         <div class="StepForm-fields">
           <div class="StepForm-group">
-            <label class="StepForm-label">How many do you need?</label>
-            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100" ng-model="vm.selected_items.flyer.quantity">
-          </div>
-          <div class="StepForm-group">
             <label class="StepForm-label">When do you need it delivered?
               <span class="StepForm-required">*</span></label>
             <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.selected_items.flyer.deliver_by" required>
             <delivery-dates
-                    items="vm.selected_items"
+                    dates="vm.helper_dates"
                     event-date="vm.event_date"
                     exclude="flyer"
                     deliver-by="vm.selected_items.flyer.deliver_by">
@@ -123,15 +115,11 @@
 
         <div class="StepForm-fields">
           <div class="StepForm-group">
-            <label class="StepForm-label">How many do you need?</label>
-            <input class="StepForm-input StepForm-input--number" type="text" placeholder="e.g. 100" ng-model="vm.selected_items.t_shirt.quantity">
-          </div>
-          <div class="StepForm-group">
             <label class="StepForm-label">When do you need it delivered?
               <span class="StepForm-required">*</span></label>
             <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.selected_items.t_shirt.deliver_by" required>
             <delivery-dates
-                    items="vm.selected_items"
+                    dates="vm.helper_dates"
                     event-date="vm.event_date"
                     exclude="t_shirt"
                     deliver-by="vm.selected_items.t_shirt.deliver_by">
