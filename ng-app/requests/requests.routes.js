@@ -1,22 +1,24 @@
-(function(module) {
+(function (module) {
 
     module.config(Config);
 
-    Config.$inject = ['$routeProvider'];
+    Config.$inject = ['$stateProvider'];
 
-    function Config(routeProvider) {
+    function Config($stateProvider) {
 
-        routeProvider.when('/requests', {
-            template: '<requests-list></requests-list>'
-        });
-
-        routeProvider.when('/requests/new', {
-            template: '<requests-new></requests-new>'
-        });
-
-        routeProvider.when('/requests/new/graphics', {
-            template: '<requests-graphics></requests-graphics>'
-        });
+        $stateProvider
+            .state('requests', {
+                url: '/requests',
+                template: '<requests-list></requests-list>'
+            })
+            .state('requests_new', {
+                url: '/requests/new',
+                template: '<requests-new></requests-new>'
+            })
+            .state('requests_new_graphics', {
+                url: '/requests/new/graphics',
+                template: '<requests-graphics></requests-graphics>'
+            });
 
     }
 

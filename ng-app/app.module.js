@@ -1,7 +1,7 @@
 (function (angular) {
 
     angular.module('admin', [
-        'ngRoute',
+        'ui.router',
         'ngResource',
         'ngAnimate',
         'ui.bootstrap.dropdown',
