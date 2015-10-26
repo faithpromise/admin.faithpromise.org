@@ -2,17 +2,16 @@
 
     module.config(Config);
 
-    Config.$inject = ['$routeProvider'];
+    Config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function Config(routeProvider) {
+    function Config($stateProvider, $urlRouterProvider) {
 
-        routeProvider.when('/', {
+        $stateProvider.state('home', {
+            url: '/',
             template: 'home'
         });
 
-        routeProvider.otherwise({
-            template: 'no route'
-        });
+        $urlRouterProvider.otherwise('/');
 
     }
 
