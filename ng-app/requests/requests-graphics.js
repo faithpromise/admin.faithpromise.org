@@ -19,60 +19,65 @@
     function Controller($scope) {
 
         var vm = this;
+        vm.subject = '';
+        vm.event_date = null;
         vm.toggle_item = toggle_item;
-        vm.is_item_selected = is_item_selected;
         vm.has_items_selected = has_items_selected;
-        vm.set_date = set_date;
-
-        vm.items = [
-            {slug: 'invite_card', title: 'Invite Card'},
-            {slug: 'flyer', title: 'Flyer'},
-            {slug: 't_shirt', title: 'T-Shirt'},
-            {slug: 'sign', title: 'Sign'},
-            {slug: 'logo', title: 'Logo'},
-            {slug: 'other', title: 'Other'}
-        ];
-
-        vm.selected_items = {};
-        vm.num_items_selected = 0;
+        vm.submit = submit;
         vm.helper_dates = [];
+        vm.items = {
+            invite_card: {title: 'Invite Card'},
+            flyer: {title: 'Flyer'},
+            seat_card: {title: 'Seatback Card'},
+            slide: {title: 'Slide In Service'},
+            t_shirt: {title: 'T-Shirt'},
+            sign: {title: 'Sign'},
+            logo: {title: 'Logo'},
+            website_update: {title: 'Website Update'},
+            other: {title: 'Other'}
+        };
 
-        function toggle_item(item) {
+        function submit() {
+            var data = {
+                requests: gather_requests()
+            };
 
-            if (!vm.selected_items.hasOwnProperty(item.slug)) {
-                vm.selected_items[item.slug] = {
-                    active: true,
-                    slug: item.slug,
-                    title: item.title
-                };
-            } else {
-                vm.selected_items[item.slug].active = !vm.selected_items[item.slug].active;
-            }
-
+            console.log(data);
         }
 
-        function is_item_selected(slug) {
-            return vm.selected_items.hasOwnProperty(slug) && vm.selected_items[slug].active;
+        function gather_requests() {
+            var result = [];
+
+            angular.forEach(vm.items, function(item, key) {
+                if (item.selected) {
+                    item.type = key;
+                    item.subject = vm.subject;
+                    item.description = 'Event is happening on ' + vm.event_date;
+                    result.push(item);
+                }
+            });
+
+            return result;
+        }
+
+        function toggle_item(item) {
+            item.selected = !item.selected;
         }
 
         function has_items_selected() {
-            var i;
-            for (i = 0; i < vm.items.length; i++) {
-                if (is_item_selected(vm.items[i].slug)) {
-                    return true;
+            var result = false;
+            angular.forEach(vm.items, function (item) {
+                if (item.selected) {
+                    return result = true;
                 }
-            }
-            return false;
-        }
-
-        function set_date(date_string) {
-            vm.selected_items.flyer.deliver_by = new Date(date_string);
+            });
+            return result;
         }
 
         function update_helper_dates() {
             var helper_dates = [];
-            angular.forEach(vm.selected_items, function(value) {
-                if (value.deliver_by && value.active) {
+            angular.forEach(vm.items, function (value) {
+                if (value.deliver_by && value.selected) {
                     helper_dates.push({
                         slug: value.slug,
                         title: value.title,
@@ -83,7 +88,7 @@
             vm.helper_dates = helper_dates;
         }
 
-        $scope.$watch('vm.selected_items', update_helper_dates, true);
+        $scope.$watch('vm.items', update_helper_dates, true);
 
     }
 
