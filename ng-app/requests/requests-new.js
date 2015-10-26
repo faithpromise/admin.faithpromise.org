@@ -14,9 +14,13 @@
         };
     }
 
-    Controller.$inject = [];
+    Controller.$inject = ['$http'];
 
-    function Controller() {
+    function Controller($http) {
+
+        $http.get('/test').then(function(result) {
+            console.log(result);
+        });
 
         var vm = this;
 

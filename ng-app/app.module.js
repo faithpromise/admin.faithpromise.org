@@ -5,6 +5,7 @@
         'ngResource',
         'ngAnimate',
         'ui.bootstrap.dropdown',
+        'satellizer',
         'toastr'
     ]);
 

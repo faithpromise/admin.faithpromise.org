@@ -11,6 +11,11 @@
             template: 'home'
         });
 
+        $stateProvider.state('login', {
+            url: '/login',
+            template: '<login></login>'
+        });
+
         $urlRouterProvider.otherwise('/');
 
     }
