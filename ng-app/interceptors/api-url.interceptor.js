@@ -1,4 +1,4 @@
-(function(module) {
+(function (module) {
 
     module.factory('apiUrlInterceptor', factory);
 
@@ -20,6 +20,7 @@
 
             // Otherwise, prepend base API url
             requestConfig.url = config.api_uri + url;
+            requestConfig.withCredentials = true;
 
             return requestConfig;
         }
