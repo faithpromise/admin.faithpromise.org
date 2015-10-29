@@ -28,7 +28,8 @@
     }
 
     module.constant('config', {
-        api_uri: 'http://api.192.168.10.10.xip.io/v1'
+        // TODO: Make this dynamic
+        api_uri: 'http://api.faithpromise.192.168.10.10.xip.io/v1'
     });
 
 })(angular.module('admin'));
