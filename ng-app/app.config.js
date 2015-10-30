@@ -16,9 +16,10 @@
 
         $authProvider.oauth1({
             name: 'faithpromise',
-            url: '/auth/request-token',
+            url: '/auth/fellowshipone',
             authorizationEndpoint: 'https://fpctystn.staging.fellowshiponeapi.com/v1/PortalUser/Login',
-            redirectUri: config.api_uri + '/auth/',
+            //redirectUri: config.api_uri + '/auth/',
+            redirectUri: null,
             popupOptions: { width: 600, height: 400 }
         });
 

@@ -25,9 +25,14 @@
         function login() {
 
             $auth.authenticate('faithpromise').then(function(response) {
-                console.log('success', response);
+
+                // TODO: Set user in local storage?
+                $window.localStorage.currentUser = JSON.stringify(response.data.user);
+
             }).catch(function(response) {
+
                 console.log('error', response);
+
             });
 
         }
