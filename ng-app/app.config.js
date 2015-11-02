@@ -17,7 +17,7 @@
 
         // Auth config
         $authProvider.loginUrl = '/login';
-        $authProvider.tokenPrefix = 'fp_admin';
+        $authProvider.tokenPrefix = '';
         $authProvider.oauth1({
             name: 'faithpromise',
             url: '/auth/fellowshipone',
