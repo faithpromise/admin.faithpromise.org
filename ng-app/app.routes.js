@@ -16,6 +16,11 @@
             template: '<login></login>'
         });
 
+        $stateProvider.state('register', {
+            url: '/register',
+            template: 'register yo self'
+        });
+
         $urlRouterProvider.otherwise('/');
 
     }
