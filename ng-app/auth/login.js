@@ -14,9 +14,9 @@
         };
     }
 
-    Controller.$inject = ['$auth'];
+    Controller.$inject = ['$auth', '$window', '$rootScope'];
 
-    function Controller($auth) {
+    function Controller($auth, $window, $rootScope) {
 
         var vm = this;
 
@@ -26,11 +26,12 @@
 
             $auth.authenticate('faithpromise').then(function(response) {
 
-                // TODO: Set user in local storage?
-                $window.localStorage.currentUser = JSON.stringify(response.data.user);
+                $window.localStorage.user = JSON.stringify(response.data.user);
+                $rootScope.user = response.data.user;
 
             }).catch(function(response) {
 
+                alert('An error occurred. Check console');
                 console.log('error', response);
 
             });
