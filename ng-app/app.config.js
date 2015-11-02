@@ -42,7 +42,10 @@
 
         $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
-            var logged_in = $auth.isAuthenticated() && $window.localStorage.user,
+            var user = $window.localStorage.user ? JSON.parse($window.localStorage.user) : null;
+
+            var logged_in = $auth.isAuthenticated() && user,
+                account_complete = user ? user.id : false,
                 is_logging_in = $location.path() === '/login',
                 is_registering = ($location.path() === '/register') || ($location.path() === '/verify-email');
 
@@ -51,8 +54,8 @@
                 $location.path('/login');
             }
 
-            // Redirect to /register if authenticated, but no user id
-            if (!$window.localStorage.user.id && !is_registering) {
+            // Redirect to /register if authenticated, but account not complete
+            if (logged_in && !account_complete && !is_registering) {
                 $location.path('/register');
             }
 
