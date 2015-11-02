@@ -14,9 +14,9 @@
         };
     }
 
-    Controller.$inject = ['$auth', '$window', '$rootScope'];
+    Controller.$inject = ['$window', '$location', '$rootScope', '$auth'];
 
-    function Controller($auth, $window, $rootScope) {
+    function Controller($window, $location, $rootScope, $auth) {
 
         var vm = this;
 
@@ -28,6 +28,7 @@
 
                 $window.localStorage.user = JSON.stringify(response.data.user);
                 $rootScope.user = response.data.user;
+                $location.path('/');
 
             }).catch(function(response) {
 
