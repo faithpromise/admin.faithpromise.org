@@ -18,7 +18,12 @@
 
         $stateProvider.state('register', {
             url: '/register',
-            template: 'register yo self'
+            template: '<register></register>'
+        });
+
+        $stateProvider.state('verify-email', {
+            url: '/verify-email',
+            template: '<verify-email></verify-email>'
         });
 
         $urlRouterProvider.otherwise('/');
