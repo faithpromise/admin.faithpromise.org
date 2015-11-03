@@ -19,15 +19,16 @@
     function Controller($http) {
 
         var vm = this;
-        vm.email = null;
+        vm.email_username = null;
+        vm.email_sent = false;
         vm.send = send;
 
         function send() {
 
-            var data = { email: vm.email };
+            var data = { username: vm.email_username };
 
-            $http.get('/verify-email', data, function() {
-                alert('email sent');
+            $http.post('/auth/register', data).then(function(response) {
+                vm.email_sent = true;
             });
 
         }

@@ -1,11 +1,21 @@
-
 <h1>Register</h1>
-<p>Please verify your email address. This is a one time requirement.</p>
 
-<form method="post">
-  <input type="text" ng-model="vm.email">@faithpromise.org
+<div ng-hide="vm.email_sent">
 
-  <div>
-    <button type="submit">Next</button>
-  </div>
-</form>
+  <p>Please verify your email address. This is a one time requirement.</p>
+
+  <form method="post" ng-submit="vm.send()">
+    <input type="text" ng-model="vm.email_username" required>@faithpromise.org
+
+    <div>
+      <button type="submit">Next</button>
+    </div>
+  </form>
+
+</div>
+
+<div ng-show="vm.email_sent">
+
+  We've sent you an email. Please click the link provided in the email to verify your account.
+
+</div>
