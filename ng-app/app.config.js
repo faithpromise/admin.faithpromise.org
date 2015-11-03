@@ -44,10 +44,10 @@
 
             var user = $window.localStorage.user ? JSON.parse($window.localStorage.user) : null;
 
-            var logged_in = $auth.isAuthenticated() && user,
-                account_complete = user ? user.id : false,
+            var logged_in = $auth.isAuthenticated(),
+                account_complete = user !== null,
                 is_logging_in = $location.path() === '/login',
-                is_registering = ($location.path() === '/register') || ($location.path() === '/verify-email');
+                is_registering = ($location.path() === '/register') || ($location.path().indexOf('/verify-email') >= 0);
 
             // Redirect to login if not authenticated
             if (!logged_in && !is_logging_in) {
