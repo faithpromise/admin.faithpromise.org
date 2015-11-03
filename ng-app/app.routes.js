@@ -22,7 +22,7 @@
         });
 
         $stateProvider.state('verify-email', {
-            url: '/verify-email',
+            url: '/verify-email/:token',
             template: '<verify-email></verify-email>'
         });
 
