@@ -24,13 +24,16 @@
 
         function login() {
 
-            $auth.authenticate('faithpromise').then(function(response) {
+            $auth.authenticate('faithpromise').then(function (response) {
 
-                $window.localStorage.user = JSON.stringify(response.data.user);
-                $rootScope.user = response.data.user;
+                if (response.data.user) {
+                    $window.localStorage.user = JSON.stringify(response.data.user);
+                    $rootScope.user = response.data.user;
+                }
+
                 $location.path('/');
 
-            }).catch(function(response) {
+            }).catch(function (response) {
 
                 alert('An error occurred. Check console');
                 console.log('error', response);
