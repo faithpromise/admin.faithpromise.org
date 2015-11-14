@@ -148,6 +148,7 @@ return [
         App\FaithPromise\FellowshipOne\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         VTalbot\Markdown\MarkdownServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
 
     ],
 
