@@ -76,7 +76,7 @@
                 <div class="Nav-profile">
                     <div class="Nav-item">
                         <span class="Nav-link">
-                            <img class="Nav-profileImage" src="http://d3m6gouty6q7nm.cloudfront.net/sm/quarter/images/staff/brandon-dunford-square.jpg?v=1438638001&">
+                            <img class="Nav-profileImage" ng-src="@{{ user.thumb }}">
                             <i class="Nav-linkIcon icon-down-open"></i>
                         </span>
                     </div>

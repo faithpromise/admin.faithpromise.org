@@ -4,9 +4,18 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/faithpromise/fp-shared.git"
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "tymon/jwt-auth": "0.5.*",
+        "huddledigital/zendesk-laravel": "~1.0",
+        "faithpromise/fp-shared": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

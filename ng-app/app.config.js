@@ -1,15 +1,11 @@
 (function(module) {
 
-    module.constant('config', {
-        // TODO: Make this dynamic
-        api_uri: 'http://api.faithpromise.192.168.10.10.xip.io/v1'
-    });
     module.config(Config);
     module.run(Run);
 
-    Config.$inject = ['$locationProvider', '$resourceProvider', '$httpProvider', '$authProvider'];
+    Config.$inject = ['$locationProvider', '$resourceProvider', '$authProvider'];
 
-    function Config($locationProvider, $resourceProvider, $httpProvider, $authProvider) {
+    function Config($locationProvider, $resourceProvider, $authProvider) {
 
         $locationProvider.html5Mode(true);
 
@@ -25,9 +21,6 @@
             redirectUri: null,
             popupOptions: { width: 600, height: 400 }
         });
-
-        // Interceptors
-        $httpProvider.interceptors.push('apiUrlInterceptor');
 
     }
 
