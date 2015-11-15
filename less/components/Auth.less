@@ -13,11 +13,21 @@
 }
 
 .Auth-banner {
-  display:         flex;
-  align-items:     center;
-  min-height:      160px;
-  padding:         20px 80px;
-  background:      #000;
+  display:     flex;
+  align-items: center;
+  min-height:  160px;
+  padding:     10px 15px;
+  background:  #000;
+
+  @media (min-width: 551px) {
+    padding: 20px 80px;
+  }
+}
+
+.Auth-logoWrap {
+  @media (max-width: 550px) {
+    display: none;
+  }
 }
 
 .Auth-logo {
@@ -28,7 +38,11 @@
 
 .Auth-content {
   flex-grow:  1;
-  text-align: right;
+  text-align: center;
+
+  @media (min-width: 551px) {
+    text-align: right;
+  }
 }
 
 .Auth-loginButton {
