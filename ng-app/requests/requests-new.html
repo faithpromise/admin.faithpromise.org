@@ -3,7 +3,7 @@
   <ul class="RequestCard-list">
 
     <li class="RequestCard-item" ng-repeat="card in vm.cards">
-      <a class="RequestCard" href="/requests/new/{{ card.type }}">
+      <a class="RequestCard" href="/requests/{{ card.type }}">
         <div class="RequestCard-header">
           <!-- TODO: Link to optimized image -->
           <img class="RequestCard-image" ng-src="//assets.faithpromise.192.168.10.10.xip.io/images/requests/{{ card.type }}-tall.jpg">

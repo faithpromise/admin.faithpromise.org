@@ -46,11 +46,11 @@
                 template: '<requests-list></requests-list>'
             })
             .state('main.requests_new', {
-                url: '/new',
+                url: '^/requests/new',
                 template: '<requests-new></requests-new>'
             })
             .state('main.requests_graphics', {
-                url: '/new/graphics',
+                url: '^/requests/graphics',
                 template: '<requests-graphics></requests-graphics>'
             });
 
