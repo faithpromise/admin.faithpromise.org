@@ -148,7 +148,8 @@ return [
         App\FaithPromise\FellowshipOne\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         VTalbot\Markdown\MarkdownServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Huddle\Zendesk\Providers\ZendeskServiceProvider::class
 
     ],
 
@@ -201,7 +202,8 @@ return [
 
         'JWTAuth'    => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Markdown'   => VTalbot\Markdown\Facades\Markdown::class
+        'Markdown'   => VTalbot\Markdown\Facades\Markdown::class,
+        'Zendesk'    => Huddle\Zendesk\Facades\Zendesk::class
 
     ],
 
