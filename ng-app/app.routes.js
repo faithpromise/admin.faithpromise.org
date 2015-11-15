@@ -6,27 +6,53 @@
 
     function Config($stateProvider, $urlRouterProvider) {
 
-        $stateProvider.state('home', {
-            url: '/',
-            template: 'home'
-        });
+        $urlRouterProvider.otherwise('/home');
 
-        $stateProvider.state('login', {
-            url: '/login',
-            template: '<login></login>'
-        });
+        $stateProvider
+            .state('main', {
+                abstract: true,
+                url: '/',
+                templateUrl: '/build/ng-app/common/main-layout.html'
+            })
+            .state('main.home', {
+                url: '^/home',
+                template: 'home'
+            });
 
-        $stateProvider.state('register', {
-            url: '/register',
-            template: '<register></register>'
-        });
+        // Authentication
+        $stateProvider
+            .state('auth', {
+                abstract: true,
+                url: '/auth',
+                templateUrl: '/build/ng-app/common/auth-layout.html'
+            })
+            .state('auth.login', {
+                url: '^/login',
+                template: '<login></login>'
+            })
+            .state('auth.register', {
+                url: '^/register',
+                template: '<register></register>'
+            })
+            .state('auth.verify-email', {
+                url: '^/verify-email/:token',
+                template: '<verify-email></verify-email>'
+            });
 
-        $stateProvider.state('verify-email', {
-            url: '/verify-email/:token',
-            template: '<verify-email></verify-email>'
-        });
-
-        $urlRouterProvider.otherwise('/');
+        // Support Requests
+        $stateProvider
+            .state('main.requests', {
+                url: '^/requests',
+                template: '<requests-list></requests-list>'
+            })
+            .state('main.requests_new', {
+                url: '/new',
+                template: '<requests-new></requests-new>'
+            })
+            .state('main.requests_graphics', {
+                url: '/new/graphics',
+                template: '<requests-graphics></requests-graphics>'
+            });
 
     }
 
