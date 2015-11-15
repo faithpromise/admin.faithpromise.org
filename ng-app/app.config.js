@@ -24,9 +24,9 @@
 
     }
 
-    Run.$inject = ['$window', '$location', '$rootScope', '$auth'];
+    Run.$inject = ['$window', '$document', '$location', '$rootScope', '$auth'];
 
-    function Run($window, $location, $rootScope, $auth) {
+    function Run($window, $document, $location, $rootScope, $auth) {
 
         // Add user to root scope if found in local storage
         if ($window.localStorage.user) {
@@ -52,6 +52,10 @@
                 $location.path('/register');
             }
 
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function() {
+            $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
         });
 
     }
