@@ -18,7 +18,7 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
  */
 Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
 
-    Route::get('/test', 'AuthenticateController@index');
+    Route::get('/test', 'SupportRequests@listRequests');
 
 });
 
