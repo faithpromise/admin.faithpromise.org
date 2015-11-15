@@ -13,19 +13,22 @@
 }
 
 .Auth-banner {
-  display:     flex;
-  align-items: center;
-  min-height:  160px;
-  padding:     10px 15px;
-  background:  #000;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  min-height:      160px;
+  padding:         30px 20px;
+  background:      #000;
+  color:           #b5b5b5;
 
-  @media (min-width: 551px) {
+  @media (min-width: 621px) {
     padding: 20px 80px;
   }
 }
 
 .Auth-logoWrap {
-  @media (max-width: 550px) {
+  flex-grow: 1;
+  @media (max-width: 620px) {
     display: none;
   }
 }
@@ -37,24 +40,81 @@
 }
 
 .Auth-content {
-  flex-grow:  1;
-  text-align: center;
+  max-width: 340px;
 
-  @media (min-width: 551px) {
-    text-align: right;
+  @media (min-width: 621px) {
+    padding-left: 30px;
   }
 }
 
-.Auth-loginButton {
+.Auth-button {
   display:          inline-block;
   padding:          0 20px;
   line-height:      50px;
+  border:           none;
   border-radius:    5px;
   background-color: #778067;
   color:            #fff;
   font-style:       italic;
+  white-space:      nowrap;
 
   &:hover {
     background-color: lighten(#778067, 10);
+  }
+}
+
+.Auth-register {
+  display:        flex;
+  flex-direction: column;
+}
+
+.Auth-registerForm {
+  display:   flex;
+  flex-wrap: wrap;
+}
+
+.Auth-email,
+.Auth-domain,
+.Auth-registerButton {
+  font-size: 1rem;
+}
+
+.Auth-email {
+  flex:          1 1 0;
+  border:        none;
+  border-radius: 5px 0 0 5px;
+  padding:       0 2px 0 10px;
+  line-height:   50px;
+  text-align:    right;
+  background:    #fff;
+  color:         #434343;
+
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.Auth-domain {
+  display:     inline-block;
+  padding:     0 10px 0 0;
+  line-height: 50px;
+  text-align:  right;
+  background:  #fff;
+  color:       #9c9c9c;
+
+  @media (max-width: 380px) {
+    border-radius: 0 5px 5px 0;
+  }
+}
+
+.Auth-registerButton {
+  &:extend(.Auth-button);
+  border-radius:    0 5px 5px 0;
+  background-color: #1399e3;
+
+  @media (max-width: 380px) {
+    width:         100%;
+    margin-top:    20px;
+    border-radius: 5px;
   }
 }
