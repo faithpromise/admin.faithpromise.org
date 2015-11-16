@@ -90,7 +90,7 @@ class AuthController extends BaseController {
                 'oauth_token_secret' => $payload->get('oauth_token_secret')
             ]);
 
-            $user = $user->setVisible(['first_name', 'last_name', 'email', 'thumb'])->toArray();
+            $user = $user->toClient();
 
             return response()->json(compact('token', 'user'));
 
@@ -121,7 +121,7 @@ class AuthController extends BaseController {
         ];
 
         if ($user) {
-            $result['user'] = $user->toArray();
+            $result['user'] = $user->toClient();
         } else {
             $user = new User();
             $user->id = 0;
