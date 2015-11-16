@@ -15,6 +15,7 @@ class SupportRequests extends Controller {
 
         $email = JWTAuth::parseToken()->authenticate()->email;
         $email = 'ginam@faithpromise.org';
+        // TODO: Remove test email
 
         $user_search = Zendesk::users()->search(['query' => $email]);
         $user = $user_search->users[0];
