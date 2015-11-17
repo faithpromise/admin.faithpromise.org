@@ -81,6 +81,34 @@
     </div>
   </div>
 
+  <div class="slide-toggle ng-hide" ng-show="vm.items.seat_card.selected">
+    <div class="StepForm-section">
+      <div class="StepForm-fieldset">
+        <h2 class="StepForm-legend">Tell us about your <strong>Seatback Card</strong></h2>
+
+        <div class="StepForm-fields">
+          <div class="StepForm-group">
+            <label class="StepForm-label">When do you need it delivered?
+              <span class="StepForm-required">*</span></label>
+            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.items.seat_card.deliver_by" required>
+            <delivery-dates
+                    dates="vm.helper_dates"
+                    event-date="vm.event_date"
+                    exclude="seat_card"
+                    deliver-by="vm.items.seat_card.deliver_by">
+            </delivery-dates>
+            <!-- TODO: Show date and alert if under x weeks -->
+            Please allow 5 weeks
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">Briefly describe your t-shirt idea.</label>
+            <textarea class="StepForm-textarea" ng-model="vm.items.seat_card.description"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="slide-toggle ng-hide" ng-show="vm.items.flyer.selected">
     <div class="StepForm-section">
       <div class="StepForm-fieldset">
