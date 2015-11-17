@@ -14,11 +14,12 @@
         };
     }
 
-    Controller.$inject = ['$scope'];
+    Controller.$inject = ['$scope', '$rootScope'];
 
-    function Controller($scope) {
+    function Controller($scope, $rootScope) {
 
         var vm = this;
+        vm.user = $rootScope.user;
         vm.subject = '';
         vm.event_date = null;
         vm.toggle_item = toggle_item;
