@@ -11,16 +11,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class SupportRequests extends Controller {
 
-    public function listRequests(Request $request) {
+    public function listRequests() {
 
-        $email = JWTAuth::parseToken()->authenticate()->email;
-        $email = 'ginam@faithpromise.org';
-        // TODO: Remove test email
-
-        $user_search = Zendesk::users()->search(['query' => $email]);
-        $user = $user_search->users[0];
-
-        $tickets = Zendesk::users($user->id)->tickets()->findAll();
+        $user = JWTAuth::parseToken()->authenticate();
+        $tickets = Zendesk::users($user->zendesk_user_id)->tickets()->findAll();
 
         return response()->json($tickets);
     }
