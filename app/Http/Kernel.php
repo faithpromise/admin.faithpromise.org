@@ -25,5 +25,6 @@ class Kernel extends HttpKernel {
     protected $routeMiddleware = [
         'jwt.auth'    => GetUserFromToken::class,
         'jwt.refresh' => RefreshToken::class,
+        'zendesk.user_id' => Middleware\ZendeskUserId::class
     ];
 }
