@@ -2,21 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\FaithPromise\Zendesk\TicketFactory;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Huddle\Zendesk\Facades\Zendesk;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class SupportRequests extends Controller {
 
-    public function listRequests() {
+    public function index(Request $request) {
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user();
         $tickets = Zendesk::users($user->zendesk_user_id)->tickets()->findAll();
 
         return response()->json($tickets);
+    }
+
+    public function batchCreate(Request $request) {
+
+        $user = $request->user();
+        $tickets = $request->input('requests');
+
+        foreach ($tickets as $ticket) {
+            $ticket = TicketFactory::create($ticket['type'], $ticket, $user);
+            $ticket->save();
+        }
+
+        dd($tickets);
+
     }
 
 }
