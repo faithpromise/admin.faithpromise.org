@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<form class="StepForm" name="request_form" ng-submit="vm.submit()" novalidate>
+<form class="StepForm" name="request_form" ng-submit="vm.submit()">
 
   <div class="StepForm-section">
     <div class="StepForm-fieldset">
@@ -24,11 +24,11 @@
 
       <div class="StepForm-fields">
         <div class="StepForm-group">
-          <label class="StepForm-label" ng-model="vm.subject">What’s the name of your event or project?</label>
-          <input class="StepForm-input" type="text" placeholder="e.g. &quot;Haiti Trip,&quot; &quot;Kids Camp&quot;">
+          <label class="StepForm-label">What’s the name of your event or project?</label>
+          <input class="StepForm-input" name="subject" type="text" placeholder="e.g. &quot;Haiti Trip,&quot; &quot;Kids Camp&quot;" ng-model="vm.subject" required>
         </div>
         <div class="StepForm-group">
-          <label class="StepForm-label">When is your event (if applicable)?</label>
+          <label class="StepForm-label">When does your event start (if applicable)?</label>
           <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.event_date">
         </div>
       </div>
@@ -54,112 +54,29 @@
     </div>
   </div>
 
-  <div class="slide-toggle ng-hide" ng-show="vm.items.invite_card.selected">
+  <div class="slide-toggle ng-hide" ng-repeat="(key, item) in vm.items" ng-show="item.selected">
     <div class="StepForm-section">
       <div class="StepForm-fieldset">
-        <h2 class="StepForm-legend">Tell us about your <strong>invite card</strong></h2>
+        <h2 class="StepForm-legend">Tell us about your <strong>{{ item.title }}</strong></h2>
 
         <div class="StepForm-fields">
           <div class="StepForm-group">
-            <label class="StepForm-label">When do you need it delivered?
+            <label class="StepForm-label">{{ item.deliver_label || 'When do you need it delivered?' }}
               <span class="StepForm-required">*</span></label>
-            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.items.invite_card.deliver_by">
+            <input class="StepForm-input StepForm-input--date" name="{{ key }}_deliver_by" type="date" placeholder="e.g. 3/21/2016" ng-model="item.deliver_by">
             <delivery-dates
                     dates="vm.helper_dates"
                     event-date="vm.event_date"
-                    exclude="invite_card"
-                    deliver-by="vm.items.invite_card.deliver_by">
+                    exclude="{{ key }}"
+                    deliver-by="item.deliver_by">
             </delivery-dates>
           </div>
           <div class="StepForm-group">
-            <label class="StepForm-label">What should your invite card say?</label>
-            <textarea class="StepForm-textarea" ng-model="vm.items.invite_card.description"></textarea>
+            <label class="StepForm-label">{{ item.description_label || 'What should it say?' }}</label>
+            <textarea class="StepForm-textarea" ng-model="item.description"></textarea>
           </div>
         </div>
 
-      </div>
-    </div>
-  </div>
-
-  <div class="slide-toggle ng-hide" ng-show="vm.items.seat_card.selected">
-    <div class="StepForm-section">
-      <div class="StepForm-fieldset">
-        <h2 class="StepForm-legend">Tell us about your <strong>Seatback Card</strong></h2>
-
-        <div class="StepForm-fields">
-          <div class="StepForm-group">
-            <label class="StepForm-label">When do you need it delivered?
-              <span class="StepForm-required">*</span></label>
-            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.items.seat_card.deliver_by" required>
-            <delivery-dates
-                    dates="vm.helper_dates"
-                    event-date="vm.event_date"
-                    exclude="seat_card"
-                    deliver-by="vm.items.seat_card.deliver_by">
-            </delivery-dates>
-            <!-- TODO: Show date and alert if under x weeks -->
-            Please allow 5 weeks
-          </div>
-          <div class="StepForm-group">
-            <label class="StepForm-label">Briefly describe your t-shirt idea.</label>
-            <textarea class="StepForm-textarea" ng-model="vm.items.seat_card.description"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="slide-toggle ng-hide" ng-show="vm.items.flyer.selected">
-    <div class="StepForm-section">
-      <div class="StepForm-fieldset">
-        <h2 class="StepForm-legend">Tell us about your <strong>flyer</strong></h2>
-
-        <div class="StepForm-fields">
-          <div class="StepForm-group">
-            <label class="StepForm-label">When do you need it delivered?
-              <span class="StepForm-required">*</span></label>
-            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.items.flyer.deliver_by" required>
-            <delivery-dates
-                    dates="vm.helper_dates"
-                    event-date="vm.event_date"
-                    exclude="flyer"
-                    deliver-by="vm.items.flyer.deliver_by">
-            </delivery-dates>
-
-          </div>
-          <div class="StepForm-group">
-            <label class="StepForm-label">What should it say?</label>
-            <textarea class="StepForm-textarea" ng-attr-placeholder="{{ vm.event_date ? 'Be sure to include dates and times.' : '' }}" ng-model="vm.items.flyer.description"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="slide-toggle ng-hide" ng-show="vm.items.t_shirt.selected">
-    <div class="StepForm-section">
-      <div class="StepForm-fieldset">
-        <h2 class="StepForm-legend">Tell us about your <strong>T-Shirt</strong></h2>
-
-        <div class="StepForm-fields">
-          <div class="StepForm-group">
-            <label class="StepForm-label">When do you need it delivered?
-              <span class="StepForm-required">*</span></label>
-            <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.items.t_shirt.deliver_by" required>
-            <delivery-dates
-                    dates="vm.helper_dates"
-                    event-date="vm.event_date"
-                    exclude="t_shirt"
-                    deliver-by="vm.items.t_shirt.deliver_by">
-            </delivery-dates>
-            <!-- TODO: Show date and alert if under x weeks -->
-            Please allow 5 weeks
-          </div>
-          <div class="StepForm-group">
-            <label class="StepForm-label">Briefly describe your t-shirt idea.</label>
-            <textarea class="StepForm-textarea" ng-model="vm.items.t_shirt.description"></textarea>
-          </div>
-        </div>
       </div>
     </div>
   </div>
