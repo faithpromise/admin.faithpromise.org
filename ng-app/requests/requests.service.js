@@ -11,8 +11,11 @@
 
             all: function() {
                 return $http.get('/api/requests');
-            }
+            },
 
+            batch_save: function(data) {
+                return $http.post('/api/requests/batch', data);
+            }
         };
 
     }
