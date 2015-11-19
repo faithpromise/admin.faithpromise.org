@@ -24,7 +24,7 @@ class SupportRequests extends Controller {
         $tickets = $request->input('requests');
 
         foreach ($tickets as $ticket) {
-            $ticket = TicketFactory::create($ticket['type'], $ticket, $user);
+            $ticket = TicketFactory::create($ticket['meta']['type'], $ticket, $user);
             $ticket->save();
         }
 

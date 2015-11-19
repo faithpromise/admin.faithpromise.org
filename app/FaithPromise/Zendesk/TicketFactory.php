@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: broberts
- * Date: 11/18/15
- * Time: 3:59 PM
- */
 
 namespace App\FaithPromise\Zendesk;
 

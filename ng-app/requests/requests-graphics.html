@@ -45,8 +45,8 @@
       <div class="StepForm-fields">
         <ul class="StepForm-checkboxList">
           <li class="StepForm-checkboxItem" ng-repeat="(key, item) in vm.items" ng-click="vm.toggle_item(item)">
-            <i class="StepForm-checkbox icon-check-empty" ng-hide="item.selected"></i>
-            <i class="StepForm-checkbox icon-check" ng-show="item.selected"></i>
+            <i class="StepForm-checkbox icon-check-empty" ng-hide="item.meta.selected"></i>
+            <i class="StepForm-checkbox icon-check" ng-show="item.meta.selected"></i>
             {{ item.title }}
           </li>
         </ul>
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <div class="slide-toggle ng-hide" ng-repeat="(key, item) in vm.items" ng-show="item.selected">
+  <div class="slide-toggle ng-hide" ng-repeat="(key, item) in vm.items" ng-show="item.meta.selected">
     <div class="StepForm-section">
       <div class="StepForm-fieldset">
         <h2 class="StepForm-legend">Tell us about your <strong>{{ item.title }}</strong></h2>

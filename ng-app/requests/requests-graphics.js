@@ -26,16 +26,34 @@
         vm.has_items_selected = has_items_selected;
         vm.submit = submit;
         vm.helper_dates = [];
-        vm.items = {
-            invite_card: {title: 'Invite Card', description_label: 'What should your invite card say?'},
-            flyer: {title: 'Flyer', description_label: 'What should it say?'},
-            seat_card: {title: 'Seatback Card', description_label: 'Briefly describe the purpose of your card?'},
-            slide: {title: 'Slide In Service', description_label: 'What should your slide say?'},
-            t_shirt: {title: 'T-Shirt', description_label: 'Briefly describe your t-shirt idea.'},
-            sign: {title: 'Sign', description_label: 'What should your sign say?'},
-            website_update: {title: 'Website Update', description_label: 'What needs to be added or changed on the website?'},
-            other: {title: 'Other Project', description_label: 'Please describe your project?'}
-        };
+        vm.items = {};
+
+        init();
+
+        function init() {
+            create_items();
+        }
+
+        function create_items() {
+            create_item('invite_card', 'Invite Card', 'What should your invite card say?');
+            create_item('flyer', 'Flyer', 'What should it say?');
+            create_item('seat_card', 'Seatback Card', 'Briefly describe the purpose of your card.');
+            create_item('slide', 'Slide In Service', 'What should your slide say?');
+            create_item('t_shirt', 'T-Shirt', 'Briefly describe your t-shirt idea.');
+            create_item('sign', 'Sign', 'What should your sign say?');
+            create_item('website_update', 'Website Update', 'What needs to be added or changed on the website?');
+            create_item('other', 'Other Project', 'Please describe your project?');
+        }
+
+        function create_item(ident, title, description_label) {
+            vm.items[ident] = {
+                title: title,
+                meta: {
+                    description_label: description_label
+                }
+
+            };
+        }
 
         function submit() {
             var data = {
@@ -51,9 +69,9 @@
             var result = [];
 
             angular.forEach(vm.items, function (item, key) {
-                if (item.selected) {
-                    item.type = key;
-                    item.subject = vm.subject;
+                if (item.meta.selected) {
+                    item.meta.type = key;
+                    item.subject = '(' + item.title + ') ' + vm.subject;
                     result.push(item);
                 }
             });
@@ -62,13 +80,13 @@
         }
 
         function toggle_item(item) {
-            item.selected = !item.selected;
+            item.meta.selected = !item.meta.selected;
         }
 
         function has_items_selected() {
             var result = false;
             angular.forEach(vm.items, function (item) {
-                if (item.selected) {
+                if (item.meta.selected) {
                     return result = true;
                 }
             });
@@ -78,7 +96,7 @@
         function update_helper_dates() {
             var helper_dates = [];
             angular.forEach(vm.items, function (value) {
-                if (value.deliver_by && value.selected) {
+                if (value.deliver_by && value.meta.selected) {
                     helper_dates.push({
                         slug: value.slug,
                         title: value.title,
