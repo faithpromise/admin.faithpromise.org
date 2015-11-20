@@ -35,14 +35,14 @@
         }
 
         function create_items() {
-            create_item('invite_card', 'Invite Card', 'What should your invite card say?');
-            create_item('flyer', 'Flyer', 'What should it say?');
-            create_item('seat_card', 'Seatback Card', 'Briefly describe the purpose of your card.');
-            create_item('slide', 'Slide In Service', 'What should your slide say?');
-            create_item('t_shirt', 'T-Shirt', 'Briefly describe your t-shirt idea.');
-            create_item('sign', 'Sign', 'What should your sign say?');
-            create_item('website_update', 'Website Update', 'What needs to be added or changed on the website?');
-            create_item('other', 'Other Project', 'Please describe your project?');
+            create_item('graphics_invite_card', 'Invite Card', 'What should your invite card say?');
+            create_item('graphics_flyer', 'Flyer', 'What should it say?');
+            create_item('graphics_seat_card', 'Seatback Card', 'Briefly describe the purpose of your card.');
+            create_item('graphics_slide', 'Slide In Service', 'What should your slide say?');
+            create_item('graphics_apparel', 'T-Shirt/Apparel', 'Briefly describe your t-shirt idea.');
+            create_item('graphics_sign', 'Signage', 'What should your sign say?');
+            create_item('graphics_website', 'Website Promo', 'What needs to be added or changed on the website?');
+            create_item('graphics_other', 'Other Project', 'Please describe your project?');
         }
 
         function create_item(ident, title, description_label) {
@@ -71,7 +71,7 @@
             angular.forEach(vm.items, function (item, key) {
                 if (item.meta.selected) {
                     item.meta.type = key;
-                    item.subject = '(' + item.title + ') ' + vm.subject;
+                    item.subject = vm.subject + ' - ' + item.title;
                     result.push(item);
                 }
             });
