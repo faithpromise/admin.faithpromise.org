@@ -20,11 +20,11 @@ class SupportRequests extends Controller {
 
     public function batchCreate(Request $request) {
 
-        $user = $request->user();
+        $requester = $request->user()->Staff;
         $tickets = $request->input('requests');
 
         foreach ($tickets as $ticket) {
-            $ticket = TicketFactory::create($ticket['meta']['type'], $ticket, $user);
+            $ticket = TicketFactory::create($ticket['meta']['type'], $ticket, $requester);
             $ticket->save();
         }
 
