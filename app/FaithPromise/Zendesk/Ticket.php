@@ -6,86 +6,112 @@ use Carbon\Carbon;
 use FaithPromise\Shared\Models\Staff;
 use Huddle\Zendesk\Facades\Zendesk;
 
-class Ticket {
+abstract class Ticket {
 
-    protected $driver = 'mail';
-    private $zendesk_users = [];
+    protected $deliver_to = 'brad-roberts';
+    protected $deliver_method = 'email';
+    private $zendesk_agent_ids = [];
 
-    public function __construct($ticket, $user) {
+    public function __construct($ticket, Staff $requester) {
 
-        $this->requester = $user;
         $this->ticket = $ticket;
-        $this->agent = Staff::findBySlug($this->agent);
+        $this->requester = $requester;
+        $this->recipient = Staff::findBySlug($this->deliver_to);
 
+        // Carbonize the deliver_by date.
         if ($ticket['deliver_by']) {
-            $ticket['deliver_by'] = Carbon::parse($ticket['deliver_by'], 'UTC')->setTimezone('America/New_York');
+            $this->ticket['deliver_by'] = Carbon::parse($ticket['deliver_by'], 'UTC')->setTimezone('America/New_York');
         }
 
     }
 
-    public final function save() {
+    abstract protected function createTasks($zendesk_ticket_id);
 
-        if ($this->driver === 'zendesk') {
-            return $this->saveToZendesk();
+    public function save() {
+
+        if ($this->deliver_method === 'zendesk') {
+            return $this->sendViaZendesk();
         }
 
         return $this->sendViaEmail();
 
     }
 
-    private function saveToZendesk() {
+    private function sendViaZendesk() {
 
-        $zendesk_user_id = $this->getZendeskUser();
+        $zendesk_agent_id = $this->getZendeskAgentId();
 
-        if (!$zendesk_user_id) {
+        if (!$zendesk_agent_id) {
             return $this->sendViaEmail();
         }
 
-        Zendesk::tickets()->create([
-            'subject' => $this->ticket['subject'],
-            'comment' => [
+        $zendesk_ticket = Zendesk::tickets()->create([
+            'subject'      => $this->ticket['subject'],
+            'comment'      => [
                 'body' => $this->buildDescription()
             ],
             'requester_id' => $this->requester->zendesk_user_id,
-            'assignee_id' => $zendesk_user_id,
-            'priority' => 'normal'
+            'assignee_id'  => $zendesk_agent_id,
+            'priority'     => 'normal'
         ]);
 
-        return $this;
+        $this->createTasks($zendesk_ticket->ticket->id);
+
+        return true;
 
     }
 
-    private function getZendeskUser() {
+    private function getZendeskAgentId() {
 
-        if (isset($this->zendesk_users[$this->agent])) {
+        if (!array_key_exists($this->deliver_to, $this->zendesk_agent_ids)) {
 
-            $zendesk_user_search = Zendesk::users()->search(['query' => $this->agent->email]);
+            // If staff has zendesk_user_id, use it
+            if ($this->recipient->zendesk_user_id) {
 
-            if (!count($zendesk_user_search)) {
-                $this->zendesk_users[$this->agent] = null;
+                $this->zendesk_agent_ids[$this->deliver_to] = $this->recipient->zendesk_user_id;
+
             } else {
-                $this->zendesk_users[$this->agent] = $zendesk_user_search->users[0]->id;
+
+                $zendesk_user_search = Zendesk::users()->search(['query' => $this->recipient->email]);
+
+                if (!count($zendesk_user_search)) {
+                    $this->zendesk_agent_ids[$this->deliver_to] = null;
+                } else {
+                    $this->zendesk_agent_ids[$this->deliver_to] = $zendesk_user_search->users[0]->id;
+                }
+
             }
 
         }
 
-        return $this->zendesk_users[$this->agent];
+        return $this->zendesk_agent_ids[$this->deliver_to];
 
     }
 
     private function sendViaEmail() {
 
-
-
-        return $this;
+        return true;
 
     }
 
     private function buildDescription() {
 
+        $description = [];
+        $desc = trim($this->ticket['description']);
 
+        if (!empty($desc)) {
+            $description[] = $desc;
+        }
 
-        return $this->ticket['description'];
+        if ($this->ticket['deliver_by']) {
+            $description[] = 'Deliver by: ' . $this->ticket['deliver_by']->format('D, M j, Y');
+        }
+
+        if (empty($description)) {
+            $description[] = 'No description or delivery date provided.';
+        }
+
+        return implode(PHP_EOL . PHP_EOL, $description);
 
     }
 
