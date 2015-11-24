@@ -25,7 +25,7 @@ abstract class Ticket {
 
     }
 
-    abstract protected function createTasks($zendesk_ticket_id);
+    abstract protected function createTasks($zendesk_ticket_id, Staff $requester);
 
     public function save() {
 
@@ -55,7 +55,7 @@ abstract class Ticket {
             'priority'     => 'normal'
         ]);
 
-        $this->createTasks($zendesk_ticket->ticket->id);
+        $this->createTasks($zendesk_ticket->ticket->id, $this->requester);
 
         return true;
 
