@@ -41,14 +41,24 @@ class TicketTasksController extends Controller {
     public function update(Request $request, $zendesk_ticket_id, $task_id) {
 
         $task = TicketTask::where('zendesk_ticket_id', '=', $zendesk_ticket_id)->where('id', '=', $task_id)->firstOrFail();
+        $completed_at = $request->input('completed_at');
+        $completed_by_email = $request->input('completed_by_email');
 
-        if ($request->input('completed_at') !== null) {
-            $task->completed_at = empty($request->input('completed_at')) ? null : Carbon::createFromFormat(Carbon::ISO8601, $request->input('completed_at'));
+        // completed_at provided
+        if ($completed_at !== null && strlen($completed_at)) {
+            $task->completed_at = Carbon::createFromFormat(Carbon::ISO8601, $completed_at);;
         }
 
-        if (! empty($request->input('completed_by'))) {
-            $staffer = Staff::where('email', '=', $request->input('completed_by'))->first();
+        // completed_at is not empty
+        if ($completed_by_email !== null && strlen($completed_by_email)) {
+            $staffer = Staff::where('email', '=', $request->input('completed_by_email'))->first();
             $task->completed_by = $staffer ? $staffer->id : null;
+        }
+
+        // completed_at provided, but empty indicating it should be cleared
+        if ($completed_at === '') {
+            $task->completed_at = null;
+            $task->completed_by = null;
         }
 
         $task->save();
