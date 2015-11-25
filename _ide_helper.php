@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.24 (LTS) on 2015-11-20.
+ * Generated for Laravel 5.1.24 (LTS) on 2015-11-25.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -2226,11 +2226,11 @@ namespace {
          *
          * @param string $key
          * @param mixed $value
-         * @return int|bool 
+         * @return int 
          * @static 
          */
         public static function increment($key, $value = 1){
-            return \Illuminate\Cache\MemcachedStore::increment($key, $value);
+            return \Illuminate\Cache\FileStore::increment($key, $value);
         }
         
         /**
@@ -2238,11 +2238,11 @@ namespace {
          *
          * @param string $key
          * @param mixed $value
-         * @return int|bool 
+         * @return int 
          * @static 
          */
         public static function decrement($key, $value = 1){
-            return \Illuminate\Cache\MemcachedStore::decrement($key, $value);
+            return \Illuminate\Cache\FileStore::decrement($key, $value);
         }
         
         /**
@@ -2252,17 +2252,27 @@ namespace {
          * @static 
          */
         public static function flush(){
-            \Illuminate\Cache\MemcachedStore::flush();
+            \Illuminate\Cache\FileStore::flush();
         }
         
         /**
-         * Get the underlying Memcached connection.
+         * Get the Filesystem instance.
          *
-         * @return \Memcached 
+         * @return \Illuminate\Filesystem\Filesystem 
          * @static 
          */
-        public static function getMemcached(){
-            return \Illuminate\Cache\MemcachedStore::getMemcached();
+        public static function getFilesystem(){
+            return \Illuminate\Cache\FileStore::getFilesystem();
+        }
+        
+        /**
+         * Get the working directory of the cache.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDirectory(){
+            return \Illuminate\Cache\FileStore::getDirectory();
         }
         
         /**
@@ -2272,43 +2282,7 @@ namespace {
          * @static 
          */
         public static function getPrefix(){
-            return \Illuminate\Cache\MemcachedStore::getPrefix();
-        }
-        
-        /**
-         * Set the cache key prefix.
-         *
-         * @param string $prefix
-         * @return void 
-         * @static 
-         */
-        public static function setPrefix($prefix){
-            \Illuminate\Cache\MemcachedStore::setPrefix($prefix);
-        }
-        
-        /**
-         * Begin executing a new tags operation.
-         *
-         * @param string $name
-         * @return \Illuminate\Cache\TaggedCache 
-         * @deprecated since version 5.1. Use tags instead.
-         * @static 
-         */
-        public static function section($name){
-            //Method inherited from \Illuminate\Cache\TaggableStore            
-            return \Illuminate\Cache\MemcachedStore::section($name);
-        }
-        
-        /**
-         * Begin executing a new tags operation.
-         *
-         * @param array|mixed $names
-         * @return \Illuminate\Cache\TaggedCache 
-         * @static 
-         */
-        public static function tags($names){
-            //Method inherited from \Illuminate\Cache\TaggableStore            
-            return \Illuminate\Cache\MemcachedStore::tags($names);
+            return \Illuminate\Cache\FileStore::getPrefix();
         }
         
     }
@@ -7860,10 +7834,11 @@ namespace {
          * @param mixed $data
          * @param string $queue
          * @return mixed 
+         * @throws \Throwable
          * @static 
          */
         public static function push($job, $data = '', $queue = null){
-            return \Illuminate\Queue\DatabaseQueue::push($job, $data, $queue);
+            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
         }
         
         /**
@@ -7876,7 +7851,7 @@ namespace {
          * @static 
          */
         public static function pushRaw($payload, $queue = null, $options = array()){
-            return \Illuminate\Queue\DatabaseQueue::pushRaw($payload, $queue, $options);
+            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
         }
         
         /**
@@ -7886,37 +7861,11 @@ namespace {
          * @param string $job
          * @param mixed $data
          * @param string $queue
-         * @return void 
+         * @return mixed 
          * @static 
          */
         public static function later($delay, $job, $data = '', $queue = null){
-            \Illuminate\Queue\DatabaseQueue::later($delay, $job, $data, $queue);
-        }
-        
-        /**
-         * Push an array of jobs onto the queue.
-         *
-         * @param array $jobs
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @static 
-         */
-        public static function bulk($jobs, $data = '', $queue = null){
-            return \Illuminate\Queue\DatabaseQueue::bulk($jobs, $data, $queue);
-        }
-        
-        /**
-         * Release a reserved job back onto the queue.
-         *
-         * @param string $queue
-         * @param \StdClass $job
-         * @param int $delay
-         * @return mixed 
-         * @static 
-         */
-        public static function release($queue, $job, $delay){
-            return \Illuminate\Queue\DatabaseQueue::release($queue, $job, $delay);
+            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
         }
         
         /**
@@ -7927,50 +7876,7 @@ namespace {
          * @static 
          */
         public static function pop($queue = null){
-            return \Illuminate\Queue\DatabaseQueue::pop($queue);
-        }
-        
-        /**
-         * Delete a reserved job from the queue.
-         *
-         * @param string $queue
-         * @param string $id
-         * @return void 
-         * @static 
-         */
-        public static function deleteReserved($queue, $id){
-            \Illuminate\Queue\DatabaseQueue::deleteReserved($queue, $id);
-        }
-        
-        /**
-         * Get the underlying database instance.
-         *
-         * @return \Illuminate\Database\Connection 
-         * @static 
-         */
-        public static function getDatabase(){
-            return \Illuminate\Queue\DatabaseQueue::getDatabase();
-        }
-        
-        /**
-         * Get the expiration time in seconds.
-         *
-         * @return int|null 
-         * @static 
-         */
-        public static function getExpire(){
-            return \Illuminate\Queue\DatabaseQueue::getExpire();
-        }
-        
-        /**
-         * Set the expiration time in seconds.
-         *
-         * @param int|null $seconds
-         * @return void 
-         * @static 
-         */
-        public static function setExpire($seconds){
-            \Illuminate\Queue\DatabaseQueue::setExpire($seconds);
+            return \Illuminate\Queue\SyncQueue::pop($queue);
         }
         
         /**
@@ -7984,7 +7890,7 @@ namespace {
          */
         public static function pushOn($queue, $job, $data = ''){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\DatabaseQueue::pushOn($queue, $job, $data);
+            return \Illuminate\Queue\SyncQueue::pushOn($queue, $job, $data);
         }
         
         /**
@@ -7999,7 +7905,7 @@ namespace {
          */
         public static function laterOn($queue, $delay, $job, $data = ''){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\DatabaseQueue::laterOn($queue, $delay, $job, $data);
+            return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
         }
         
         /**
@@ -8011,7 +7917,21 @@ namespace {
          */
         public static function marshal(){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\DatabaseQueue::marshal();
+            return \Illuminate\Queue\SyncQueue::marshal();
+        }
+        
+        /**
+         * Push an array of jobs onto the queue.
+         *
+         * @param array $jobs
+         * @param mixed $data
+         * @param string $queue
+         * @return mixed 
+         * @static 
+         */
+        public static function bulk($jobs, $data = '', $queue = null){
+            //Method inherited from \Illuminate\Queue\Queue            
+            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
         }
         
         /**
@@ -8023,7 +7943,7 @@ namespace {
          */
         public static function setContainer($container){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\DatabaseQueue::setContainer($container);
+            \Illuminate\Queue\SyncQueue::setContainer($container);
         }
         
         /**
@@ -8035,7 +7955,7 @@ namespace {
          */
         public static function setEncrypter($crypt){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\DatabaseQueue::setEncrypter($crypt);
+            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
         }
         
     }
