@@ -12,7 +12,29 @@ use App\Http\Controllers\Controller;
 
 class TicketTasksController extends Controller {
 
-    public function index($zendesk_ticket_id) {
+    public function index(Request $request) {
+
+        $tasks = TicketTask::with(['finisher' => function($query) {
+            $query->select('id', 'first_name', 'last_name');
+        }])->where(function($query) {
+            $completed_after = Carbon::now()->startOfDay()->subDays(10);
+            $query->whereNull('completed_at')->orWhere('completed_at', '>', $completed_after);
+        });
+
+        // Limit to certain tickets?
+        if ($request->has('zendesk_ticket_ids')) {
+            $tasks->whereIn('zendesk_ticket_id', explode(',', $request->input('zendesk_ticket_ids')));
+        }
+
+        $result = [
+            'tasks' => $tasks->get()
+        ];
+
+        return \Response::json($result);
+
+    }
+
+    public function byTicket($zendesk_ticket_id) {
 
         $result = [
             'tasks' => TicketTask::with(['finisher' => function($query) {
