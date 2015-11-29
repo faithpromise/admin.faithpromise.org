@@ -27,7 +27,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
 
     Route::get('/tasks', 'TicketTasksController@index');
 
-    Route::get('/tickets/{id}/tasks', 'TicketTasksController@byTask');
+    Route::get('/tickets/{id}/tasks', 'TicketTasksController@byTicket');
     Route::post('/tickets/{id}/tasks', 'TicketTasksController@store');
     Route::patch('/tickets/{id}/tasks/{task_id}', 'TicketTasksController@update');
     Route::delete('/tickets/{id}/tasks/{task_id}', 'TicketTasksController@destroy');
