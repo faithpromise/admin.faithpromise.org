@@ -26,11 +26,15 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
 Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
 
     Route::get('/tasks', 'TicketTasksController@index');
-
     Route::get('/tickets/{id}/tasks', 'TicketTasksController@byTicket');
     Route::post('/tickets/{id}/tasks', 'TicketTasksController@store');
     Route::patch('/tickets/{id}/tasks/{task_id}', 'TicketTasksController@update');
     Route::delete('/tickets/{id}/tasks/{task_id}', 'TicketTasksController@destroy');
+
+    Route::get('/requirements', 'TicketRequirementsController@index');
+    Route::get('/tickets/{id}/requirements', 'TicketRequirementsController@byTicket');
+    Route::post('/tickets/{id}/requirements', 'TicketRequirementsController@store');
+    Route::delete('/tickets/{id}/requirements/{requirement_id}', 'TicketRequirementsController@destroy');
 
 });
 
