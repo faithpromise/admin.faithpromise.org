@@ -490,12 +490,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/faithpromise/fp-shared.git",
-                "reference": "74151687f96b64eb13fe7bb7540952e60191b5f8"
+                "reference": "075310b5c772fdeeb425e85696eef7ff401da56f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/faithpromise/fp-shared/zipball/74151687f96b64eb13fe7bb7540952e60191b5f8",
-                "reference": "74151687f96b64eb13fe7bb7540952e60191b5f8",
+                "url": "https://api.github.com/repos/faithpromise/fp-shared/zipball/075310b5c772fdeeb425e85696eef7ff401da56f",
+                "reference": "075310b5c772fdeeb425e85696eef7ff401da56f",
                 "shasum": ""
             },
             "require": {
@@ -524,7 +524,7 @@
                 "source": "https://github.com/faithpromise/fp-shared/tree/master",
                 "issues": "https://github.com/faithpromise/fp-shared/issues"
             },
-            "time": "2015-11-30 21:25:04"
+            "time": "2015-12-01 17:58:10"
         },
         {
             "name": "huddledigital/zendesk-laravel",
