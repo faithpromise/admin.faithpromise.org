@@ -19,7 +19,7 @@ class TicketTasksController extends Controller {
         }])->where(function($query) {
             $completed_after = Carbon::now()->startOfDay()->subDays(10);
             $query->whereNull('completed_at')->orWhere('completed_at', '>', $completed_after);
-        });
+        })->orderBy('due_at')->orderBy('id');
 
         // Limit to certain tickets?
         if ($request->has('zendesk_ticket_ids')) {
@@ -39,7 +39,7 @@ class TicketTasksController extends Controller {
         $result = [
             'tasks' => TicketTask::with(['finisher' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
-            }])->where('zendesk_ticket_id', '=', $zendesk_ticket_id)->get()
+            }])->where('zendesk_ticket_id', '=', $zendesk_ticket_id)->orderBy('due_at')->orderBy('id')->get()
         ];
 
         return \Response::json($result);
