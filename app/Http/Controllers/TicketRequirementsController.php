@@ -46,14 +46,40 @@ class TicketRequirementsController extends Controller {
 
         $staffer = Staff::where('email', '=', $request->input('created_by_email'))->first();
 
-        $data = [
+        TicketRequirement::create([
             'zendesk_ticket_id' => $zendesk_ticket_id,
-            'title' => $request->input('title'),
-            'body' => $request->input('body'),
-            'created_by' => $staffer ? $staffer->id : null
-        ];
+            'title'             => $request->input('title'),
+            'body'              => $request->input('body'),
+            'sort'              => $request->input('sort'),
+            'created_by'        => $staffer ? $staffer->id : null
+        ]);
 
-        TicketRequirement::create($data);
+        // TODO: What should the response be?
+        return '';
+    }
+
+    public function update(Request $request, $zendesk_ticket_id, $requirement_id) {
+
+        $requirement = TicketRequirement::whereId($requirement_id)->whereZendeskTicketId($zendesk_ticket_id)->first();
+        $staffer = Staff::where('email', '=', $request->input('created_by_email'))->first();
+
+        // Create an archive
+        TicketRequirement::create([
+            'parent_id'         => $requirement->id,
+            'zendesk_ticket_id' => $requirement->zendesk_ticket_id,
+            'title'             => $requirement->title,
+            'body'              => $requirement->body,
+            'sort'              => $requirement->sort,
+            'created_by'        => $requirement->created_by
+        ])->delete();
+
+        // Update
+        $requirement->title = $request->input('title', $requirement->title);
+        $requirement->body = $request->input('body', $requirement->body);
+        $requirement->sort = $request->input('sort', $requirement->sort);
+        $requirement->created_by = $staffer ? $staffer->id : null;
+
+        $requirement->save();
 
         // TODO: What should the response be?
         return '';
