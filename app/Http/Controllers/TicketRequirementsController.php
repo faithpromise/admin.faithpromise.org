@@ -13,9 +13,9 @@ class TicketRequirementsController extends Controller {
 
     public function index(Request $request) {
 
-        $requirements = TicketRequirement::with(['author' => function($query) {
+        $requirements = TicketRequirement::with(['author' => function ($query) {
             $query->select('id', 'first_name', 'last_name');
-        }]);
+        }])->orderBy('sort');
 
         // Limit to certain tickets?
         if ($request->has('zendesk_ticket_ids')) {
@@ -33,9 +33,9 @@ class TicketRequirementsController extends Controller {
     public function byTicket($zendesk_ticket_id) {
 
         $result = [
-            'requirements' => TicketRequirement::with(['author' => function($query) {
+            'requirements' => TicketRequirement::with(['author' => function ($query) {
                 $query->select('id', 'first_name', 'last_name');
-            }])->where('zendesk_ticket_id', '=', $zendesk_ticket_id)->get()
+            }])->where('zendesk_ticket_id', '=', $zendesk_ticket_id)->orderBy('sort')->get()
         ];
 
         return \Response::json($result);
