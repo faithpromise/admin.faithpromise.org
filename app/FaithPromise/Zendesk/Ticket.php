@@ -27,6 +27,8 @@ abstract class Ticket {
 
     abstract protected function createTasks($zendesk_ticket_id, Staff $requester);
 
+    abstract protected function createRequirements($zendesk_ticket_id);
+
     public function save() {
 
         if ($this->deliver_method === 'zendesk') {
@@ -56,6 +58,7 @@ abstract class Ticket {
         ]);
 
         $this->createTasks($zendesk_ticket->ticket->id, $this->requester);
+        $this->createRequirements($zendesk_ticket->ticket->id);
 
         return true;
 
