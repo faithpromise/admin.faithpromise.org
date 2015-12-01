@@ -34,6 +34,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::get('/requirements', 'TicketRequirementsController@index');
     Route::get('/tickets/{id}/requirements', 'TicketRequirementsController@byTicket');
     Route::post('/tickets/{id}/requirements', 'TicketRequirementsController@store');
+    Route::patch('/tickets/{id}/requirements/{requirement_id}', 'TicketRequirementsController@update');
     Route::delete('/tickets/{id}/requirements/{requirement_id}', 'TicketRequirementsController@destroy');
 
 });
