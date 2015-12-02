@@ -60,11 +60,22 @@ class TicketTasksController extends Controller {
         return '';
     }
 
-    public function update(Request $request, $zendesk_ticket_id, $task_id) {
+    public function update(Request $request, $task_id) {
 
-        $task = TicketTask::where('zendesk_ticket_id', '=', $zendesk_ticket_id)->where('id', '=', $task_id)->firstOrFail();
+        $task = TicketTask::where('id', '=', $task_id)->firstOrFail();
+        $due_at = $request->input('due_at');
         $completed_at = $request->input('completed_at');
         $completed_by_email = $request->input('completed_by_email');
+
+        // title
+        if ($request->has('title')) {
+            $task->title = $request->input('title');
+        }
+
+        // due_at provided
+        if ($due_at !== null && strlen($due_at)) {
+            $task->due_at = Carbon::createFromFormat(Carbon::ISO8601, $due_at);;
+        }
 
         // completed_at provided
         if ($completed_at !== null && strlen($completed_at)) {
