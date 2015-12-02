@@ -23,19 +23,17 @@ class TicketRequirementsController extends Controller {
         }
 
         $result = [
-            'requirements' => $requirements->get()
+            'data' => $requirements->get()
         ];
 
         return \Response::json($result);
 
     }
 
-    public function byTicket($zendesk_ticket_id) {
+    public function find($requirement_id) {
 
         $result = [
-            'requirements' => TicketRequirement::with(['author' => function ($query) {
-                $query->select('id', 'first_name', 'last_name');
-            }])->where('zendesk_ticket_id', '=', $zendesk_ticket_id)->orderBy('sort')->get()
+            'data' => TicketRequirement::find($requirement_id)
         ];
 
         return \Response::json($result);
