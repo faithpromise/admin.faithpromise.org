@@ -37,22 +37,22 @@ class Graphics extends Ticket {
         $days_to_quote_turnaround = 2;
 
         // Work backwards from delivery date
-        $deliver_at = $this->ticket['deliver_by'];
-        $place_order_at = $deliver_at->copy()->subWeekdays($days_to_deliver);
+        $deliver_at = $this->ticket['deliver_by']->endOfDay();
+        $place_order_at = $deliver_at->copy()->subWeekdays($days_to_deliver)->endOfDay();
         $sign_off_at = $place_order_at->copy();
-        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof);
-        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design);
+        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof)->endOfDay();
+        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design)->endOfDay();
         $copy_due_at = $start_design_at->copy();
 
         // Work forwards from now
         $schedule_meeting_at = $now->copy();
-        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet);
-        $request_quote_at = $now->copy()->addWeekdays($days_to_meet);
-        $send_quote_at = $request_quote_at->copy()->addWeekdays($days_to_quote_turnaround);
+        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet)->endOfDay();
+        $request_quote_at = $now->copy()->addWeekdays($days_to_meet)->endOfDay();
+        $send_quote_at = $request_quote_at->copy()->addWeekdays($days_to_quote_turnaround)->endOfDay();
 
         // If starting project in the past, adjust our dates
         if ($start_design_at->isPast()) {
-            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1);
+            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1)->endOfDay();
             $gather_requirements_at = $schedule_meeting_at;
             $request_quote_at = $schedule_meeting_at;
             $send_quote_at = $schedule_meeting_at;
@@ -136,19 +136,19 @@ class Graphics extends Ticket {
         $days_to_meet = 2;
 
         // Work backwards from delivery date
-        $deliver_at = $this->ticket['deliver_by'];
+        $deliver_at = $this->ticket['deliver_by']->endOfDay();
         $sign_off_at = $deliver_at->copy();
-        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof);
-        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design);
+        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof)->endOfDay();
+        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design)->endOfDay();
         $copy_due_at = $start_design_at->copy();
 
         // Work forwards from now
         $schedule_meeting_at = $now->copy();
-        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet);
+        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet)->endOfDay();
 
         // If starting project in the past, adjust our dates
         if ($start_design_at->isPast()) {
-            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1);
+            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1)->endOfDay();
             $gather_requirements_at = $schedule_meeting_at;
         }
 
