@@ -38,21 +38,21 @@ class Graphics extends Ticket {
 
         // Work backwards from delivery date
         $deliver_at = $this->ticket['deliver_by'];
-        $place_order_at = $deliver_at->copy()->subDays($days_to_deliver);
+        $place_order_at = $deliver_at->copy()->subWeekdays($days_to_deliver);
         $sign_off_at = $place_order_at->copy();
-        $deliver_proof_at = $sign_off_at->copy()->subDays($days_to_iterate_proof);
-        $start_design_at = $deliver_proof_at->copy()->subDays($days_to_design);
+        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof);
+        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design);
         $copy_due_at = $start_design_at->copy();
 
         // Work forwards from now
         $schedule_meeting_at = $now->copy();
-        $gather_requirements_at = $now->copy()->addDays($days_to_meet);
-        $request_quote_at = $now->copy()->addDays($days_to_meet);
-        $send_quote_at = $request_quote_at->copy()->addDays($days_to_quote_turnaround);
+        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet);
+        $request_quote_at = $now->copy()->addWeekdays($days_to_meet);
+        $send_quote_at = $request_quote_at->copy()->addWeekdays($days_to_quote_turnaround);
 
         // If starting project in the past, adjust our dates
         if ($start_design_at->isPast()) {
-            $schedule_meeting_at = $start_design_at->copy()->subDays(1);
+            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1);
             $gather_requirements_at = $schedule_meeting_at;
             $request_quote_at = $schedule_meeting_at;
             $send_quote_at = $schedule_meeting_at;
@@ -138,17 +138,17 @@ class Graphics extends Ticket {
         // Work backwards from delivery date
         $deliver_at = $this->ticket['deliver_by'];
         $sign_off_at = $deliver_at->copy();
-        $deliver_proof_at = $sign_off_at->copy()->subDays($days_to_iterate_proof);
-        $start_design_at = $deliver_proof_at->copy()->subDays($days_to_design);
+        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof);
+        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design);
         $copy_due_at = $start_design_at->copy();
 
         // Work forwards from now
         $schedule_meeting_at = $now->copy();
-        $gather_requirements_at = $now->copy()->addDays($days_to_meet);
+        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet);
 
         // If starting project in the past, adjust our dates
         if ($start_design_at->isPast()) {
-            $schedule_meeting_at = $start_design_at->copy()->subDays(1);
+            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1);
             $gather_requirements_at = $schedule_meeting_at;
         }
 
