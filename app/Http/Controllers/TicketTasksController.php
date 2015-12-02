@@ -60,7 +60,7 @@ class TicketTasksController extends Controller {
 
     public function update(Request $request, $task_id) {
 
-        $task = TicketTask::where('id', '=', $task_id)->firstOrFail();
+        $task = TicketTask::whereId($task_id)->firstOrFail();
         $due_at = $request->input('due_at');
         $completed_at = $request->input('completed_at');
         $completed_by_email = $request->input('completed_by_email');
@@ -100,9 +100,9 @@ class TicketTasksController extends Controller {
     }
 
 
-    public function destroy($zendesk_ticket_id, $task_id) {
+    public function destroy($id) {
 
-        TicketTask::where('zendesk_ticket_id', '=', $zendesk_ticket_id)->where('id', '=', $task_id)->delete();
+        TicketTask::whereId($id)->delete();
 
         // TODO: What should the response be?
         return '';
