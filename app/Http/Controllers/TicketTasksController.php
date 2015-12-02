@@ -27,29 +27,27 @@ class TicketTasksController extends Controller {
         }
 
         $result = [
-            'tasks' => $tasks->get()
+            'data' => $tasks->get()
         ];
 
         return \Response::json($result);
 
     }
 
-    public function byTicket($zendesk_ticket_id) {
+    public function find($task_id) {
 
         $result = [
-            'tasks' => TicketTask::with(['finisher' => function($query) {
-                $query->select('id', 'first_name', 'last_name');
-            }])->where('zendesk_ticket_id', '=', $zendesk_ticket_id)->orderBy('due_at')->orderBy('id')->get()
+            'data' => TicketTask::find($task_id)
         ];
 
         return \Response::json($result);
 
     }
 
-    public function store(Request $request, $zendesk_ticket_id) {
+    public function store(Request $request) {
 
         $data = [
-            'zendesk_ticket_id' => $zendesk_ticket_id,
+            'zendesk_ticket_id' => $request->input('zendesk_ticket_id'),
             'title' => $request->input('title'),
             'due_at' => empty($request->input('due_at')) ? null : Carbon::createFromFormat(Carbon::ISO8601, $request->input('due_at'))
         ];
