@@ -40,12 +40,12 @@ class TicketRequirementsController extends Controller {
 
     }
 
-    public function store(Request $request, $zendesk_ticket_id) {
+    public function store(Request $request) {
 
         $staffer = Staff::where('email', '=', $request->input('created_by_email'))->first();
 
         TicketRequirement::create([
-            'zendesk_ticket_id' => $zendesk_ticket_id,
+            'zendesk_ticket_id' => $request->input('zendesk_ticket_id'),
             'title'             => $request->input('title'),
             'body'              => $request->input('body'),
             'sort'              => $request->input('sort'),
@@ -56,9 +56,9 @@ class TicketRequirementsController extends Controller {
         return '';
     }
 
-    public function update(Request $request, $zendesk_ticket_id, $requirement_id) {
+    public function update(Request $request, $requirement_id) {
 
-        $requirement = TicketRequirement::whereId($requirement_id)->whereZendeskTicketId($zendesk_ticket_id)->first();
+        $requirement = TicketRequirement::whereId($requirement_id)->first();
         $staffer = Staff::where('email', '=', $request->input('created_by_email'))->first();
 
         // Create an archive
@@ -83,9 +83,9 @@ class TicketRequirementsController extends Controller {
         return '';
     }
 
-    public function destroy($zendesk_ticket_id, $requirement_id) {
+    public function destroy($requirement_id) {
 
-        TicketRequirement::where('zendesk_ticket_id', '=', $zendesk_ticket_id)->where('id', '=', $requirement_id)->delete();
+        TicketRequirement::whereId($requirement_id)->delete();
 
         // TODO: What should the response be?
         return '';
