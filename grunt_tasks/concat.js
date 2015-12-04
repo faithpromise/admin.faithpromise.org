@@ -1,15 +1,6 @@
 module.exports = function (grunt) {
 
-    var js_src = [
-        'bower_components/angular-ui-bootstrap/src/position/position.js',
-        'bower_components/angular-ui-bootstrap/src/dropdown/dropdown.js',
-        'bower_components/angular-toastr/dist/angular-toastr.tpls.js',
-        'ng-app/app.module.js',
-        'ng-app/app.config.js',
-        'ng-app/app.routes.js',
-        'ng-app/**/*.routes.js',
-        'ng-app/**/*.js'
-    ];
+    var js = grunt.option('js');
 
     grunt.config('concat', {
 
@@ -18,8 +9,13 @@ module.exports = function (grunt) {
         },
 
         js_dev: {
-            src: js_src,
-            dest: 'public/build/admin.dev.js'
+            src:  js.src,
+            dest: js.dest_dev
+        },
+
+        js_production: {
+            src:  js.src,
+            dest: js.dest_production_tmp
         }
 
     });

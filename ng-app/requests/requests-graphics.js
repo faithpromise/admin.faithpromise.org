@@ -40,7 +40,7 @@
             create_item('graphics_seat_card', 'Seatback Card', 'Briefly describe the purpose of your card.');
             create_item('graphics_slide', 'Slide In Service', 'What should your slide say?');
             create_item('graphics_apparel', 'T-Shirt/Apparel', 'Briefly describe your t-shirt idea.');
-            create_item('graphics_sign', 'Signage', 'What should your sign say?');
+            create_item('graphics_sign', 'Signage', 'What should your sign say?'); // TODO: Should say, "When do you need it installed?"
             create_item('graphics_website', 'Website Promo', 'What needs to be added or changed on the website?');
             create_item('graphics_other', 'Other Project', 'Please describe your project?');
         }

@@ -1,5 +1,7 @@
 module.exports = function (grunt) {
 
+    var svg = grunt.option('svg');
+
     grunt.config('svgstore', {
 
         options: {
@@ -11,8 +13,8 @@ module.exports = function (grunt) {
         default: {
             files: [
                 {
-                    src: 'assets/svg/general/*.svg',
-                    dest: 'public/build/general.svg'
+                    src:  svg.src,
+                    dest: svg.dest
                 }
             ]
         }

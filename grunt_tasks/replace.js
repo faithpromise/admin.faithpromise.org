@@ -1,27 +1,30 @@
 module.exports = function (grunt) {
 
+    var fontello   = grunt.option('fontello'),
+        build_root = grunt.option('build_root');
+
     grunt.config('replace', {
 
         fontello: {
             options: {
-                patterns: [
+                patterns:  [
                     {
-                        match: '../font/',
+                        match:       '../font/',
                         replacement: '/build/fontello/'
                     },
                     {
-                        match: '[class^="icon-"]',
+                        match:       '[class^="icon-"]',
                         replacement: '.icon:before, [class^="icon-"]'
                     }
                 ],
                 usePrefix: false
             },
-            files: [
+            files:   [
                 {
-                    expand: false,
+                    expand:  false,
                     flatten: true,
-                    src: 'assets/fontello/css/fontello.css',
-                    dest: 'public/build/fontello/fontello.css.tmp'
+                    src:     fontello.root + '/css/fontello.css',
+                    dest:    build_root + '/fontello/fontello.css'
                 }
             ]
         }

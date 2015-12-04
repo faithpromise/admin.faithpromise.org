@@ -3,6 +3,7 @@
 /bower_components
 /public/build
 /.idea
+/_release/*
 Homestead.yaml
 Homestead.json
 .DS_Store
