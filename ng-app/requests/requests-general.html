@@ -1,0 +1,45 @@
+<div class="Breadcrumbs">
+  <div class="Breadcrumbs-container">
+    <a class="Breadcrumbs-link" href="/requests">Requests</a> /
+    <a class="Breadcrumbs-link" href="/requests/new">New Request</a> / {{ vm.title }}
+  </div>
+</div>
+
+<div class="Hero Hero--white">
+  <img class="Hero-image" ng-src="//d16gqslxckkrrx.cloudfront.net/xl/full/images/requests/{{ vm.image || vm.type }}-wide.jpg">
+
+  <div class="Hero-container">
+    <div class="Hero-content">
+      <h1 class="Hero-title">{{ vm.header }}</h1>
+      <p class="Hero-text"></p>
+    </div>
+  </div>
+</div>
+
+<form class="StepForm" name="request_form" ng-submit="vm.submit()">
+
+  <div class="StepForm-section">
+    <div class="StepForm-fieldset">
+      <h2 class="StepForm-legend">{{ vm.aboutLabel || 'Details' }}</h2>
+
+      <div class="StepForm-fields">
+        <div class="StepForm-group">
+          <label class="StepForm-label">{{ vm.subjectLabel || 'What\’s the name of your event or project?' }}</label>
+          <input class="StepForm-input" name="raw_subject" maxlength="40" type="text" placeholder="e.g. &quot;Haiti Trip,&quot; &quot;Kids Camp&quot;" ng-model="vm.raw_subject" required>
+        </div>
+        <div class="StepForm-group">
+          <label class="StepForm-label">{{ vm.dateLabel || 'When is it due?' }}</label>
+          <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.ticket.deliver_by" required>
+        </div>
+        <div class="StepForm-group">
+          <label class="StepForm-label">{{ vm.descriptionLabel || 'Please provide details (if applicable).' }}</label>
+          <textarea class="StepForm-textarea" ng-model="vm.ticket.description"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="StepForm-submitSection">
+    <button class="StepForm-submit" type="submit">Send Your Request <i class="icon-right-open"></i></button>
+  </div>
+</form>
