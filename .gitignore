@@ -4,6 +4,8 @@
 /public/build
 /.idea
 /_release/*
+bootstrap/cache/*
+!bootstrap/cache/.gitkeep
 Homestead.yaml
 Homestead.json
 .DS_Store
