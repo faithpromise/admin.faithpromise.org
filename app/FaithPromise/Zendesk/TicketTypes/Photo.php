@@ -7,7 +7,7 @@ use FaithPromise\Shared\Models\Staff;
 use FaithPromise\Shared\Models\TicketTask as Task;
 use FaithPromise\Shared\Models\TicketRequirement as Requirement;
 
-class GraphicsPhoto extends Graphics {
+class Photo extends Graphics {
 
 //    protected $deliver_to = 'heather-burson';
     protected $deliver_to = 'brad-roberts';
