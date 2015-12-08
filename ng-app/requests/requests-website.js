@@ -1,11 +1,11 @@
 (function (module) {
     'use strict';
 
-    module.directive('requestsPhoto', directive);
+    module.directive('requestsWebsite', directive);
 
     function directive() {
         return {
-            templateUrl: '/build/ng-app/requests/requests-photo.html',
+            templateUrl: '/build/ng-app/requests/requests-website.html',
             restrict:    'E'
         };
     }
