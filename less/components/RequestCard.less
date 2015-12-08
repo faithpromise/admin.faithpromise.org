@@ -34,12 +34,16 @@
 }
 
 .RequestCard-header {
-  position:    relative;
-  height:      0;
-  padding-top: 47%;
-  overflow:    hidden;
+  position: relative;
+  overflow: hidden;
 
   &:before {
+    content:     "";
+    display:     block;
+    padding-top: 47%;
+  }
+
+  &:after {
     content:          "";
     display:          block;
     position:         absolute;
@@ -69,7 +73,7 @@
   position:      absolute;
   top:           54%;
   right:         3.8461538%;
-  z-index:       1;
+  z-index:       2;
   border-radius: 50%;
 }
 
@@ -82,17 +86,17 @@
   .antialiasing();
   .to-em(font-size, 22, @RequestCard-font-size);
   .to-em(margin-bottom, 10, 22);
-  line-height:            1;
-  font-weight:            normal;
-  text-transform:         uppercase;
-  color:                  inherit;
+  line-height:    1;
+  font-weight:    normal;
+  text-transform: uppercase;
+  color:          inherit;
 }
 
 .RequestCard-description {
   .antialiasing();
   .to-em(font-size, 15, @RequestCard-font-size);
-  margin:                 0;
-  line-height:            1.2;
+  margin:      0;
+  line-height: 1.2;
 }
 
 .RequestCard-footer {
@@ -102,9 +106,9 @@
 .RequestCard-action {
   .antialiasing();
   .to-em(font-size, 15, @RequestCard-font-size);
-  font-weight:            normal;
-  text-transform:         uppercase;
-  color:                  inherit;
+  font-weight:    normal;
+  text-transform: uppercase;
+  color:          inherit;
 
   .RequestCard:hover & {
     color: @anchor-text-color;
