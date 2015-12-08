@@ -18,6 +18,16 @@ class SupportRequests extends Controller {
         return response()->json($tickets);
     }
 
+    public function store(Request $request) {
+
+        $requester = $request->user()->Staff;
+        $ticket = $request->input('ticket');
+
+        $ticket = TicketFactory::create($ticket['type'], $ticket, $requester);
+        $ticket->save();
+
+    }
+
     public function batchCreate(Request $request) {
 
         $requester = $request->user()->Staff;
