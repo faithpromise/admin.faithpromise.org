@@ -24,14 +24,17 @@
                 title: 'Tech Support',
                 description: 'Computer, email, printing, and Internet issues.',
                 image: '',
-                staffer: 'joe-filipowicz'
+                staffer: 'joe-filipowicz',
+                submit_text: 'helpdesk@faithpromise.org',
+                submit_link: 'mailto:helpdesk@faithpromise.org'
             },
             {
                 type: 'worship-tech',
                 title: 'Worship Tech',
                 description: 'Mics, projectors, lights, or other worship equipment issues.',
                 image: '',
-                staffer: 'emily-carringer'
+                staffer: 'emily-carringer',
+                submit_link: 'http://www.faithpromiseweb.com/request/tech-maintenance-request/'
             },
             {
                 type: 'graphics',
@@ -45,7 +48,8 @@
                 title: 'Video',
                 description: 'Video shoots for event promotion, interviews, short films, etc.',
                 image: '',
-                staffer: 'adam-chapman'
+                staffer: 'adam-chapman',
+                submit_link: 'http://www.faithpromiseweb.com/request/video-request-2/'
             },
             {
                 type: 'photo',
@@ -56,7 +60,7 @@
             },
             {
                 type: 'website',
-                title: 'Website',
+                title: 'Website Change',
                 description: 'Request an update or report an issue with our website.',
                 image: '',
                 staffer: 'brad-roberts'
@@ -66,21 +70,24 @@
                 title: 'FP Resources',
                 description: 'Promote a t-shirt, CD, book, or other item for sale.',
                 image: '',
-                staffer: 'mallory-ellis'
+                staffer: 'mallory-ellis',
+                submit_link: 'http://www.faithpromiseweb.com/request/fpresources-sales-request/'
             },
             {
                 type: 'facility',
                 title: 'Facility',
                 description: 'Repairs and replacements for common items.',
                 image: '',
-                staffer: 'marti-willen'
+                staffer: 'marti-willen',
+                submit_link: 'http://www.faithpromiseweb.com/request/facilities-request/'
             },
             {
                 type: 'construction',
                 title: 'Construction',
                 description: 'Renovation, remodeling, and building projects.',
                 image: '',
-                staffer: 'sid-spiva'
+                staffer: 'sid-spiva',
+                submit_link: 'http://www.faithpromiseweb.com/request/construction-request/'
             }
         ];
 
