@@ -47,7 +47,8 @@ abstract class Ticket {
             return $this->sendViaEmail();
         }
 
-        $zendesk_ticket = Zendesk::tickets()->create([
+        $ticket = [
+            'type'         => 'task',
             'subject'      => $this->ticket['subject'],
             'comment'      => [
                 'body' => $this->buildDescription()
@@ -55,7 +56,13 @@ abstract class Ticket {
             'requester_id' => $this->requester->zendesk_user_id,
             'assignee_id'  => $zendesk_agent_id,
             'priority'     => 'normal'
-        ]);
+        ];
+
+        if ($this->ticket['deliver_by']) {
+            $ticket['due_at'] = $this->ticket['deliver_by']->format('Y-m-d');
+        }
+
+        $zendesk_ticket = Zendesk::tickets()->create($ticket);
 
         $this->createTasks($zendesk_ticket->ticket->id, $this->requester);
         $this->createRequirements($zendesk_ticket->ticket->id);
