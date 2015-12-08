@@ -13,7 +13,7 @@ class TicketFactory {
      */
     public static function create($type, $ticket, $user) {
 
-        $class_name = 'App\\Faithpromise\\Zendesk\\TicketTypes\\' . studly_case($type);
+        $class_name = '\\App\\Faithpromise\\Zendesk\\TicketTypes\\' . studly_case($type);
 
         if (class_exists($class_name)) {
             return new $class_name($ticket, $user);
