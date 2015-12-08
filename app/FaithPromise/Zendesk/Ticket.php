@@ -32,14 +32,14 @@ abstract class Ticket {
     public function save() {
 
         if ($this->deliver_method === 'zendesk') {
-            return $this->sendViaZendesk();
+            return $this->saveToZendesk();
         }
 
         return $this->sendViaEmail();
 
     }
 
-    private function sendViaZendesk() {
+    private function saveToZendesk() {
 
         $zendesk_agent_id = $this->getZendeskAgentId();
 
