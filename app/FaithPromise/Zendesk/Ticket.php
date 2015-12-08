@@ -107,7 +107,7 @@ abstract class Ticket {
     private function buildDescription() {
 
         $description = [];
-        $desc = trim($this->ticket['description']);
+        $desc = trim(array_key_exists('description', $this->ticket) ? $this->ticket['description'] : '');
 
         if (!empty($desc)) {
             $description[] = $desc;
