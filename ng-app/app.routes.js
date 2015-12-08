@@ -52,6 +52,14 @@
             .state('main.requests_graphics', {
                 url: '^/requests/graphics',
                 template: '<requests-graphics></requests-graphics>'
+            })
+            .state('main.requests_photo', {
+                url: '^/requests/photo',
+                template: '<requests-photo></requests-photo>'
+            })
+            .state('main.requests_website', {
+                url: '^/requests/website',
+                template: '<requests-website></requests-website>'
             });
 
     }
