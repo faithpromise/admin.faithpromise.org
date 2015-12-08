@@ -19,6 +19,7 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
 Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
 
     Route::get('/requests', ['uses' => 'SupportRequests@index', 'middleware' => 'zendesk.user_id']);
+    Route::post('/requests', ['uses' => 'SupportRequests@store', 'middleware' => 'zendesk.user_id']);
     Route::post('/requests/batch', ['uses' => 'SupportRequests@batchCreate', 'middleware' => 'zendesk.user_id']);
 
 });
