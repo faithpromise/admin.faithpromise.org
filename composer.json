@@ -13,6 +13,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
+        "guzzlehttp/guzzle": "^6.0",
         "tymon/jwt-auth": "0.5.*",
         "huddledigital/zendesk-laravel": "~1.0",
         "faithpromise/fp-shared": "dev-master",
