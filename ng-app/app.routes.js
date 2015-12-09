@@ -6,7 +6,7 @@
 
     function Config($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/requests/new');
 
         $stateProvider
             .state('main', {
