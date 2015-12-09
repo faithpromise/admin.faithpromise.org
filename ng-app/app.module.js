@@ -6,7 +6,8 @@
         'ngAnimate',
         'ui.bootstrap.dropdown',
         'satellizer',
-        'toastr'
+        'toastr',
+        'siteConfig'
     ]);
 
 })(angular);

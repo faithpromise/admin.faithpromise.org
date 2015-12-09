@@ -10,7 +10,7 @@
         <title>Admin</title>
 
         <script src="https://use.typekit.net/xhr7ioc.js"></script>
-        <script>try {Typekit.load({async: false});} catch (e) {}</script>
+        <script>try {Typekit.load({ async: false });} catch (e) {}</script>
 
         <!-- build:style admin -->
         <link rel="stylesheet" href="/build/admin.dev.css">
@@ -30,6 +30,14 @@
         <![endif]-->
         <script src="//cdn.jsdelivr.net/satellizer/0.12.5/satellizer.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+
+        <script>
+            (function () {
+                angular.module('siteConfig', []).constant('SITE_CONFIG', {
+                    F1_AUTH_ENDPOINT: '<?= env('F1_API_URI') . '/PortalUser/Login' ?>'
+                });
+            })(angular);
+        </script>
 
         <!-- build:script admin -->
         <script src="/build/admin.dev.js"></script>

@@ -3,9 +3,9 @@
     module.config(Config);
     module.run(Run);
 
-    Config.$inject = ['$locationProvider', '$resourceProvider', '$authProvider'];
+    Config.$inject = ['$locationProvider', '$resourceProvider', '$authProvider', 'SITE_CONFIG'];
 
-    function Config($locationProvider, $resourceProvider, $authProvider) {
+    function Config($locationProvider, $resourceProvider, $authProvider, SITE_CONFIG) {
 
         $locationProvider.html5Mode(true);
 
@@ -17,7 +17,7 @@
         $authProvider.oauth1({
             name: 'faithpromise',
             url: '/auth/fellowshipone',
-            authorizationEndpoint: 'https://fpctystn.staging.fellowshiponeapi.com/v1/PortalUser/Login',
+            authorizationEndpoint: SITE_CONFIG.F1_AUTH_ENDPOINT,
             redirectUri: null,
             popupOptions: { width: 600, height: 400 }
         });
