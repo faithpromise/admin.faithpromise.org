@@ -9,7 +9,6 @@ use FaithPromise\Shared\Models\TicketTask as Task;
 
 class Graphics extends Ticket {
 
-//    protected $deliver_to = 'heather-burson';
     protected $deliver_to = 'kyle-gilbert';
     protected $deliver_method = 'zendesk';
 

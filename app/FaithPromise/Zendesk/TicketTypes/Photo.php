@@ -9,8 +9,7 @@ use FaithPromise\Shared\Models\TicketRequirement as Requirement;
 
 class Photo extends Graphics {
 
-//    protected $deliver_to = 'heather-burson';
-    protected $deliver_to = 'brad-roberts';
+    protected $deliver_to = 'kyle-gilbert';
     protected $deliver_method = 'zendesk';
 
     protected function createTasks($zendesk_ticket_id, Staff $requester) {
