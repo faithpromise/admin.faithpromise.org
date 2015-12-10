@@ -70,12 +70,6 @@ class Auth implements AuthInterface {
 
     }
 
-    public function getUserId() {
-        $user = $this->getUser();
-
-        return $user['@id'];
-    }
-
     public function getCurrentUserIdFromHeader() {
 
         $location_header = $this->getContentLocationHeader();
@@ -84,18 +78,14 @@ class Auth implements AuthInterface {
         return $matches[0];
     }
 
-    private function getUser() {
+    public function getUser() {
 
         if (!Session::has(self::USER_KEY)) {
-            $user = $this->obtainUser();
+            $user = $this->fetch($this->getUserLocation());
             $this->storeUser($user['person']);
         }
 
         return Session::get(self::USER_KEY);
-    }
-
-    private function obtainUser() {
-        return $this->fetch($this->getUserLocation());
     }
 
     private function getOauthClient($token = null, $secret = null) {
@@ -112,8 +102,6 @@ class Auth implements AuthInterface {
     }
 
     private function fetch($uri, $data = null, $method = OAUTH_HTTP_METHOD_GET, $retryCount = 0) {
-
-        $uri = $this->cleanUri($uri);
 
         $headers = ['Content-Type' => 'application/' . $this->getContentType()];
 
@@ -144,14 +132,6 @@ class Auth implements AuthInterface {
 
             throw new Exception($e->getMessage(), $e->getCode(), $client->getLastResponse(), $extra, $e);
         }
-
-    }
-
-    private function oauth_get($uri, $data) {
-
-        $uri = $uri . '?' . http_build_query($data);
-
-        return $this->fetch($uri, null, OAUTH_HTTP_METHOD_GET);
 
     }
 
