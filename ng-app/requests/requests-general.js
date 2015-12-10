@@ -11,13 +11,14 @@
             controllerAs:     'vm',
             bindToController: true,
             scope:            {
-                type:             '@',
-                title:            '@',
-                header:           '@',
-                subjectLabel:     '@',
-                dateLabel:        '@',
-                descriptionLabel: '@',
-                image:            '@'
+                type:               '@',
+                title:              '@',
+                header:             '@',
+                subjectLabel:       '@',
+                subjectPlaceholder: '@',
+                dateLabel:          '@',
+                descriptionLabel:   '@',
+                image:              '@'
             }
         };
     }
