@@ -3,19 +3,19 @@
 namespace App\FaithPromise\Zendesk\TicketTypes;
 
 use App\FaithPromise\Zendesk\Ticket;
+use App\Models\User;
 use Carbon\Carbon;
-use FaithPromise\Shared\Models\Staff;
 use FaithPromise\Shared\Models\TicketTask as Task;
 
 class Graphics extends Ticket {
 
-    protected $deliver_to = 'kyle-gilbert';
+    protected $deliver_to = 'kyleg@faithpromise.org';
     protected $deliver_method = 'zendesk';
 
     protected function createRequirements($zendesk_ticket_id) {
     }
 
-    protected function createTasks($zendesk_ticket_id, Staff $requester) {
+    protected function createTasks($zendesk_ticket_id, User $requester) {
         return $this->createTasksForPrintPiece($zendesk_ticket_id, $requester);
     }
 
@@ -120,7 +120,7 @@ class Graphics extends Ticket {
 
     }
 
-    protected function createTasksForDigitalPiece($zendesk_ticket_id, $requester) {
+    protected function createTasksForDigitalPiece($zendesk_ticket_id, User $requester) {
 
         // Create default tasks
         if (!$this->ticket['deliver_by']) {

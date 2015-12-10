@@ -20,7 +20,7 @@ class SupportRequests extends Controller {
 
     public function store(Request $request) {
 
-        $requester = $request->user()->Staff;
+        $requester = $request->user();
         $ticket = $request->input('ticket');
 
         $ticket = TicketFactory::create($ticket['type'], $ticket, $requester);
@@ -30,7 +30,7 @@ class SupportRequests extends Controller {
 
     public function batchCreate(Request $request) {
 
-        $requester = $request->user()->Staff;
+        $requester = $request->user();
         $tickets = $request->input('requests');
 
         foreach ($tickets as $ticket) {

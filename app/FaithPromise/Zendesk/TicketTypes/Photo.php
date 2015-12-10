@@ -2,17 +2,17 @@
 
 namespace App\FaithPromise\Zendesk\TicketTypes;
 
+use App\Models\User;
 use Carbon\Carbon;
-use FaithPromise\Shared\Models\Staff;
 use FaithPromise\Shared\Models\TicketTask as Task;
 use FaithPromise\Shared\Models\TicketRequirement as Requirement;
 
 class Photo extends Graphics {
 
-    protected $deliver_to = 'kyle-gilbert';
+    protected $deliver_to = 'kyleg@faithpromise.org';
     protected $deliver_method = 'zendesk';
 
-    protected function createTasks($zendesk_ticket_id, Staff $requester) {
+    protected function createTasks($zendesk_ticket_id, User $requester) {
 
         $today = Carbon::now()->endOfDay();
 

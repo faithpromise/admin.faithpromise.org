@@ -2,21 +2,21 @@
 
 namespace App\FaithPromise\Zendesk;
 
+use App\Models\User;
 use Carbon\Carbon;
 use FaithPromise\Shared\Models\Staff;
 use Huddle\Zendesk\Facades\Zendesk;
 
 abstract class Ticket {
 
-    protected $deliver_to = 'brad-roberts';
+    protected $deliver_to = 'bradr@faithpromise.org';
     protected $deliver_method = 'email';
     private $zendesk_agent_ids = [];
 
-    public function __construct($ticket, Staff $requester) {
+    public function __construct($ticket, User $requester) {
 
         $this->ticket = $ticket;
         $this->requester = $requester;
-        $this->recipient = Staff::findBySlug($this->deliver_to);
 
         // Carbonize the deliver_by date.
         if ($ticket['deliver_by']) {
@@ -25,7 +25,7 @@ abstract class Ticket {
 
     }
 
-    abstract protected function createTasks($zendesk_ticket_id, Staff $requester);
+    abstract protected function createTasks($zendesk_ticket_id, User $requester);
 
     abstract protected function createRequirements($zendesk_ticket_id);
 
@@ -75,21 +75,12 @@ abstract class Ticket {
 
         if (!array_key_exists($this->deliver_to, $this->zendesk_agent_ids)) {
 
-            // If staff has zendesk_user_id, use it
-            if ($this->recipient->zendesk_user_id) {
+            $zendesk_user_search = Zendesk::users()->search(['query' => $this->deliver_to]);
 
-                $this->zendesk_agent_ids[$this->deliver_to] = $this->recipient->zendesk_user_id;
-
+            if (!count($zendesk_user_search)) {
+                $this->zendesk_agent_ids[$this->deliver_to] = null;
             } else {
-
-                $zendesk_user_search = Zendesk::users()->search(['query' => $this->recipient->email]);
-
-                if (!count($zendesk_user_search)) {
-                    $this->zendesk_agent_ids[$this->deliver_to] = null;
-                } else {
-                    $this->zendesk_agent_ids[$this->deliver_to] = $zendesk_user_search->users[0]->id;
-                }
-
+                $this->zendesk_agent_ids[$this->deliver_to] = $zendesk_user_search->users[0]->id;
             }
 
         }
@@ -99,6 +90,12 @@ abstract class Ticket {
     }
 
     private function sendViaEmail() {
+
+        $recipient = Staff::findByEmail($this->deliver_to);
+
+        if ($recipient) {
+
+        }
 
         return true;
 

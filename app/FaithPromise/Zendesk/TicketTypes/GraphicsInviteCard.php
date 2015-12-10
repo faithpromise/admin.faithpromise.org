@@ -4,7 +4,7 @@ namespace App\FaithPromise\Zendesk\TicketTypes;
 
 class GraphicsInviteCard extends Graphics {
 
-    protected $deliver_to = 'heather-burson';
+    protected $deliver_to = 'heatherb@faithpromise.org';
     protected $deliver_method = 'zendesk';
 
 }
