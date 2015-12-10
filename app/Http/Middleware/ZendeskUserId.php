@@ -15,32 +15,32 @@ class ZendeskUserId {
      */
     public function handle($request, Closure $next) {
 
-        $staffer = $request->user()->Staff;
+        $user = $request->user();
 
-        if (!$staffer->zendesk_user_id) {
+        if (!$user->zendesk_user_id) {
 
             // Search for user
-            $zendesk_user_search = Zendesk::users()->search(['query' => $staffer->email]);
+            $zendesk_user_search = Zendesk::users()->search(['query' => $user->email]);
 
             // Assign zendesk id
             if (count($zendesk_user_search->users)) {
 
-                $staffer->zendesk_user_id = $zendesk_user_search->users[0]->id;
+                $user->zendesk_user_id = $zendesk_user_search->users[0]->id;
 
                 // Create zendesk user and assign id
             } else {
 
                 $response = Zendesk::users()->create([
-                    'name'     => $staffer->name,
-                    'email'    => $staffer->email,
+                    'name'     => $user->name,
+                    'email'    => $user->email,
                     'verified' => true
                 ]);
 
-                $staffer->zendesk_user_id = $response->user->id;
+                $user->zendesk_user_id = $response->user->id;
 
             }
 
-            $staffer->save();
+            $user->save();
 
         }
 
