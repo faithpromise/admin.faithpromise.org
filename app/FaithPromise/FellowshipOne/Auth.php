@@ -135,15 +135,6 @@ class Auth implements AuthInterface {
 
     }
 
-    private function cleanUri($uri) {
-
-        // Make sure content type is appended to URI
-        $content_type = $this->getContentType();
-        $uri = preg_replace('/(?:\.' . $content_type . ')+$/', '', $uri) . '.' . $content_type;
-
-        return $uri;
-    }
-
     private function getContentType() {
         return $this->content_type;
     }
