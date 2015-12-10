@@ -60,8 +60,11 @@
                 requests: gather_requests()
             };
 
-            requestsService.batch_save(data).then(function (response) {
-                console.log('requests sent', response, data);
+            requestsService.batch_save(data).success(function () {
+                Notification.success('Request sent. Thank you!');
+                $state.go('main.requests_new');
+            }).error(function() {
+                Notification.error('An error occurred. Your request could not be sent.');
             });
         }
 

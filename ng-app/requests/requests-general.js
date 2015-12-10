@@ -23,9 +23,9 @@
         };
     }
 
-    Controller.$inject = ['$scope', 'requestsService'];
+    Controller.$inject = ['$scope', '$state', 'requestsService', 'toastr'];
 
-    function Controller($scope, requestsService) {
+    function Controller($scope, $state, requestsService, Notification) {
 
         var vm    = this;
         vm.ticket = { type: vm.type };
@@ -35,14 +35,16 @@
 
             var data = { ticket: vm.ticket };
 
-            requestsService.save(data).then(function (response) {
-                console.log('requests sent', response, data);
+            requestsService.save(data).success(function () {
+                Notification.success('Request sent. Thank you!');
+                $state.go('main.requests_new');
+            }).error(function() {
+                Notification.error('An error occurred. Your request could not be sent.');
             });
         }
 
         function update_subject(newValue) {
             vm.ticket.subject = newValue + ' [' + vm.title + ']';
-            console.log('subject', vm.ticket.subject);
         }
 
         $scope.$watch('vm.raw_subject', update_subject);
