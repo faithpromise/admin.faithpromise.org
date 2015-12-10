@@ -48,7 +48,7 @@ class Auth implements AuthInterface {
     public function obtainAccessToken($oauthToken) {
 
         $request_token = $this->getRequestToken($oauthToken);
-        $oauth_token_secret = isset($request_token['oauth_token_secret']) ? $request_token['oauth_token_secret']  : null;
+        $oauth_token_secret = isset($request_token['oauth_token_secret']) ? $request_token['oauth_token_secret'] : null;
 
         try {
 
