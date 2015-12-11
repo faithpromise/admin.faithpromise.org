@@ -4,8 +4,9 @@
         'ui.router',
         'ngResource',
         'ngAnimate',
+        'ngCookies',
         'ui.bootstrap.dropdown',
-        'satellizer',
+        'angular-jwt',
         'toastr',
         'siteConfig'
     ]);
