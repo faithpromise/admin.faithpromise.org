@@ -6,9 +6,10 @@
  */
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
 
-    Route::any('fellowshipone', ['as' => 'authEndpoint', 'uses' => 'AuthController@fellowshipone']);
+    Route::any('login', ['as' => 'login', 'uses' => 'AuthController@login']);
     Route::post('register', 'AuthController@register');
-    Route::get('verify-email', 'AuthController@verifyEmail');
+    Route::get('verify-email/{token}', ['as' => 'verifyEmail', 'uses' => 'AuthController@verifyEmail']);
+    Route::get('refresh', 'AuthController@verifyEmail');
 
 });
 
@@ -44,4 +45,4 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
  * Default HTML
  * --------------------------
  */
-Route::get('{path?}', 'MainController@index')->where('path', '.+');
+Route::get('{path?}', ['as' => 'home', 'uses' => 'MainController@index'])->where('path', '.+');
