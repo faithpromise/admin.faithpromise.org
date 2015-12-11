@@ -144,13 +144,14 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
 
         App\FaithPromise\FellowshipOne\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         VTalbot\Markdown\MarkdownServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Huddle\Zendesk\Providers\ZendeskServiceProvider::class
+        Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
 
     ],
 
