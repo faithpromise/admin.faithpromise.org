@@ -54,9 +54,14 @@
     </div>
     <div class="Nav-profile">
       <div class="Nav-item">
-        <span class="Nav-link">
-            <img class="Nav-profileImage" ng-src="{{ user.thumb }}">
+        <span class="Nav-link" uib-dropdown>
+            <img class="Nav-profileImage" ng-src="{{ user.thumb }}" uib-dropdown-toggle>
             <i class="Nav-linkIcon icon-down-open"></i>
+            <ul class="NavDropdown">
+              <li class="NavDropdown-item">
+                <a class="NavDropdown-link" ui-sref="auth.logout">Logout</a>
+              </li>
+            </ul>
         </span>
       </div>
     </div>
