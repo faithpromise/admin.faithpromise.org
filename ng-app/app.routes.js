@@ -34,9 +34,9 @@
                 url: '^/register',
                 template: '<register></register>'
             })
-            .state('auth.verify-email', {
-                url: '^/verify-email/:token',
-                template: '<verify-email></verify-email>'
+            .state('auth.logout', {
+                url: '^/logout',
+                template: '<logout></logout>'
             });
 
         // Support Requests

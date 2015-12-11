@@ -4,6 +4,7 @@
 @Nav-text-color: #fff;
 @Nav-logo-height: 28;
 @Nav-profile-image-height: (@Nav-height - 20);
+@z-index-nav-dropdown: 13;
 
 .Nav {
   .to-em(font-size, @Nav-font-size, @font-size);
@@ -52,10 +53,10 @@
   .antialiasing();
   .link-color(@Nav-text-color);
   .to-em(padding, 10 11, @Nav-font-size);
-  display:                block;
-  text-transform:         uppercase;
-  text-decoration:        none;
-  font-weight:            @font-weight-myriad-semi-bold;
+  display:         block;
+  text-transform:  uppercase;
+  text-decoration: none;
+  font-weight:     @font-weight-myriad-semi-bold;
 }
 
 .Nav-linkIcon {
@@ -74,5 +75,28 @@
 }
 
 .NavDropdown {
-  display: none;
+  display:          none;
+  position:         absolute;
+  top:              100%;
+  left:             -20px;
+  z-index:          @z-index-nav-dropdown;
+  margin:           0;
+  padding:          10px 20px;
+  list-style:       none;
+  background-color: #e7e7e7;
+  border-radius:    5px;
+
+  .open > & {
+    display: block;
+  }
+}
+
+.NavDropdown-link {
+  .link-color(#36383f);
+  display:         block;
+  padding:         5px 0;
+  font-size:       14px;
+  text-decoration: none;
+  white-space:     nowrap;
+  cursor:          pointer;
 }
