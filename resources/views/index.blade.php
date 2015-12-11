@@ -25,6 +25,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-resource.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-cookies.min.js"></script>
         <!--[if lte IE 9]>
         <script src="//cdnjs.cloudflare.com/ajax/libs/Base64/0.3.0/base64.min.js"></script>
         <![endif]-->
@@ -33,9 +34,7 @@
 
         <script>
             (function () {
-                angular.module('siteConfig', []).constant('SITE_CONFIG', {
-                    F1_AUTH_ENDPOINT: '<?= env('F1_API_URI') . '/PortalUser/Login' ?>'
-                });
+                angular.module('siteConfig', []).constant('USER', {!! isset($user) && $user ? $user->toJson() : 'null' !!});
             })(angular);
         </script>
 

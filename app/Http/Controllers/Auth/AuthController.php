@@ -37,11 +37,9 @@ class AuthController extends BaseController {
         ];
 
         // Redirect to remove oauth_token URL param
-        $response = redirect('home');
+        $response = redirect('requests/new'); // TODO: Needs to go to /home eventually
 
-        if ($user) {
-            $response->withCookie(cookie()->forever('user', $user, null, null, false, false)); // Non HttpOnly
-        } else {
+        if (!$user) {
             $user = new User();
             $user->id = 0;
         }
@@ -119,7 +117,6 @@ class AuthController extends BaseController {
                 'fellowship_one_user_id' => $data['fellowship_one_user_id']
             ]);
 
-            $response->withCookie(cookie()->forever('user', $user, null, null, false, false)); // Non HttpOnly
             $response->withCookie(cookie()->forever('jwt', $jwt_token, null, null, false, false)); // Non HttpOnly
 
             return $response;

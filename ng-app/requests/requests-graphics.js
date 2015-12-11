@@ -14,12 +14,12 @@
         };
     }
 
-    Controller.$inject = ['$scope', '$rootScope', 'requestsService'];
+    Controller.$inject = ['$scope', '$state', 'requestsService', 'toastr', 'USER'];
 
-    function Controller($scope, $rootScope, requestsService) {
+    function Controller($scope, $state, requestsService, Notification, USER) {
 
         var vm = this;
-        vm.user = $rootScope.user;
+        vm.user = USER;
         vm.subject = '';
         vm.event_date = null;
         vm.toggle_item = toggle_item;

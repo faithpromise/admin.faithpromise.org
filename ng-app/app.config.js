@@ -3,9 +3,9 @@
     module.config(Config);
     module.run(Run);
 
-    Config.$inject = ['$locationProvider', '$resourceProvider', '$httpProvider', 'SITE_CONFIG'];
+    Config.$inject = ['$locationProvider', '$resourceProvider', '$httpProvider'];
 
-    function Config($locationProvider, $resourceProvider, $httpProvider, SITE_CONFIG) {
+    function Config($locationProvider, $resourceProvider, $httpProvider) {
 
         $locationProvider.html5Mode(true);
 
@@ -15,20 +15,18 @@
 
     }
 
-    Run.$inject = ['$document', '$location', '$rootScope', '$cookies', 'jwtHelper'];
+    Run.$inject = ['$document', '$location', '$rootScope', '$cookies', 'jwtHelper', 'USER'];
 
-    function Run($document, $location, $rootScope, $cookies, jwtHelper) {
+    function Run($document, $location, $rootScope, $cookies, jwtHelper, USER) {
 
         // Add user to root scope if found in local storage
-        if ($cookies.getObject('user')) {
-            $rootScope.user = $cookies.getObject('user');
-        }
+        $rootScope.user = USER;
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
             var jwt              = $cookies.get('jwt'),
                 logged_in        = jwt && !jwtHelper.isTokenExpired(jwt),
-                account_complete = $rootScope.user ? true : false,
+                account_complete = $rootScope.user !== null,
                 is_logging_in    = $location.path() === '/login',
                 is_registering   = $location.path() === '/register';
 
