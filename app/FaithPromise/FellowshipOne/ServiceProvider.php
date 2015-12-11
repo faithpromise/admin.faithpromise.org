@@ -3,29 +3,19 @@
 namespace App\FaithPromise\FellowshipOne;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use OAuth;
 
 class ServiceProvider extends BaseServiceProvider {
 
     public function register() {
 
-        $this->app->bindShared('App\FaithPromise\FellowshipOne\AuthInterface', function ($app) {
+        $this->app->bindShared(AuthInterface::class, function ($app) {
 
-            return new Auth(
-                $app['config']['fellowshipone']['key'],
-                $app['config']['fellowshipone']['secret'],
-                $app['config']['fellowshipone']['api_url']
-            );
+            $oauth_client = new OAuth($app['config']['fellowshipone']['key'], $app['config']['fellowshipone']['secret']);
+            return new Auth($oauth_client, env('F1_API_URI'));
 
         });
 
     }
-
-//    public function boot() {
-//
-//        $this->app['FaithPromise\FellowshipOne\Auth'] = function ($app) {
-//            return $app->make('faithpromise.f1.api');
-//        };
-//
-//    }
 
 }
