@@ -9,6 +9,7 @@ class User extends BaseUser {
 
     protected $fillable = ['first_name', 'last_name', 'name', 'email', 'password', 'fellowship_one_user_id'];
     protected $appends = ['thumb'];
+    protected $visible = ['first_name', 'last_name', 'thumb'];
 
     public function staff() {
         return $this->hasOne(Staff::class, 'email', 'email');
