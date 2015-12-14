@@ -5,7 +5,7 @@ namespace App\FaithPromise\FellowshipOne;
 use Illuminate\Support\Facades\Cache;
 use OAuth;
 
-class Auth implements AuthInterface {
+class Client implements ClientInterface {
 
     const F1_PORTAL_LOGIN_PATH = '/PortalUser/Login';
     const F1_REQUEST_TOKEN_PATH = '/Tokens/RequestToken';
