@@ -14,6 +14,11 @@ class Photo extends Graphics {
 
     protected function createTasks($zendesk_ticket_id, User $requester) {
 
+        // Create default tasks
+        if (!$this->ticket['deliver_by']) {
+            return;
+        }
+
         $today = Carbon::now()->endOfDay();
 
         // Work backwards from delivery date

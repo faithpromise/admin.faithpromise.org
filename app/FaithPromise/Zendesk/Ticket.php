@@ -19,9 +19,7 @@ abstract class Ticket {
         $this->requester = $requester;
 
         // Carbonize the deliver_by date.
-        if ($ticket['deliver_by']) {
-            $this->ticket['deliver_by'] = Carbon::parse($ticket['deliver_by'], 'UTC')->setTimezone('America/New_York');
-        }
+        $this->ticket['deliver_by'] = array_key_exists('deliver_by', $ticket) ? $this->ticket['deliver_by'] = Carbon::parse($ticket['deliver_by'], 'UTC')->setTimezone('America/New_York') : null;
 
     }
 
