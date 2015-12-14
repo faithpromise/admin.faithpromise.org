@@ -36,15 +36,4 @@ class User extends BaseUser {
         return $this->Staff ? $this->Staff->last_name : $this->getOriginal('last_name');
     }
 
-    public function toClient() {
-
-        $visible = $this->visible;
-
-        $user = $this->setVisible(['first_name', 'last_name', 'email', 'thumb'])->toArray();
-
-        $this->setVisible($visible);
-
-        return $user;
-    }
-
 }
