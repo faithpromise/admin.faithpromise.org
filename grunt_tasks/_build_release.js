@@ -15,6 +15,7 @@ module.exports = function (grunt) {
         'copy:fontello',
         'replace:fontello',
         'less:production',
+        'autoprefixer:production',
 
         // files
         'copy:ng_templates',
