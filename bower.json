@@ -15,7 +15,7 @@
   "dependencies": {
     "angular-ui-bootstrap": "https://github.com/angular-ui/bootstrap.git#master",
     "bootstrap": "~3.3.4",
-    "cardinal": "~3.1.0",
+    "cardinal": "~3.2.0",
     "suit": "~0.6.0",
     "angular-local-storage": "~0.2.2",
     "svg4everybody": "~1.0.0",
