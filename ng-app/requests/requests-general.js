@@ -35,11 +35,14 @@
 
             var data = { ticket: vm.ticket };
 
+            vm.is_sending = true;
+
             requestsService.save(data).success(function () {
                 Notification.success('Request sent. Thank you!');
                 $state.go('main.requests_new');
             }).error(function() {
                 Notification.error('An error occurred. Your request could not be sent.');
+                vm.is_sending = false;
             });
         }
 

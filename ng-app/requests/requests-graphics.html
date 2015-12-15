@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<form class="StepForm" name="request_form" ng-submit="vm.submit()">
+<form class="StepForm" name="request_form" ng-submit="! vm.is_sending && vm.submit()">
 
   <div class="StepForm-section">
     <div class="StepForm-fieldset">
@@ -82,6 +82,9 @@
   </div>
 
   <div class="StepForm-submitSection" ng-show="vm.has_items_selected()">
-    <button class="StepForm-submit" type="submit">Send Your Request <i class="icon-right-open"></i></button>
+    <button class="StepForm-submit" type="submit" ng-disabled="vm.is_sending">
+      <span ng-hide="vm.is_sending">Send Your Request <i class="icon-right-open"></i></span>
+      <span ng-show="vm.is_sending">Sending...</span>
+    </button>
   </div>
 </form>
