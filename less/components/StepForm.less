@@ -171,3 +171,20 @@
   display:     inline-block;
   margin-left: .5em;
 }
+
+/* 840px */
+@media (max-width: 52.5em) {
+  .StepForm-section {
+    .to-em(padding-left, 20, @StepForm-font-size);
+    .to-em(padding-right, 20, @StepForm-font-size);
+  }
+  .StepForm-legend,
+  .StepForm-fields {
+    float: none;
+    width: 100%;
+  }
+
+  .StepForm-checkboxItem {
+    width: 50%;
+  }
+}
