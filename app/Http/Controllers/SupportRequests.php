@@ -38,8 +38,6 @@ class SupportRequests extends Controller {
             $ticket->save();
         }
 
-        dd($tickets);
-
     }
 
 }
