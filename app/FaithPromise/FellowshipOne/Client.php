@@ -113,6 +113,7 @@ class Client implements ClientInterface {
 
     public function setAccessToken($oauthToken, $request_token_secret) {
         $this->oauthClient->setToken($oauthToken, $request_token_secret);
+
         return $this;
     }
 
