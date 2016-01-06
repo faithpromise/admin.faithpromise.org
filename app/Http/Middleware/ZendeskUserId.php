@@ -4,16 +4,17 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Huddle\Zendesk\Facades\Zendesk;
+use Illuminate\Http\Request;
 
 class ZendeskUserId {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request $request
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next) {
+    public function handle(Request $request, Closure $next) {
 
         $user = $request->user();
 
