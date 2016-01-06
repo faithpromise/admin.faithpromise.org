@@ -2,6 +2,7 @@
 
 namespace App\FaithPromise\FellowshipOne;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use OAuth;
 
@@ -18,6 +19,55 @@ class Client implements ClientInterface {
         $this->api_url = $api_url;
     }
 
+    /**
+     * Credentials based authentication
+     *
+     * @param $username
+     * @param $password
+     * @return $this
+     */
+    public function authenticate($username, $password) {
+
+        $key = 'f1_access_token_' . md5($username . $password);
+        $expires_at = Carbon::now()->addDays(1);
+        $has_existing_access_token = Cache::has($key);
+
+        if (!$has_existing_access_token && $token = $this->obtainCredentialsBasedAccessToken($username, $password)) {
+            Cache::put($key, $token, $expires_at);
+        }
+
+        if (!$token = Cache::get($key)) {
+            return false;
+        }
+
+        $this->setAccessToken($token['oauth_token'], $token['oauth_token_secret']);
+
+        return $this;
+
+    }
+
+    private function obtainCredentialsBasedAccessToken($username, $password) {
+
+        try {
+
+            $message = urlencode(base64_encode($username . ' ' . $password));
+            $url = $this->build_url(self::F1_PORTAL_ACCESS_TOKEN_PATH) . '?ec=' . $message;
+
+            $token = $this->oauthClient->getAccessToken($url);
+
+            return $token;
+
+        } catch (\OAuthException $e) {
+            return false;
+        }
+
+    }
+
+    /**
+     * 3rd party (redirect) OAuth based authentication
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login() {
 
         $request_token_url = $this->build_url(self::F1_REQUEST_TOKEN_PATH);
