@@ -7,9 +7,10 @@ use OAuth;
 
 class Client implements ClientInterface {
 
-    const F1_PORTAL_LOGIN_PATH = '/PortalUser/Login';
-    const F1_REQUEST_TOKEN_PATH = '/Tokens/RequestToken';
-    const F1_ACCESS_TOKEN_PATH = '/Tokens/AccessToken';
+    const F1_PORTAL_LOGIN_PATH = '/v1/PortalUser/Login';
+    const F1_PORTAL_ACCESS_TOKEN_PATH = '/v1/PortalUser/AccessToken';
+    const F1_REQUEST_TOKEN_PATH = '/v1/Tokens/RequestToken';
+    const F1_ACCESS_TOKEN_PATH = '/v1/Tokens/AccessToken';
 
     public function __construct(OAuth $client, $api_url) {
 
@@ -67,8 +68,9 @@ class Client implements ClientInterface {
     }
 
     public function getPerson($id) {
-        $url = $this->build_url('/People/' . $id);
+        $url = $this->build_url('/v1/People/' . $id);
         $person = $this->fetch($url);
+
         return $person['person'];
     }
 
@@ -106,7 +108,7 @@ class Client implements ClientInterface {
     }
 
     private function build_url($path) {
-        return $this->api_url . $path;
+        return preg_replace('/\/v1$/', '', $this->api_url) . $path;
     }
 
     private function getContentLocationHeader() {
