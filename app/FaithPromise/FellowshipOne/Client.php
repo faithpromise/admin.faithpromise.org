@@ -79,6 +79,13 @@ class Client implements ClientInterface {
         return \Redirect::away($login_url);
     }
 
+    /**
+     * Second step of 3rd party (redirect) OAuth based authentication
+     *
+     * @param $oauthToken
+     * @return array
+     * @throws Exception
+     */
     public function obtainAccessToken($oauthToken) {
 
         $request_token = $this->getStoredRequestToken($oauthToken);
