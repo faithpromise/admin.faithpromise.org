@@ -2,17 +2,21 @@
 
 namespace App\FaithPromise\FellowshipOne;
 
+use App\FaithPromise\FellowshipOne\Client as FellowshipOneApi;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use OAuth;
 
 class ServiceProvider extends BaseServiceProvider {
 
     public function register() {
 
-        $this->app->bindShared(ClientInterface::class, function ($app) {
+        $this->app->bindShared(ClientInterface::class, function () {
 
-            $oauth_client = new OAuth($app['config']['fellowshipone']['key'], $app['config']['fellowshipone']['secret']);
-            return new Client($oauth_client, env('F1_API_URI'));
+            // TODO: Can get rid of config/fellowshipone.php?
+            return new FellowshipOneApi(
+                env('F1_KEY'),
+                env('F1_SECRET'),
+                env('F1_API_URI')
+            );
 
         });
 

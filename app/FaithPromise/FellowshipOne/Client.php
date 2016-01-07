@@ -13,9 +13,9 @@ class Client implements ClientInterface {
     const F1_REQUEST_TOKEN_PATH = '/v1/Tokens/RequestToken';
     const F1_ACCESS_TOKEN_PATH = '/v1/Tokens/AccessToken';
 
-    public function __construct(OAuth $client, $api_url) {
+    public function __construct($consumer_key, $consumer_secret, $api_url) {
 
-        $this->oauthClient = $client;
+        $this->oauthClient = new OAuth($consumer_key, $consumer_secret);
         $this->api_url = $api_url;
     }
 
