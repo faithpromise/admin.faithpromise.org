@@ -2,6 +2,10 @@
 
 namespace App\FaithPromise\FellowshipOne;
 
+use App\FaithPromise\FellowshipOne\Resources\Events;
+use App\FaithPromise\FellowshipOne\Resources\GroupCategories;
+use App\FaithPromise\FellowshipOne\Resources\Groups;
+use App\FaithPromise\FellowshipOne\Resources\People;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use OAuth;
@@ -17,6 +21,15 @@ class Client implements ClientInterface {
 
         $this->oauthClient = new OAuth($consumer_key, $consumer_secret);
         $this->api_url = $api_url;
+    }
+
+    public static function getValidResources() {
+        return [
+            'people'          => People::class,
+            'groups'          => Groups::class,
+            'groupCategories' => GroupCategories::class,
+            'events'          => Events::class
+        ];
     }
 
     /**
@@ -132,7 +145,9 @@ class Client implements ClientInterface {
         return $person['person'];
     }
 
-    private function fetch($uri, $data = null, $method = OAUTH_HTTP_METHOD_GET, $retryCount = 0) {
+    public function fetch($uri, $data = null, $method = OAUTH_HTTP_METHOD_GET, $retryCount = 0) {
+
+        $uri = $this->build_url($uri);
 
         $headers = ['Content-Type' => 'application/json'];
 
@@ -166,6 +181,10 @@ class Client implements ClientInterface {
     }
 
     private function build_url($path) {
+        if (stripos($path, $this->api_url) === 0) {
+            return $path;
+        }
+
         return preg_replace('/\/v1$/', '', $this->api_url) . $path;
     }
 
@@ -214,6 +233,18 @@ class Client implements ClientInterface {
         Cache::put($key, $value, 5);
 
         return $this;
+    }
+
+    public function __call($name, $args) {
+
+        if (!array_key_exists($name, $validResources = self::getValidResources())) {
+            throw new \Exception("No method called $name available in " . __CLASS__);
+        }
+
+        $className = $validResources[$name];
+
+        return new $className($this);
+
     }
 
 }
