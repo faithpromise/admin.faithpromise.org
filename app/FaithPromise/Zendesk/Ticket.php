@@ -105,18 +105,16 @@ abstract class Ticket {
         $desc = trim(array_key_exists('description', $this->ticket) ? $this->ticket['description'] : '');
 
         if (!empty($desc)) {
-            $description[] = $desc;
+            $description[] = $desc . PHP_EOL;
         }
 
         if ($this->ticket['deliver_by']) {
             $description[] = 'Deliver by: ' . $this->ticket['deliver_by']->format('D, M j, Y');
         }
 
-        if (empty($description)) {
-            $description[] = 'No description or delivery date provided.';
-        }
+        $description[] = 'Submitted by: ' . $this->requester->getNameAttribute();
 
-        return implode(PHP_EOL . PHP_EOL, $description);
+        return implode(PHP_EOL, $description);
 
     }
 
