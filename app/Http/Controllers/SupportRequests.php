@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\FaithPromise\Zendesk\TicketFactory;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller as BaseController;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Huddle\Zendesk\Facades\Zendesk;
+use Illuminate\Http\Request;
 
-class SupportRequests extends Controller {
+class SupportRequests extends BaseController {
 
     public function index(Request $request) {
 
