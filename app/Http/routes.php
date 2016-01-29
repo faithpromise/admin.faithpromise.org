@@ -45,4 +45,5 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
  * Default HTML
  * --------------------------
  */
+Route::get('/test', ['as' => 'test', 'uses' => 'MainController@test']);
 Route::get('{path?}', ['as' => 'home', 'uses' => 'MainController@index'])->where('path', '.+');

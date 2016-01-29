@@ -2,31 +2,26 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
+use App\FaithPromise\FellowshipOne\Models\Group;
+
 class Groups extends BaseResource {
 
-    public function all($page = 1) {
-
-        $url = '/groups/v1/groups/search?issearchable=true&page=' . $page;
-        $result = $this->client->fetch($url);
-
-        return [
-            '@count'           => $result['groups']['@count'],
-            '@pageNumber'      => $result['groups']['@pageNumber'],
-            '@totalRecords'    => $result['groups']['@totalRecords'],
-            '@additionalPages' => $result['groups']['@additionalPages'],
-            'data'             => $result['groups']['group']
-        ];
+    public function all() {
+        $result = $this->client->fetch('/groups/v1/groups/search?issearchable=true&recordsPerPage=5'); // TODO: recordsPerPage=9999999
+        return $this->buildCollection($result['groups']['group'], Group::class);
     }
 
     public function find($id) {
+        $result = $this->client->fetch('/groups/v1/groups/' . $id);
+        return new Group($this->client, $result['group']);
+    }
 
-        $url = '/groups/v1/groups/' . $id;
-        $result = $this->client->fetch($url);
-
-        return [
-            'data' => $result['group']
-        ];
-
+    /**
+     * @return Group
+     */
+    public function context($id) {
+        $model = new Group($this->client);
+        return $model->setId($id);
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\FaithPromise\FellowshipOne;
 
-interface ClientInterface {
+interface FellowshipOneInterface {
 
     public function login();
     public function obtainAccessToken($oauthToken);

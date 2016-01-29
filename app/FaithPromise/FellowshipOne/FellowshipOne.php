@@ -2,34 +2,83 @@
 
 namespace App\FaithPromise\FellowshipOne;
 
-use App\FaithPromise\FellowshipOne\Resources\Events;
+use App\FaithPromise\FellowshipOne\Resources\Addresses;
+use App\FaithPromise\FellowshipOne\Resources\Communications;
+use App\FaithPromise\FellowshipOne\Resources\Denominations;
 use App\FaithPromise\FellowshipOne\Resources\GroupCategories;
+use App\FaithPromise\FellowshipOne\Resources\GroupMembers;
 use App\FaithPromise\FellowshipOne\Resources\Groups;
+use App\FaithPromise\FellowshipOne\Resources\HouseholdMemberTypes;
+use App\FaithPromise\FellowshipOne\Resources\Occupations;
 use App\FaithPromise\FellowshipOne\Resources\People;
+use App\FaithPromise\FellowshipOne\Resources\Households;
+use App\FaithPromise\FellowshipOne\Resources\PersonStatuses;
+use App\FaithPromise\FellowshipOne\Resources\Schools;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use OAuth;
 
-class Client implements ClientInterface {
+class FellowshipOne implements FellowshipOneInterface {
 
     const F1_PORTAL_LOGIN_PATH = '/v1/PortalUser/Login';
     const F1_PORTAL_ACCESS_TOKEN_PATH = '/v1/PortalUser/AccessToken';
     const F1_REQUEST_TOKEN_PATH = '/v1/Tokens/RequestToken';
     const F1_ACCESS_TOKEN_PATH = '/v1/Tokens/AccessToken';
 
-    public function __construct($consumer_key, $consumer_secret, $api_url) {
+    protected $oauthClient;
+    protected $api_url;
 
+    public function __construct($consumer_key, $consumer_secret, $api_url) {
         $this->oauthClient = new OAuth($consumer_key, $consumer_secret);
         $this->api_url = $api_url;
     }
 
-    public static function getValidResources() {
-        return [
-            'people'          => People::class,
-            'groups'          => Groups::class,
-            'groupCategories' => GroupCategories::class,
-            'events'          => Events::class
-        ];
+    public function addresses($person_id) {
+        return new Addresses($this, $person_id);
+    }
+
+    public function communications($person_id) {
+        return new Communications($this, $person_id);
+    }
+
+    public function denominations() {
+        return new Denominations($this);
+    }
+
+    public function groups() {
+        return new Groups($this);
+    }
+
+    public function groupCategories() {
+        return new GroupCategories($this);
+    }
+
+    public function groupMembers($group_id) {
+        return new GroupMembers($this, $group_id);
+    }
+
+    public function households() {
+        return new Households($this);
+    }
+
+    public function householdMemberTypes() {
+        return new HouseholdMemberTypes($this);
+    }
+
+    public function occupations() {
+        return new Occupations($this);
+    }
+
+    public function people() {
+        return new People($this);
+    }
+
+    public function personStatuses() {
+        return new PersonStatuses($this);
+    }
+
+    public function schools() {
+        return new Schools($this);
     }
 
     /**
@@ -155,13 +204,22 @@ class Client implements ClientInterface {
             $data = json_encode($data);
         }
 
+        $cache_key = md5($uri . $data . $method . $retryCount);
+
+//        if (Cache::has($cache_key)) {
+//            var_dump($uri . ' (cached)');
+//            return Cache::get($cache_key);
+//        }
+
         $this->oauthClient->disableSSLChecks();
 
         try {
 
             $this->oauthClient->fetch($uri, $data, $method, $headers);
 
-            return json_decode($this->oauthClient->getLastResponse(), true);
+            Cache::put($cache_key, json_decode($this->oauthClient->getLastResponse(), true), 480);
+
+            return Cache::get($cache_key);
 
         } catch (\OAuthException $e) {
 
@@ -233,18 +291,6 @@ class Client implements ClientInterface {
         Cache::put($key, $value, 5);
 
         return $this;
-    }
-
-    public function __call($name, $args) {
-
-        if (!array_key_exists($name, $validResources = self::getValidResources())) {
-            throw new \Exception("No method called $name available in " . __CLASS__);
-        }
-
-        $className = $validResources[$name];
-
-        return new $className($this);
-
     }
 
 }

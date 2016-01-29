@@ -2,24 +2,23 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
+use App\FaithPromise\FellowshipOne\Models\GroupCategory;
+
 class GroupCategories extends BaseResource {
 
     public function all() {
-        $url = '/groups/v1/categories';
-        $result = $this->client->fetch($url);
-
-        return [
-            'data' => $result['categories']['category']
-        ];
+        $result = $this->client->fetch('/groups/v1/categories');
+        return $this->buildCollection($result['categories']['category'], GroupCategory::class);
     }
 
+    /**
+     * @param $id
+     * @return GroupCategory
+     * @throws \App\FaithPromise\FellowshipOne\Exception
+     */
     public function find($id) {
-        $url = '/groups/v1/categories/' . $id;
-        $result = $this->client->fetch($url);
-
-        return [
-            'data' => $result['category']
-        ];
+        $result = $this->client->fetch('/groups/v1/categories/' . $id);
+        return new GroupCategory($this->client, $result['category']);
     }
 
 }
