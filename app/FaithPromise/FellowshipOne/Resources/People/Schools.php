@@ -1,8 +1,9 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Resources;
+namespace App\FaithPromise\FellowshipOne\Resources\People;
 
 use App\FaithPromise\FellowshipOne\Models\People\School;
+use App\FaithPromise\FellowshipOne\Resources\BaseResource;
 
 class Schools extends BaseResource {
 

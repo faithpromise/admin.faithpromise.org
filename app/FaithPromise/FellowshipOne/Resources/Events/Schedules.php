@@ -1,11 +1,12 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Resources;
+namespace App\FaithPromise\FellowshipOne\Resources\Events;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
 use App\FaithPromise\FellowshipOne\Models\Events\Schedule;
+use App\FaithPromise\FellowshipOne\Resources\BaseResource;
 
-class EventSchedules extends BaseResource {
+class Schedules extends BaseResource {
 
     protected $event_id;
 

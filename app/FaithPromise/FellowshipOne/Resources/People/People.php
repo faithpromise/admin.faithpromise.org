@@ -1,9 +1,10 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Resources;
+namespace App\FaithPromise\FellowshipOne\Resources\People;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
 use App\FaithPromise\FellowshipOne\Models\People\Person;
+use App\FaithPromise\FellowshipOne\Resources\BaseResource;
 use App\FaithPromise\FellowshipOne\Traits\SearchableResource;
 use Carbon\Carbon;
 

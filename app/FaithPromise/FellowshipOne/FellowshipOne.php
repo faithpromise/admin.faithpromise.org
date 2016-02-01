@@ -2,20 +2,20 @@
 
 namespace App\FaithPromise\FellowshipOne;
 
-use App\FaithPromise\FellowshipOne\Resources\Addresses;
-use App\FaithPromise\FellowshipOne\Resources\Communications;
-use App\FaithPromise\FellowshipOne\Resources\Denominations;
-use App\FaithPromise\FellowshipOne\Resources\Events;
-use App\FaithPromise\FellowshipOne\Resources\EventSchedules;
-use App\FaithPromise\FellowshipOne\Resources\GroupCategories;
-use App\FaithPromise\FellowshipOne\Resources\GroupMembers;
-use App\FaithPromise\FellowshipOne\Resources\Groups;
-use App\FaithPromise\FellowshipOne\Resources\HouseholdMemberTypes;
-use App\FaithPromise\FellowshipOne\Resources\Occupations;
-use App\FaithPromise\FellowshipOne\Resources\People;
-use App\FaithPromise\FellowshipOne\Resources\Households;
-use App\FaithPromise\FellowshipOne\Resources\PersonStatuses;
-use App\FaithPromise\FellowshipOne\Resources\Schools;
+use App\FaithPromise\FellowshipOne\Resources\People\Addresses;
+use App\FaithPromise\FellowshipOne\Resources\People\Communications;
+use App\FaithPromise\FellowshipOne\Resources\People\Denominations;
+use App\FaithPromise\FellowshipOne\Resources\Events\Events;
+use App\FaithPromise\FellowshipOne\Resources\Events\Schedules;
+use App\FaithPromise\FellowshipOne\Resources\Groups\Categories;
+use App\FaithPromise\FellowshipOne\Resources\Groups\Members;
+use App\FaithPromise\FellowshipOne\Resources\Groups\Groups;
+use App\FaithPromise\FellowshipOne\Resources\People\HouseholdMemberTypes;
+use App\FaithPromise\FellowshipOne\Resources\People\Occupations;
+use App\FaithPromise\FellowshipOne\Resources\People\People;
+use App\FaithPromise\FellowshipOne\Resources\People\Households;
+use App\FaithPromise\FellowshipOne\Resources\People\PersonStatuses;
+use App\FaithPromise\FellowshipOne\Resources\People\Schools;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use OAuth;
@@ -52,7 +52,7 @@ class FellowshipOne implements FellowshipOneInterface {
     }
 
     public function eventSchedules($event_id) {
-        return new EventSchedules($this, $event_id);
+        return new Schedules($this, $event_id);
     }
 
     public function groups() {
@@ -60,11 +60,11 @@ class FellowshipOne implements FellowshipOneInterface {
     }
 
     public function groupCategories() {
-        return new GroupCategories($this);
+        return new Categories($this);
     }
 
     public function groupMembers($group_id) {
-        return new GroupMembers($this, $group_id);
+        return new Members($this, $group_id);
     }
 
     public function households() {

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Resources;
+namespace App\FaithPromise\FellowshipOne\Resources\Events;
 
 use App\FaithPromise\FellowshipOne\Models\Events\Event;
+use App\FaithPromise\FellowshipOne\Resources\BaseResource;
 
 class Events extends BaseResource {
 

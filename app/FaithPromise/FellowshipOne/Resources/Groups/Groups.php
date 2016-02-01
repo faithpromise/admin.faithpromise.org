@@ -1,10 +1,11 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Resources;
+namespace App\FaithPromise\FellowshipOne\Resources\Groups;
 
 use App\FaithPromise\FellowshipOne\Models\Groups\Group;
 use App\FaithPromise\FellowshipOne\Models\Groups\Gender;
 use App\FaithPromise\FellowshipOne\Models\Groups\MaritalStatus;
+use App\FaithPromise\FellowshipOne\Resources\BaseResource;
 use App\FaithPromise\FellowshipOne\Traits\SearchableResource;
 
 class Groups extends BaseResource {

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Resources;
+namespace App\FaithPromise\FellowshipOne\Resources\People;
 
 use App\FaithPromise\FellowshipOne\Models\People\Denomination;
+use App\FaithPromise\FellowshipOne\Resources\BaseResource;
 
 class Denominations extends BaseResource {
 

@@ -32,7 +32,7 @@ class MainController extends BaseController {
 //            $test = $f1->events()->all()->filter(function($item) {
 //                return stripos($item->getName(), 'Gilbert') !== false;
 //            });
-            $test = $f1->groups()->whereName('Gilbert')->get();
+            $test = $f1->groupCategories()->find(14043);
             dd($test);
 
 

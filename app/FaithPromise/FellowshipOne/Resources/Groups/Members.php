@@ -1,11 +1,12 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Resources;
+namespace App\FaithPromise\FellowshipOne\Resources\Groups;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
 use App\FaithPromise\FellowshipOne\Models\Groups\Member;
+use App\FaithPromise\FellowshipOne\Resources\BaseResource;
 
-class GroupMembers extends BaseResource {
+class Members extends BaseResource {
 
     protected $group_id;
     protected $with_people = true;
