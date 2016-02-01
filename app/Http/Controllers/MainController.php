@@ -27,14 +27,12 @@ class MainController extends BaseController {
          * Household IDs: 7871147,47232278,33807856,11883428
          */
 
-
         if ($f1) {
 
-//            $test = $f1->denominations()->all();
-//            $test = $f1->people()->loadAddresses()->byHousehold(11883428)->first()->getImage();
-            $test = $f1->groups()->whereMinAge(50)->whereMaxAge(100)->get();
-            // https://fpctystn.fellowshiponeapi.com/groups/v1/maritalstatuses/1
-//            $test = $f1->groups()->find(786697);
+//            $test = $f1->events()->all()->filter(function($item) {
+//                return stripos($item->getName(), 'Gilbert') !== false;
+//            });
+            $test = $f1->eventSchedules(113065)->all();
             dd($test);
 
 
@@ -42,7 +40,7 @@ class MainController extends BaseController {
 
 //            $test = $f1->households()->context(11883428)->getVisitors();
 
-            $test = $f1->groups()->find(786697);
+            $test = $f1->groups()->find(1906648);
             dd($test);
 
 

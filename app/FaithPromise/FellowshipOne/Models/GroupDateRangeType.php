@@ -3,20 +3,20 @@
 namespace App\FaithPromise\FellowshipOne\Models;
 
 /**
- * Class Occupation
+ * Class GroupDateRangeType
  * @package App\FaithPromise\FellowshipOne\Models
  *
  * @method string getId()
  * @method string getUri()
  * @method string getName()
  *
- * @method Occupation setId($value)
- * @method Occupation setUri($value)
- * @method Occupation setName($value)
+ * @method GroupDateRangeType setId($value)
+ * @method GroupDateRangeType setUri($value)
+ * @method GroupDateRangeType setName($value)
  *
  */
 
-class Occupation extends Base {
+class GroupDateRangeType extends Base {
 
     protected $attributes = [
         'id'   => '@id',

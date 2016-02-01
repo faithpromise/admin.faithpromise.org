@@ -128,7 +128,7 @@ class Groups extends BaseResource {
         $this->addSearchParam('page', $this->page);
         $this->addSearchParam('recordsPerPage', $this->per_page);
         $result = $this->client->fetch('/groups/v1/groups/search?' . http_build_query($this->search_params));
-
+dd($result);
         return $this->buildCollection($result['groups'], 'group', Group::class);
     }
 

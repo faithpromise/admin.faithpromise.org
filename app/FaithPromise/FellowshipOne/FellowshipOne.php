@@ -5,6 +5,8 @@ namespace App\FaithPromise\FellowshipOne;
 use App\FaithPromise\FellowshipOne\Resources\Addresses;
 use App\FaithPromise\FellowshipOne\Resources\Communications;
 use App\FaithPromise\FellowshipOne\Resources\Denominations;
+use App\FaithPromise\FellowshipOne\Resources\Events;
+use App\FaithPromise\FellowshipOne\Resources\EventSchedules;
 use App\FaithPromise\FellowshipOne\Resources\GroupCategories;
 use App\FaithPromise\FellowshipOne\Resources\GroupMembers;
 use App\FaithPromise\FellowshipOne\Resources\Groups;
@@ -43,6 +45,14 @@ class FellowshipOne implements FellowshipOneInterface {
 
     public function denominations() {
         return new Denominations($this);
+    }
+
+    public function events() {
+        return new Events($this);
+    }
+
+    public function eventSchedules($event_id) {
+        return new EventSchedules($this, $event_id);
     }
 
     public function groups() {

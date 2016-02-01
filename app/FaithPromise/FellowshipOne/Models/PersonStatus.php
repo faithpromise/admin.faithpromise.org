@@ -13,11 +13,11 @@ namespace App\FaithPromise\FellowshipOne\Models;
  * @method string getDate()
  * @method string getSubStatus()
  *
- * @method string setId($value)
- * @method string setUri($value)
- * @method string setName($value)
- * @method string setComment($value)
- * @method string setSubStatus($value)
+ * @method PersonStatus setId($value)
+ * @method PersonStatus setUri($value)
+ * @method PersonStatus setName($value)
+ * @method PersonStatus setComment($value)
+ * @method PersonStatus setSubStatus($value)
  *
  */
 

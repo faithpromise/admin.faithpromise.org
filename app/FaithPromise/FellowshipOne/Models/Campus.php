@@ -3,20 +3,20 @@
 namespace App\FaithPromise\FellowshipOne\Models;
 
 /**
- * Class Occupation
+ * Class Campus
  * @package App\FaithPromise\FellowshipOne\Models
  *
  * @method string getId()
  * @method string getUri()
  * @method string getName()
  *
- * @method Occupation setId($value)
- * @method Occupation setUri($value)
- * @method Occupation setName($value)
+ * @method Campus setId($value)
+ * @method Campus setUri($value)
+ * @method Campus setName($value)
  *
  */
 
-class Occupation extends Base {
+class Campus extends Base {
 
     protected $attributes = [
         'id'   => '@id',

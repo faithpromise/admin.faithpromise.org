@@ -15,14 +15,14 @@ namespace App\FaithPromise\FellowshipOne\Models;
  * @method string getCreatedAt()
  * @method string getUpdatedAt()
  *
- * @method string setId($value)
- * @method string setUri($value)
- * @method string setName($value)
- * @method string setSortName($value)
- * @method string setFirstName($value)
- * @method string setLastActivityAt($value)
- * @method string setCreatedAt($value)
- * @method string setUpdatedAt($value)
+ * @method Household setId($value)
+ * @method Household setUri($value)
+ * @method Household setName($value)
+ * @method Household setSortName($value)
+ * @method Household setFirstName($value)
+ * @method Household setLastActivityAt($value)
+ * @method Household setCreatedAt($value)
+ * @method Household setUpdatedAt($value)
  *
  */
 class Household extends Base {

@@ -18,55 +18,55 @@ use Illuminate\Support\Collection;
  * @method string getIsPublic()
  * @method string getHasChildcare()
  * @method string getIsSearchable()
- * @method string getChurchCampus()
- * @method string getGroupType()
+ * @method Campus getChurchCampus()
+ * @method GroupType getGroupType()
  * @method string getGroupURL()
- * @method string getTimeZone()
- * @method string getGender()
- * @method string getMaritalStatus()
+ * @method TimeZone getTimeZone()
+ * @method GroupGender getGender()
+ * @method GroupMaritalStatus getMaritalStatus()
  * @method string getStartAgeRange()
  * @method string getEndAgeRange()
- * @method string getDateRangeType()
+ * @method GroupDateRangeType getDateRangeType()
  * @method string getLeadersCount()
  * @method string getMembersCount()
  * @method string getOpenProspectsCount()
  * @method string getEvent()
- * @method string getLocation()
+ * @method GroupLocation getLocation()
  * @method string getCreatedDate()
- * @method string getCreatedByPerson()
+ * @method Person getCreatedByPerson()
  * @method string getLastUpdatedDate()
- * @method string getLastUpdatedByPerson()
+ * @method Person getLastUpdatedByPerson()
  * @method string getIsLocationPrivate()
  *
- * @method string setId($value)
- * @method string setUri($value)
- * @method string setName($value)
- * @method string setDescription($value)
- * @method string setStartDate($value)
- * @method string setExpirationDate($value)
- * @method string setIsOpen($value)
- * @method string setIsPublic($value)
- * @method string setHasChildcare($value)
- * @method string setIsSearchable($value)
- * @method string setChurchCampus($value)
- * @method string setGroupType($value)
- * @method string setGroupURL($value)
- * @method string setTimeZone($value)
- * @method string setGender($value)
- * @method string setMaritalStatus($value)
- * @method string setStartAgeRange($value)
- * @method string setEndAgeRange($value)
- * @method string setDateRangeType($value)
- * @method string setLeadersCount($value)
- * @method string setMembersCount($value)
- * @method string setOpenProspectsCount($value)
- * @method string setEvent($value)
- * @method string setLocation($value)
- * @method string setCreatedDate($value)
- * @method string setCreatedByPerson($value)
- * @method string setLastUpdatedDate($value)
- * @method string setLastUpdatedByPerson($value)
- * @method string setIsLocationPrivate($value)
+ * @method Group setId($value)
+ * @method Group setUri($value)
+ * @method Group setName($value)
+ * @method Group setDescription($value)
+ * @method Group setStartDate($value)
+ * @method Group setExpirationDate($value)
+ * @method Group setIsOpen($value)
+ * @method Group setIsPublic($value)
+ * @method Group setHasChildcare($value)
+ * @method Group setIsSearchable($value)
+ * @method Group setChurchCampus($value)
+ * @method Group setGroupType($value)
+ * @method Group setGroupURL($value)
+ * @method Group setTimeZone($value)
+ * @method Group setGender($value)
+ * @method Group setMaritalStatus($value)
+ * @method Group setStartAgeRange($value)
+ * @method Group setEndAgeRange($value)
+ * @method Group setDateRangeType($value)
+ * @method Group setLeadersCount($value)
+ * @method Group setMembersCount($value)
+ * @method Group setOpenProspectsCount($value)
+ * @method Group setEvent($value)
+ * @method Group setLocation($value)
+ * @method Group setCreatedDate($value)
+ * @method Group setCreatedByPerson($value)
+ * @method Group setLastUpdatedDate($value)
+ * @method Group setLastUpdatedByPerson($value)
+ * @method Group setIsLocationPrivate($value)
  *
  */
 class Group extends Base {
@@ -82,24 +82,24 @@ class Group extends Base {
         'isPublic'            => 'isPublic',
         'hasChildcare'        => 'hasChildcare',
         'isSearchable'        => 'isSearchable',
-        'churchCampus'        => 'churchCampus',
-        'groupType'           => 'groupType',
+        'churchCampus'        => ['churchCampus', Campus::class],
+        'groupType'           => ['groupType', GroupType::class],
         'groupURL'            => 'groupURL',
-        'timeZone'            => 'timeZone',
+        'timeZone'            => ['timeZone', TimeZone::class],
         'gender'              => ['gender', GroupGender::class],
         'maritalStatus'       => ['maritalStatus', GroupMaritalStatus::class],
         'startAgeRange'       => 'startAgeRange',
         'endAgeRange'         => 'endAgeRange',
-        'dateRangeType'       => 'dateRangeType',
+        'dateRangeType'       => ['dateRangeType', GroupDateRangeType::class],
         'leadersCount'        => 'leadersCount',
         'membersCount'        => 'membersCount',
         'openProspectsCount'  => 'openProspectsCount',
         'event'               => 'event',
-        'location'            => 'location',
+        'location'            => ['location', GroupLocation::class],
         'createdDate'         => 'createdDate',
-        'createdByPerson'     => 'createdByPerson',
+        'createdByPerson'     => ['createdByPerson', Person::class],
         'lastUpdatedDate'     => 'lastUpdatedDate',
-        'lastUpdatedByPerson' => 'lastUpdatedByPerson',
+        'lastUpdatedByPerson' => ['lastUpdatedByPerson', Person::class],
         'isLocationPrivate'   => 'isLocationPrivate',
     ];
 

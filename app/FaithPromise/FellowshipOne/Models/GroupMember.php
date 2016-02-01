@@ -16,15 +16,15 @@ namespace App\FaithPromise\FellowshipOne\Models;
  * @method string getLastUpdatedDate()
  * @method string getLastUpdatedByPerson()
  *
- * @method string setId($value)
- * @method string setUri($value)
- * @method Group setGroup($value)
- * @method Person setPerson($value)
- * @method string setMemberType($value)
- * @method string setCreatedDate($value)
- * @method string setCreatedByPerson($value)
- * @method string setLastUpdatedDate($value)
- * @method string setLastUpdatedByPerson($value)
+ * @method GroupMember setId($value)
+ * @method GroupMember setUri($value)
+ * @method GroupMember setGroup($value)
+ * @method GroupMember setPerson($value)
+ * @method GroupMember setMemberType($value)
+ * @method GroupMember setCreatedDate($value)
+ * @method GroupMember setCreatedByPerson($value)
+ * @method GroupMember setLastUpdatedDate($value)
+ * @method GroupMember setLastUpdatedByPerson($value)
  *
  */
 
