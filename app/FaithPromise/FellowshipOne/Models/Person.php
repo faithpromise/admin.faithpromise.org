@@ -28,7 +28,7 @@ use Illuminate\Support\Collection;
  * @method string getGender()
  * @method string getDateOfBirth()
  * @method string getMaritalStatus()
- * @method string getHouseholdMemberType()
+ * @method HouseholdMemberType getHouseholdMemberType()
  * @method string getIsAuthorized()
  * @method string getStatus()
  * @method string getOccupation()
@@ -153,6 +153,14 @@ class Person extends Base {
         return $dob ? $dob->age : null;
     }
 
+    public function getImage() {
+        if (empty($this->getImageURI())) {
+            return null;
+        }
+
+        return $this->getClient()->fetchImage($this->getImageURI());
+    }
+
     public function isAdult() {
         return $this->getAge() >= 18 || $this->getHouseholdMemberType()->isHead() || $this->getHouseholdMemberType()->isSpouse();
     }
@@ -192,7 +200,6 @@ class Person extends Base {
     public function getCommunications() {
         // Make sure communications are loaded
         if (!$this->values['communications']) {
-            // TODO: add @methods for set methods
             $this->setCommunications($this->getClient()->communications($this->getId())->all());
         }
 

@@ -10,7 +10,7 @@ class Denominations extends BaseResource {
         $url = '/v1/People/Denominations';
         $result = $this->client->fetch($url);
 
-        return $this->buildCollection($result['denominations']['denomination'], Denomination::class);
+        return $this->buildCollection($result['denominations'], 'denomination', Denomination::class);
 
     }
 

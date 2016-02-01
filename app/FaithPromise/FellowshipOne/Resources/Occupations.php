@@ -11,7 +11,7 @@ class Occupations extends BaseResource {
         $url = '/v1/People/Occupations';
         $result = $this->client->fetch($url);
 
-        return $this->buildCollection($result['occupations']['occupation'], Occupation::class);
+        return $this->buildCollection($result['occupations'], 'occupation', Occupation::class);
 
     }
 

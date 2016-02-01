@@ -20,7 +20,7 @@ class Addresses extends BaseResource {
 
     public function all() {
         $result = $this->client->fetch($this->url);
-        return $this->buildCollection($result['addresses']['address'], Address::class);
+        return $this->buildCollection($result['addresses'], 'address', Address::class);
     }
 
     public function find($id) {

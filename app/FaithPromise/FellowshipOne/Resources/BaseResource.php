@@ -8,18 +8,20 @@ use Illuminate\Support\Collection;
 class BaseResource {
 
     protected $url;
-    protected $page = 1;
-    protected $per_page = 1000;
 
     public function __construct(FellowshipOne $f1) {
         $this->client = $f1;
     }
 
-    protected function buildCollection($data, $model) {
+    protected function buildCollection($data, $results_property, $model) {
 
         $collection = new Collection;
 
-        foreach ($data as $record) {
+        if (! array_key_exists($results_property, $data)) {
+            return $collection;
+        }
+
+        foreach ($data[$results_property] as $record) {
             $item = new $model($this->client, $record);
             $collection->put($record['@id'], $item);
         }

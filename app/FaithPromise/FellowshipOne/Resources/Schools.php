@@ -10,7 +10,7 @@ class Schools extends BaseResource {
         $url = '/v1/People/Schools';
         $result = $this->client->fetch($url);
 
-        return $this->buildCollection($result['schools']['school'], School::class);
+        return $this->buildCollection($result['schools'], 'school', School::class);
 
     }
 

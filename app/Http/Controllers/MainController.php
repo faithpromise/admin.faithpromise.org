@@ -31,8 +31,10 @@ class MainController extends BaseController {
         if ($f1) {
 
 //            $test = $f1->denominations()->all();
-            $test = $f1->people()->loadAddresses()->byHousehold(11883428)->first()->getMobilePhone();
-//            $test = $f1->groups()->find(786697)->getMembers(true);
+//            $test = $f1->people()->loadAddresses()->byHousehold(11883428)->first()->getImage();
+            $test = $f1->groups()->whereMinAge(50)->whereMaxAge(100)->get();
+            // https://fpctystn.fellowshiponeapi.com/groups/v1/maritalstatuses/1
+//            $test = $f1->groups()->find(786697);
             dd($test);
 
 

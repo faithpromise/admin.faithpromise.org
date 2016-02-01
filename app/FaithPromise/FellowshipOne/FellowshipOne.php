@@ -194,22 +194,26 @@ class FellowshipOne implements FellowshipOneInterface {
         return $person['person'];
     }
 
-    public function fetch($uri, $data = null, $method = OAUTH_HTTP_METHOD_GET, $retryCount = 0) {
+    public function fetchImage($uri, $contentType = 'image/jpeg') {
+        return $this->fetch($uri, null, OAUTH_HTTP_METHOD_GET, $contentType);
+    }
+
+    public function fetch($uri, $data = null, $method = OAUTH_HTTP_METHOD_GET, $contentType = 'application/json', $retryCount = 0) {
 
         $uri = $this->build_url($uri);
 
-        $headers = ['Content-Type' => 'application/json'];
+        $headers = ['Content-Type' => $contentType];
 
         if (preg_match('[array|object]', gettype($data))) {
             $data = json_encode($data);
         }
 
-        $cache_key = md5($uri . $data . $method . $retryCount);
+        $cache_key = md5($uri . $data . $method . $retryCount . '3');
 
-//        if (Cache::has($cache_key)) {
-//            var_dump($uri . ' (cached)');
-//            return Cache::get($cache_key);
-//        }
+        if (Cache::has($cache_key)) {
+            var_dump($uri . ' (cached)');
+            return Cache::get($cache_key);
+        }
 
         $this->oauthClient->disableSSLChecks();
 
@@ -217,7 +221,11 @@ class FellowshipOne implements FellowshipOneInterface {
 
             $this->oauthClient->fetch($uri, $data, $method, $headers);
 
-            Cache::put($cache_key, json_decode($this->oauthClient->getLastResponse(), true), 480);
+            if (strcasecmp($contentType, 'application/json') === 0) {
+                Cache::put($cache_key, json_decode($this->oauthClient->getLastResponse(), true), 480);
+            } else {
+                Cache::put($cache_key, $this->oauthClient->getLastResponse(), 480);
+            }
 
             return Cache::get($cache_key);
 

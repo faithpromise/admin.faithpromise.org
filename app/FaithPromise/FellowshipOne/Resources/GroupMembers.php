@@ -32,7 +32,7 @@ class GroupMembers extends BaseResource {
     public function all() {
 
         $result = $this->client->fetch($this->url);
-        $collection = $this->buildCollection($result['members']['member'], GroupMember::class);
+        $collection = $this->buildCollection($result['members'], 'member', GroupMember::class);
 
         if ($this->with_people) {
             return $this->addPeople($collection);

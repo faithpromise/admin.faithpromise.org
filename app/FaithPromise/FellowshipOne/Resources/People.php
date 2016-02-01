@@ -2,15 +2,22 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
+use App\FaithPromise\FellowshipOne\FellowshipOne;
 use App\FaithPromise\FellowshipOne\Models\Person;
+use App\FaithPromise\FellowshipOne\Traits\SearchableResource;
 use Carbon\Carbon;
 
 class People extends BaseResource {
 
-    // Include phone numbers and email by default
-    protected $include_params = ['communications'];
+    use SearchableResource;
 
-    protected $search_params = [];
+    public function __construct(FellowshipOne $f1) {
+
+        parent::__construct($f1);
+
+        // Include phone numbers and email by default
+        $this->loadCommunications();
+    }
 
 
     /*
@@ -152,7 +159,7 @@ class People extends BaseResource {
     | "With" Methods
     |--------------------------------------------------------------------------
     |
-    | Where methods are chainable and are used include records that would not
+    | With methods are chainable and are used include records that would not
     | be returned by default.
     |
     | Ex: $f1->people()->withInactive()->whereName('Betty Boop')->get();
@@ -165,26 +172,6 @@ class People extends BaseResource {
 
     public function withDeceased($include = true) {
         return $this->toggleSearchParam('includeDeceased', 'True', $include);
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Pagination methods
-    |--------------------------------------------------------------------------
-    |
-    | Used to set the number of records returned in each page set.
-    |
-    | Ex: $f1->people()->perPage(100)->whereName('Betty Boop')->get();
-    |
-    */
-
-    public function perPage($qty) {
-        $this->per_page = $qty;
-    }
-
-    public function page($page) {
-        $this->page = $page;
     }
 
 
@@ -210,51 +197,7 @@ class People extends BaseResource {
         $params = array_merge($this->search_params, ['include' => implode(',', $this->include_params)]);
         $result = $this->client->fetch('/v1/People/Search?' . http_build_query($params));
 
-        return $this->buildCollection($result['results']['person'], Person::class);
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Private methods
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    private function addSearchParam($name, $value) {
-        $this->search_params[$name] = $value;
-
-        return $this;
-    }
-
-    private function removeSearchParam($name) {
-        unset($this->search_params[$name]);
-
-        return $this;
-    }
-
-    private function addDateParam($name, $value) {
-        $date = new Carbon($value);
-
-        return $this->addSearchParam($name, $date->format('Y-m-d'));
-    }
-
-    private function toggleSearchParam($name, $value, $include) {
-        if ($include)
-            return $this->addSearchParam($name, $value);
-
-        return $this->removeSearchParam($name);
-    }
-
-    private function toggleInclude($value, $include = true) {
-
-        if ($include && !in_array($value, $this->include_params)) {
-            array_push($this->include_params, $value);
-        } else if (!$include && in_array($value, $this->include_params)) {
-            unset($this->include_params[array_search($value, $this->include_params)]);
-        }
-
-        return $this;
+        return $this->buildCollection($result['results'], 'person', Person::class);
     }
 
 }

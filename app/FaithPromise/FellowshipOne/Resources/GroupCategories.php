@@ -8,7 +8,7 @@ class GroupCategories extends BaseResource {
 
     public function all() {
         $result = $this->client->fetch('/groups/v1/categories');
-        return $this->buildCollection($result['categories']['category'], GroupCategory::class);
+        return $this->buildCollection($result['categories'], 'category', GroupCategory::class); // TODO: Create GroupCategory
     }
 
     /**

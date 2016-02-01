@@ -20,7 +20,7 @@ class Communications extends BaseResource {
     public function all() {
         $result = $this->client->fetch($this->url);
 
-        return $this->buildCollection($result['communications']['communication'], Communication::class);
+        return $this->buildCollection($result['communications'], 'communication', Communication::class);
     }
 
     public function find($id) {

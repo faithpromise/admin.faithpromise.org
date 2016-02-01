@@ -77,7 +77,7 @@ class Households extends BaseResource {
 
     private function search($url) {
         $result = $this->client->fetch($url . '&recordsPerPage=5'); // TODO: Change back to 99999
-        return $this->buildCollection($result['results']['household'], Household::class);
+        return $this->buildCollection($result['results'], 'household', Household::class);
     }
 
 }
