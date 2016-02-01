@@ -3,7 +3,7 @@
 namespace App\FaithPromise\FellowshipOne\Resources;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
-use App\FaithPromise\FellowshipOne\Models\Household;
+use App\FaithPromise\FellowshipOne\Models\People\Household;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 

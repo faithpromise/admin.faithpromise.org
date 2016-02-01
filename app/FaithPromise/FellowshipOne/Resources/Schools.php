@@ -2,7 +2,7 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
-use App\FaithPromise\FellowshipOne\Models\School;
+use App\FaithPromise\FellowshipOne\Models\People\School;
 
 class Schools extends BaseResource {
 

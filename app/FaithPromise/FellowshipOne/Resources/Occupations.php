@@ -3,7 +3,7 @@
 namespace App\FaithPromise\FellowshipOne\Resources;
 
 
-use App\FaithPromise\FellowshipOne\Models\Occupation;
+use App\FaithPromise\FellowshipOne\Models\People\Occupation;
 
 class Occupations extends BaseResource {
 

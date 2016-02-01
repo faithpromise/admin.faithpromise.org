@@ -1,6 +1,9 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\Groups;
+
+use App\FaithPromise\FellowshipOne\Models\Base;
+use App\FaithPromise\FellowshipOne\Models\People\Person;
 
 /**
  * Class GroupLocation
@@ -18,21 +21,20 @@ namespace App\FaithPromise\FellowshipOne\Models;
  * @method string getLastUpdatedDate()
  * @method string getLastUpdatedByPerson()
  *
- * @method GroupLocation setId($value)
- * @method GroupLocation setUri($value)
- * @method GroupLocation setName($value)
- * @method GroupLocation setDescription($value)
- * @method GroupLocation setIsOnline($value)
- * @method GroupLocation setUrl($value)
- * @method GroupLocation setAddress($value)
- * @method GroupLocation setCreatedDate($value)
- * @method GroupLocation setCreatedByPerson($value)
- * @method GroupLocation setLastUpdatedDate($value)
- * @method GroupLocation setLastUpdatedByPerson($value)
+ * @method Location setId($value)
+ * @method Location setUri($value)
+ * @method Location setName($value)
+ * @method Location setDescription($value)
+ * @method Location setIsOnline($value)
+ * @method Location setUrl($value)
+ * @method Location setAddress($value)
+ * @method Location setCreatedDate($value)
+ * @method Location setCreatedByPerson($value)
+ * @method Location setLastUpdatedDate($value)
+ * @method Location setLastUpdatedByPerson($value)
  *
  */
-
-class GroupLocation extends Base {
+class Location extends Base {
 
     protected $attributes = [
         'id'                  => '@id',

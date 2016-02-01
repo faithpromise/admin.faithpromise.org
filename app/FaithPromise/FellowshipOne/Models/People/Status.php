@@ -1,9 +1,10 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\People;
+use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
- * Class PersonStatus
+ * Class Status
  * @package App\FaithPromise\FellowshipOne\Models
  *
  * @method string getId()
@@ -13,15 +14,15 @@ namespace App\FaithPromise\FellowshipOne\Models;
  * @method string getDate()
  * @method string getSubStatus()
  *
- * @method PersonStatus setId($value)
- * @method PersonStatus setUri($value)
- * @method PersonStatus setName($value)
- * @method PersonStatus setComment($value)
- * @method PersonStatus setSubStatus($value)
+ * @method Status setId($value)
+ * @method Status setUri($value)
+ * @method Status setName($value)
+ * @method Status setComment($value)
+ * @method Status setSubStatus($value)
  *
  */
 
-class PersonStatus extends Base {
+class Status extends Base {
 
     protected $attributes = [
         'id'        => '@id',
@@ -29,7 +30,7 @@ class PersonStatus extends Base {
         'name'      => 'name',
         'comment'   => 'comment',
         'date'      => 'date',
-        'subStatus' => ['subStatus', PersonSubStatus::class],
+        'subStatus' => ['subStatus', SubStatus::class],
     ];
 
 }

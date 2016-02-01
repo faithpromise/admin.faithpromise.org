@@ -1,9 +1,10 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\Events;
+use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
- * Class EventSchedule
+ * Class Schedule
  * @package App\FaithPromise\FellowshipOne\Models
  *
  * @method string getId()
@@ -22,25 +23,25 @@ namespace App\FaithPromise\FellowshipOne\Models;
  * @method string getLastUpdatedDate()
  * @method string getLastUpdatedByPerson()
  *
- * @method string setId($value)
- * @method string setUri($value)
- * @method string setName($value)
- * @method string setDescription($value)
- * @method string setStartTime($value)
- * @method string setEndTime($value)
- * @method string setNumberRecurrences($value)
- * @method string setStartDate($value)
- * @method string setEndDate($value)
- * @method string setRecurrenceType($value)
- * @method string setRecurrences($value)
- * @method string setCreatedDate($value)
- * @method string setCreatedByPerson($value)
- * @method string setLastUpdatedDate($value)
- * @method string setLastUpdatedByPerson($value)
+ * @method Schedule setId($value)
+ * @method Schedule setUri($value)
+ * @method Schedule setName($value)
+ * @method Schedule setDescription($value)
+ * @method Schedule setStartTime($value)
+ * @method Schedule setEndTime($value)
+ * @method Schedule setNumberRecurrences($value)
+ * @method Schedule setStartDate($value)
+ * @method Schedule setEndDate($value)
+ * @method Schedule setRecurrenceType($value)
+ * @method Schedule setRecurrences($value)
+ * @method Schedule setCreatedDate($value)
+ * @method Schedule setCreatedByPerson($value)
+ * @method Schedule setLastUpdatedDate($value)
+ * @method Schedule setLastUpdatedByPerson($value)
  *
  */
 
-class EventSchedule extends Base {
+class Schedule extends Base {
 
     protected $attributes = [
         'id'                  => '@id',

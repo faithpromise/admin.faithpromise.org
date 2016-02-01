@@ -3,8 +3,8 @@
 namespace App\FaithPromise\FellowshipOne\Resources;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
-use App\FaithPromise\FellowshipOne\Models\Address;
-use App\FaithPromise\FellowshipOne\Models\Group;
+use App\FaithPromise\FellowshipOne\Models\People\Address;
+use App\FaithPromise\FellowshipOne\Models\Groups\Group;
 
 class Addresses extends BaseResource {
 

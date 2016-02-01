@@ -1,22 +1,23 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\Groups;
+use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
- * Class CommunicationType
+ * Class MaritalStatus
  * @package App\FaithPromise\FellowshipOne\Models
  *
  * @method string getId()
  * @method string getUri()
  * @method string getName()
  *
- * @method GroupMaritalStatus setId($value)
- * @method GroupMaritalStatus setUri($value)
- * @method GroupMaritalStatus setName($value)
+ * @method MaritalStatus setId($value)
+ * @method MaritalStatus setUri($value)
+ * @method MaritalStatus setName($value)
  *
  */
 
-class GroupMaritalStatus extends Base {
+class MaritalStatus extends Base {
 
     const MARRIED_OR_SINGLE = 0;
     const MARRIED = 1;

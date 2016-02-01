@@ -1,22 +1,23 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\People;
+use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
- * Class GroupType
+ * Class School
  * @package App\FaithPromise\FellowshipOne\Models
  *
  * @method string getId()
  * @method string getUri()
  * @method string getName()
  *
- * @method GroupType setId($value)
- * @method GroupType setUri($value)
- * @method GroupType setName($value)
+ * @method School setId($value)
+ * @method School setUri($value)
+ * @method School setName($value)
  *
  */
 
-class GroupType extends Base {
+class School extends Base {
 
     protected $attributes = [
         'id'   => '@id',

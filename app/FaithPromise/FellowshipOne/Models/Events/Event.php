@@ -1,6 +1,8 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\Events;
+use App\FaithPromise\FellowshipOne\Models\Base;
+use App\FaithPromise\FellowshipOne\Models\People\Person;
 
 /**
  * Class Event

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\FaithPromise\FellowshipOne\FellowshipOneFacade;
-use App\FaithPromise\FellowshipOne\Models\Group;
-use App\FaithPromise\FellowshipOne\Models\Person;
+use App\FaithPromise\FellowshipOne\Models\Groups\Group;
+use App\FaithPromise\FellowshipOne\Models\People\Person;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -32,7 +32,7 @@ class MainController extends BaseController {
 //            $test = $f1->events()->all()->filter(function($item) {
 //                return stripos($item->getName(), 'Gilbert') !== false;
 //            });
-            $test = $f1->eventSchedules(113065)->all();
+            $test = $f1->groups()->whereName('Gilbert')->get();
             dd($test);
 
 

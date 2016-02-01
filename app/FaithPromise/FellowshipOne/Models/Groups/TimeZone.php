@@ -1,6 +1,7 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\Groups;
+use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
  * Class TimeZone

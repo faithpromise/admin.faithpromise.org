@@ -2,7 +2,7 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
-use App\FaithPromise\FellowshipOne\Models\HouseholdMemberType;
+use App\FaithPromise\FellowshipOne\Models\People\HouseholdMemberType;
 
 class HouseholdMemberTypes extends BaseResource {
 

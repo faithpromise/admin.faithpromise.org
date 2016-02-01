@@ -2,9 +2,9 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
-use App\FaithPromise\FellowshipOne\Models\Group;
-use App\FaithPromise\FellowshipOne\Models\GroupGender;
-use App\FaithPromise\FellowshipOne\Models\GroupMaritalStatus;
+use App\FaithPromise\FellowshipOne\Models\Groups\Group;
+use App\FaithPromise\FellowshipOne\Models\Groups\Gender;
+use App\FaithPromise\FellowshipOne\Models\Groups\MaritalStatus;
 use App\FaithPromise\FellowshipOne\Traits\SearchableResource;
 
 class Groups extends BaseResource {
@@ -27,7 +27,7 @@ class Groups extends BaseResource {
 
     /**
      * @param $id
-     * @return Group
+     * @return \App\FaithPromise\FellowshipOne\Models\Groups\Group
      */
     public function context($id) {
         $model = new Group($this->client);
@@ -56,27 +56,27 @@ class Groups extends BaseResource {
     }
 
     public function whereMenOnly() {
-        return $this->addSearchParam('genderID', GroupGender::MALE);
+        return $this->addSearchParam('genderID', Gender::MALE);
     }
 
     public function whereWomenOnly() {
-        return $this->addSearchParam('genderID', GroupGender::FEMALE);
+        return $this->addSearchParam('genderID', Gender::FEMALE);
     }
 
     public function whereCoed() {
-        return $this->addSearchParam('genderID', GroupGender::COED);
+        return $this->addSearchParam('genderID', Gender::COED);
     }
 
     public function whereMarriedsOnly() {
-        return $this->addSearchParam('maritalStatusID', GroupMaritalStatus::MARRIED);
+        return $this->addSearchParam('maritalStatusID', MaritalStatus::MARRIED);
     }
 
     public function whereSinglesOnly() {
-        return $this->addSearchParam('maritalStatusID', GroupMaritalStatus::SINGLE);
+        return $this->addSearchParam('maritalStatusID', MaritalStatus::SINGLE);
     }
 
     public function whereMarriedsAndSingles() {
-        return $this->addSearchParam('maritalStatusID', GroupMaritalStatus::SINGLE);
+        return $this->addSearchParam('maritalStatusID', MaritalStatus::SINGLE);
     }
 
     public function whereMinAge($value) {
@@ -128,7 +128,7 @@ class Groups extends BaseResource {
         $this->addSearchParam('page', $this->page);
         $this->addSearchParam('recordsPerPage', $this->per_page);
         $result = $this->client->fetch('/groups/v1/groups/search?' . http_build_query($this->search_params));
-dd($result);
+
         return $this->buildCollection($result['groups'], 'group', Group::class);
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
-use App\FaithPromise\FellowshipOne\Models\Event;
+use App\FaithPromise\FellowshipOne\Models\Events\Event;
 
 class Events extends BaseResource {
 

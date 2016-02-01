@@ -1,22 +1,23 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\Groups;
+use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
- * Class CommunicationType
+ * Class Gender
  * @package App\FaithPromise\FellowshipOne\Models
  *
  * @method string getId()
  * @method string getUri()
  * @method string getName()
  *
- * @method GroupGender setId($value)
- * @method GroupGender setUri($value)
- * @method GroupGender setName($value)
+ * @method Gender setId($value)
+ * @method Gender setUri($value)
+ * @method Gender setName($value)
  *
  */
 
-class GroupGender extends Base {
+class Gender extends Base {
 
     const COED = 0;
     const MALE = 1;

@@ -3,7 +3,7 @@
 namespace App\FaithPromise\FellowshipOne\Resources;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
-use App\FaithPromise\FellowshipOne\Models\Communication;
+use App\FaithPromise\FellowshipOne\Models\People\Communication;
 
 class Communications extends BaseResource {
 

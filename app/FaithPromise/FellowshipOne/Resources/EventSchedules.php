@@ -3,7 +3,7 @@
 namespace App\FaithPromise\FellowshipOne\Resources;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
-use App\FaithPromise\FellowshipOne\Models\EventSchedule;
+use App\FaithPromise\FellowshipOne\Models\Events\Schedule;
 
 class EventSchedules extends BaseResource {
 
@@ -19,7 +19,7 @@ class EventSchedules extends BaseResource {
     public function all() {
         $result = $this->client->fetch($this->url);
 
-        $collection = $this->buildCollection($result['schedules'], 'schedule', EventSchedule::class);
+        $collection = $this->buildCollection($result['schedules'], 'schedule', Schedule::class);
 
 //        if ($this->with_people) {
 //            return $this->addPeople($collection);

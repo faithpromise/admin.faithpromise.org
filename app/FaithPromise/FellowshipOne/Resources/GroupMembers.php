@@ -3,7 +3,7 @@
 namespace App\FaithPromise\FellowshipOne\Resources;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
-use App\FaithPromise\FellowshipOne\Models\GroupMember;
+use App\FaithPromise\FellowshipOne\Models\Groups\Member;
 
 class GroupMembers extends BaseResource {
 
@@ -20,7 +20,7 @@ class GroupMembers extends BaseResource {
     public function find($member_id) {
         $result = $this->client->fetch('/groups/v1/groups/' . $this->group_id . '/members/' . $member_id);
 
-        return new GroupMember($result['member']); // TODO: test
+        return new Member($result['member']); // TODO: test
     }
 
     public function withPeople($with_people = true) {
@@ -32,7 +32,7 @@ class GroupMembers extends BaseResource {
     public function all() {
 
         $result = $this->client->fetch($this->url);
-        $collection = $this->buildCollection($result['members'], 'member', GroupMember::class);
+        $collection = $this->buildCollection($result['members'], 'member', Member::class);
 
         if ($this->with_people) {
             return $this->addPeople($collection);

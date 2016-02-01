@@ -87,6 +87,7 @@ abstract class Base implements \ArrayAccess, Arrayable {
 
         foreach($result as &$value) {
             if (is_object($value)) {
+                /** @noinspection PhpUndefinedMethodInspection */
                 $value = $value->toArray();
             }
         }
@@ -99,10 +100,12 @@ abstract class Base implements \ArrayAccess, Arrayable {
     }
 
     public function offsetGet($offset) {
+        /** @noinspection PhpUndefinedMethodInspection */
         return $this->get($offset);
     }
 
     public function offsetSet($offset, $value) {
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->set($offset, $value);
     }
 

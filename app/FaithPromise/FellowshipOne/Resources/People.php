@@ -3,7 +3,7 @@
 namespace App\FaithPromise\FellowshipOne\Resources;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
-use App\FaithPromise\FellowshipOne\Models\Person;
+use App\FaithPromise\FellowshipOne\Models\People\Person;
 use App\FaithPromise\FellowshipOne\Traits\SearchableResource;
 use Carbon\Carbon;
 

@@ -2,7 +2,7 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources;
 
-use App\FaithPromise\FellowshipOne\Models\PersonStatus;
+use App\FaithPromise\FellowshipOne\Models\People\Status;
 
 class PersonStatuses extends BaseResource {
 
@@ -10,7 +10,7 @@ class PersonStatuses extends BaseResource {
 
         $url = '/v1/People/Statuses';
         $result = $this->client->fetch($url);
-        return $this->buildCollection($result['statuses'], 'status', PersonStatus::class);
+        return $this->buildCollection($result['statuses'], 'status', Status::class);
 
     }
 

@@ -1,7 +1,10 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\Groups;
 
+use App\FaithPromise\FellowshipOne\Models\Base;
+use App\FaithPromise\FellowshipOne\Models\People\Household;
+use App\FaithPromise\FellowshipOne\Models\People\Person;
 use Illuminate\Support\Collection;
 
 /**
@@ -19,19 +22,19 @@ use Illuminate\Support\Collection;
  * @method string getHasChildcare()
  * @method string getIsSearchable()
  * @method Campus getChurchCampus()
- * @method GroupType getGroupType()
+ * @method Type getGroupType()
  * @method string getGroupURL()
  * @method TimeZone getTimeZone()
- * @method GroupGender getGender()
- * @method GroupMaritalStatus getMaritalStatus()
+ * @method Gender getGender()
+ * @method MaritalStatus getMaritalStatus()
  * @method string getStartAgeRange()
  * @method string getEndAgeRange()
- * @method GroupDateRangeType getDateRangeType()
+ * @method DateRangeType getDateRangeType()
  * @method string getLeadersCount()
  * @method string getMembersCount()
  * @method string getOpenProspectsCount()
  * @method string getEvent()
- * @method GroupLocation getLocation()
+ * @method Location getLocation()
  * @method string getCreatedDate()
  * @method Person getCreatedByPerson()
  * @method string getLastUpdatedDate()
@@ -83,19 +86,19 @@ class Group extends Base {
         'hasChildcare'        => 'hasChildcare',
         'isSearchable'        => 'isSearchable',
         'churchCampus'        => ['churchCampus', Campus::class],
-        'groupType'           => ['groupType', GroupType::class],
+        'groupType'           => ['groupType', Type::class],
         'groupURL'            => 'groupURL',
         'timeZone'            => ['timeZone', TimeZone::class],
-        'gender'              => ['gender', GroupGender::class],
-        'maritalStatus'       => ['maritalStatus', GroupMaritalStatus::class],
+        'gender'              => ['gender', Gender::class],
+        'maritalStatus'       => ['maritalStatus', MaritalStatus::class],
         'startAgeRange'       => 'startAgeRange',
         'endAgeRange'         => 'endAgeRange',
-        'dateRangeType'       => ['dateRangeType', GroupDateRangeType::class],
+        'dateRangeType'       => ['dateRangeType', DateRangeType::class],
         'leadersCount'        => 'leadersCount',
         'membersCount'        => 'membersCount',
         'openProspectsCount'  => 'openProspectsCount',
         'event'               => 'event',
-        'location'            => ['location', GroupLocation::class],
+        'location'            => ['location', Location::class],
         'createdDate'         => 'createdDate',
         'createdByPerson'     => ['createdByPerson', Person::class],
         'lastUpdatedDate'     => 'lastUpdatedDate',
@@ -113,7 +116,7 @@ class Group extends Base {
 
         $ages = [];
 
-        /** @var GroupMember $member */
+        /** @var Member $member */
         foreach ($this->getMembers(true) as $member) {
             if ($member->getPerson()->hasDateOfBirth()) {
                 $ages[] = $member->getPerson()->getAge();
@@ -132,10 +135,10 @@ class Group extends Base {
         $ages = new Collection();
         $households = $this->getHouseHolds();
 
-        /** @var Household $household */
+        /** @var \App\FaithPromise\FellowshipOne\Models\People\Household $household */
         foreach ($households as $household) {
 
-            /** @var Person $person */
+            /** @var \App\FaithPromise\FellowshipOne\Models\Events\\App\FaithPromise\FellowshipOne\Models\People\Person $person */
             foreach ($household->getChildren() as $person) {
                 if ($person->hasDateOfBirth()) {
                     $ages->push($person->getAge());
@@ -153,7 +156,7 @@ class Group extends Base {
         $members = $this->getMembers(true);
         $household_ids = new Collection();
 
-        /** @var GroupMember $member */
+        /** @var Member $member */
         foreach ($members as $member) {
             $household_ids->put($member->getPerson()->getHouseholdId(), $member->getPerson()->getHouseholdId());
         }

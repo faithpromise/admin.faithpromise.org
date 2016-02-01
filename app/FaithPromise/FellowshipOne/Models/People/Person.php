@@ -1,7 +1,8 @@
 <?php
 
-namespace App\FaithPromise\FellowshipOne\Models;
+namespace App\FaithPromise\FellowshipOne\Models\People;
 
+use App\FaithPromise\FellowshipOne\Models\Base;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -114,7 +115,7 @@ class Person extends Base {
         'maritalStatus'       => 'maritalStatus',
         'householdMemberType' => ['householdMemberType', HouseholdMemberType::class],
         'isAuthorized'        => 'isAuthorized',
-        'status'              => ['status', PersonStatus::class],
+        'status'              => ['status', Status::class],
         'occupation'          => ['occupation', Occupation::class],
         'employer'            => 'employer',
         'school'              => ['school', School::class],
@@ -207,6 +208,7 @@ class Person extends Base {
     }
 
     public function getPrimaryAddress() {
+        /** @noinspection PhpUnusedParameterInspection */
         return $this->getAddresses()->first(function($key, Address $address) {
             return $address->getAddressType()->isPrimary();
         });
@@ -219,12 +221,14 @@ class Person extends Base {
     }
 
     public function getPreferredPhone() {
+        /** @noinspection PhpUnusedParameterInspection */
         return $this->getCommunications()->first(function($key, Communication $communication) {
             return $communication->isPhone() && $communication->isPreferred();
         });
     }
 
     public function getMobilePhone() {
+        /** @noinspection PhpUnusedParameterInspection */
         return $this->getCommunications()->first(function($key, Communication $communication) {
             return $communication->isMobilePhone();
         });
@@ -237,6 +241,7 @@ class Person extends Base {
     }
 
     public function getPreferredEmail() {
+        /** @noinspection PhpUnusedParameterInspection */
         return $this->getCommunications()->first(function($key, Communication $communication) {
             return $communication->isEmail() && $communication->isPreferred();
         });
