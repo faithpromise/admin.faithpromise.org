@@ -2,18 +2,14 @@
 
 namespace App\FaithPromise\FellowshipOne\Resources\People;
 
-use App\FaithPromise\FellowshipOne\FellowshipOne;
 use App\FaithPromise\FellowshipOne\Models\People\Household;
 use App\FaithPromise\FellowshipOne\Resources\BaseResource;
-use Carbon\Carbon;
+use App\FaithPromise\FellowshipOne\Traits\SearchableResource;
 use Illuminate\Support\Collection;
 
 class Households extends BaseResource {
 
-    public function __construct(FellowshipOne $f1) {
-        parent::__construct($f1);
-    }
-
+    use SearchableResource;
 
     /*
     |--------------------------------------------------------------------------
@@ -36,48 +32,63 @@ class Households extends BaseResource {
      */
     public function context($id) {
         $model = new Household($this->client);
+
         return $model->setId($id);
     }
 
     public function edit($id) {
-        return $this->find($id, true);
+        return $this->find($id);
     }
 
-    public function whereId(array $ids) {
 
+    /*
+    |--------------------------------------------------------------------------
+    | "By" Methods
+    |--------------------------------------------------------------------------
+    |
+    | These methods will immediately return results.
+    |
+    | Ex: $f1->groups()->byName('Betty Boop');
+    |
+    */
+
+    public function byId(array $ids) {
         $result = new Collection();
 
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             $result->put($id, $this->find($id));
         }
 
         return $result;
     }
 
-    public function whereName($name) {
-        return $this->search('/v1/Households/Search?searchfor=' . urlencode($name));
+    public function byName($value) {
+        return $this->addSearchParam('searchfor', $value)->get();
     }
 
-    public function whereLastActivityBefore($date) {
-        $d = new Carbon($date);
-
-        return $this->search('/v1/Households/Search?lastActivityDate=' . $d->format('Y-m-d'));
+    public function byLastActivityBefore($value) {
+        return $this->addDateParam('lastActivityDate', $value)->get();
     }
 
-    public function whereLastUpdatedBefore($date) {
-        $d = new Carbon($date);
-
-        return $this->search('/v1/Households/Search?lastUpdatedDate=' . $d->format('Y-m-d'));
+    public function byLastUpdatedBefore($value) {
+        return $this->addDateParam('lastUpdatedDate', $value)->get();
     }
 
-    public function whereCreatedBefore($date) {
-        $d = new Carbon($date);
-
-        return $this->search('/v1/Households/Search?createdDate=' . $d->format('Y-m-d'));
+    public function byCreatedBefore($value) {
+        return $this->addDateParam('createdDate', $value)->get();
     }
 
-    private function search($url) {
-        $result = $this->client->fetch($url . '&recordsPerPage=5'); // TODO: Change back to 99999
+    public function get() {
+
+        if (empty($this->search_params)) {
+            throw new \Exception('At least one criteria must be provided to search households.');
+        }
+
+        $this->addSearchParam('page', $this->page);
+        $this->addSearchParam('recordsPerPage', $this->per_page);
+//        $params = array_merge($this->search_params, ['include' => implode(',', $this->include_params)]);
+        $result = $this->client->fetch('/v1/Households/Search?' . http_build_query($this->search_params));
+
         return $this->buildCollection($result['results'], 'household', Household::class);
     }
 
