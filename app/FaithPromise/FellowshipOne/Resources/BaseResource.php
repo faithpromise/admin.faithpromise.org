@@ -17,17 +17,28 @@ class BaseResource {
 
         $collection = new Collection;
 
-        if (! array_key_exists($results_property, $data)) {
-            return $collection;
-        }
-
-        foreach ($data[$results_property] as $record) {
-            $item = new $model($this->client, $record);
-            $collection->put($record['@id'], $item);
+        if (array_key_exists($results_property, $data)) {
+            foreach ($data[$results_property] as $record) {
+                $item = new $model($this->client, $record);
+                $collection->put($record['@id'], $item);
+            }
         }
 
         return $collection;
 
+    }
+
+    protected function buildSimpleCollection(array $data, $model) {
+        $collection = new Collection;
+
+        if (count($data) > 0) {
+            foreach ($data as $record) {
+                $item = new $model($this->client, $record);
+                $collection->push($item);
+            }
+        }
+
+        return $collection;
     }
 
 }

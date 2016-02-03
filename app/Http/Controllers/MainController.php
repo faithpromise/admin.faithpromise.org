@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\FaithPromise\FellowshipOne\FellowshipOneFacade;
-use App\FaithPromise\FellowshipOne\Models\Groups\Group;
-use App\FaithPromise\FellowshipOne\Models\People\Person;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -25,6 +23,10 @@ class MainController extends BaseController {
         /**
          * Group IDs: 1906648
          * Household IDs: 7871147,47232278,33807856,11883428
+         *
+         * Ministry: 9701 (PEL - Student Ministries)
+         * Activity: 27043 (fpStudents High School)
+         * Schedule: 47102 (Wednesday, 6:30 PM)
          */
 
         if ($f1) {
@@ -32,7 +34,22 @@ class MainController extends BaseController {
 //            $test = $f1->events()->all()->filter(function($item) {
 //                return stripos($item->getName(), 'Gilbert') !== false;
 //            });
-            $test = $f1->groupCategories()->find(14043);
+
+            $test = $f1->activityHeadCounts(81562843)->all();
+
+            dd($test);
+
+
+
+
+            $test = $f1->assignments()->all();
+
+            foreach($test as $min) {
+                if ($min->getName() == 'PEL - Student Ministries') {
+                    dd($min);
+                }
+            }
+
             dd($test);
 
 

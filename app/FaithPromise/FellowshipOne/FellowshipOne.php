@@ -2,6 +2,15 @@
 
 namespace App\FaithPromise\FellowshipOne;
 
+use App\FaithPromise\FellowshipOne\Resources\Activities\Activities;
+use App\FaithPromise\FellowshipOne\Resources\Activities\Assignments;
+use App\FaithPromise\FellowshipOne\Resources\Activities\HeadCounts;
+use App\FaithPromise\FellowshipOne\Resources\Activities\Instances;
+use App\FaithPromise\FellowshipOne\Resources\Activities\Ministries;
+use App\FaithPromise\FellowshipOne\Resources\Activities\Rooms;
+use App\FaithPromise\FellowshipOne\Resources\Activities\RosterFolders;
+use App\FaithPromise\FellowshipOne\Resources\Activities\Rosters;
+use App\FaithPromise\FellowshipOne\Resources\Activities\Schedules as ActivitySchedules;
 use App\FaithPromise\FellowshipOne\Resources\People\Addresses;
 use App\FaithPromise\FellowshipOne\Resources\People\Communications;
 use App\FaithPromise\FellowshipOne\Resources\People\Denominations;
@@ -35,8 +44,44 @@ class FellowshipOne implements FellowshipOneInterface {
         $this->api_url = $api_url;
     }
 
+    public function activities() {
+        return new Activities($this);
+    }
+
+    public function activityInstances($schedule_id) {
+        return new Instances($this, $schedule_id);
+    }
+
+    public function activitySchedules($activity_id) {
+        return new ActivitySchedules($this, $activity_id);
+    }
+
+    public function activityRosters($activity_id) {
+        return new Rosters($this, $activity_id);
+    }
+
+    public function activityRosterFolders($activity_id) {
+        return new RosterFolders($this, $activity_id);
+    }
+
+    public function activityHeadCounts($instance_id) {
+        return new HeadCounts($this, $instance_id);
+    }
+
+    public function activityRooms() {
+        return new Rooms($this);
+    }
+
     public function addresses($person_id) {
         return new Addresses($this, $person_id);
+    }
+
+    public function assignments($activity_id) {
+        return new Assignments($this, $activity_id);
+    }
+
+    public function attendances($activity_id, $instance_id) {
+        return new Attendances($this, $activity_id, $instance_id);
     }
 
     public function communications($person_id) {
@@ -73,6 +118,10 @@ class FellowshipOne implements FellowshipOneInterface {
 
     public function householdMemberTypes() {
         return new HouseholdMemberTypes($this);
+    }
+
+    public function ministries() {
+        return new Ministries($this);
     }
 
     public function occupations() {

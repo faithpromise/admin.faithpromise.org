@@ -12,18 +12,45 @@ class Groups extends BaseResource {
 
     use SearchableResource;
 
-    public function all() {
 
-        return $this->whereMinAge(50)->whereMaxAge(100)->get();
-        // TODO: Fix
-//        $result = $this->client->fetch('/groups/v1/groups/search?issearchable=true&recordsPerPage=5');
-//        return $this->buildCollection($result['groups']['group'], Group::class);
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Find
+    |--------------------------------------------------------------------------
+    |
+    | Find and return a single record
+    |
+    */
 
     public function find($id) {
         $result = $this->client->fetch('/groups/v1/groups/' . $id);
 
         return new Group($this->client, $result['group']);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | All
+    |--------------------------------------------------------------------------
+    |
+    | Get all records. Should not be used with "where" methods. When searching
+    | use the get() method.
+    |
+    | Ex: $f1->groups()->all();
+    |
+    */
+
+    public function all() {
+
+        if ($this->hasSearchParameters()) {
+            throw new \Exception('You should not use all() after adding criteria. Use get() instead.');
+        }
+
+        $searchable_groups = $this->client->groups()->whereSearchable()->perPage(99999)->get();
+        $hidden_groups = $this->client->groups()->whereSearchable(false)->perPage(99999)->get();
+
+        return $searchable_groups->merge($hidden_groups);
     }
 
     /**
@@ -52,8 +79,8 @@ class Groups extends BaseResource {
         return $this->addSearchParam('searchFor', $value);
     }
 
-    public function whereSearchable() {
-        return $this->addSearchParam('isSearchable', 'true');
+    public function whereSearchable($value = true) {
+        return $this->addSearchParam('isSearchable', $value ? 'true' : 'false');
     }
 
     public function whereMenOnly() {
@@ -122,7 +149,7 @@ class Groups extends BaseResource {
 
     public function get() {
 
-        if (empty($this->search_params)) {
+        if (!$this->hasSearchParameters()) {
             throw new \Exception('At least one criteria must be provided to search groups.');
         }
 

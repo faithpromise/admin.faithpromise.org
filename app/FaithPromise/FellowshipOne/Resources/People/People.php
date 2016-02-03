@@ -33,7 +33,7 @@ class People extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/v1/People/' . $id);
 
-        return new Person($result['person']);
+        return new Person($this->client, $result['person']);
     }
 
 
@@ -42,7 +42,19 @@ class People extends BaseResource {
     | All
     |--------------------------------------------------------------------------
     |
-    | Get all records.
+    | Get all records. Limited to 1000. Use pagination:
+    |
+    |
+    |   $collection = $f1->people()->all();
+    |
+    |   while($collection->hasMore()) {
+    |
+    |       $people = $collection->get();
+    |
+    |       foreach($people as $person) {
+    |           echo $person->getName() . '<br>';
+    |       }
+    |   }
     |
     */
 
@@ -187,18 +199,38 @@ class People extends BaseResource {
     |
     */
 
+    public function hasMore() {
+
+        $result = $this->client->fetch($this->getSearchUrl());
+        $additional_pages = intval($result['results']['@additionalPages']);
+
+        if ($additional_pages > 0) {
+            $this->nextPage();
+        }
+
+        return $additional_pages >= 0;
+
+    }
+
     public function get() {
 
-        if (empty($this->search_params)) {
+        if (!$this->hasSearchParameters()) {
             throw new \Exception('At least one criteria must be provided to search people.');
         }
 
-        $this->addSearchParam('page', $this->page);
-        $this->addSearchParam('recordsPerPage', $this->per_page);
-        $params = array_merge($this->search_params, ['include' => implode(',', $this->include_params)]);
-        $result = $this->client->fetch('/v1/People/Search?' . http_build_query($params));
+        $result = $this->client->fetch($this->getSearchUrl());
 
         return $this->buildCollection($result['results'], 'person', Person::class);
+    }
+
+    private function getSearchUrl() {
+
+        $this->addSearchParam('page', $this->page);
+        $this->addSearchParam('recordsPerPage', $this->per_page);
+
+        $params = array_merge($this->search_params, ['include' => implode(',', $this->include_params)]);
+
+        return '/v1/People/Search?' . http_build_query($params);
     }
 
 }

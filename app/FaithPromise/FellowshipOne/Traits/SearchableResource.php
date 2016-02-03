@@ -11,6 +11,10 @@ trait SearchableResource {
     protected $search_params = [];
     protected $include_params = [];
 
+    protected function hasSearchParameters() {
+        return count($this->search_params) > 0;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Search parameter methods
@@ -73,10 +77,20 @@ trait SearchableResource {
 
     public function perPage($qty) {
         $this->per_page = $qty;
+
+        return $this;
     }
 
     public function page($page) {
         $this->page = $page;
+
+        return $this;
+    }
+
+    public function nextPage() {
+        $this->page++;
+
+        return $this;
     }
 
 }
