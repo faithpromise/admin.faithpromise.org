@@ -7,192 +7,183 @@ use App\Models\User;
 use Carbon\Carbon;
 use FaithPromise\Shared\Models\TicketTask as Task;
 
-class Graphics extends Ticket {
+abstract class Graphics extends Ticket {
 
-    protected $deliver_to = 'kyleg@faithpromise.org';
+    protected $deliver_to = 'heatherb@faithpromise.org';
     protected $deliver_method = 'zendesk';
 
-    protected function createRequirements($zendesk_ticket_id) {
-    }
+    /** @var  Carbon */
+    protected $deliver_at;
+    /** @var  Carbon */
+    protected $place_order_at;
+    /** @var  Carbon */
+    protected $sign_off_at;
+    /** @var  Carbon */
+    protected $deliver_proof_at;
+    /** @var  Carbon */
+    protected $start_design_at;
+    /** @var  Carbon */
+    protected $copy_due_at;
+    /** @var  Carbon */
+    protected $meeting_at;
+    /** @var  Carbon */
+    protected $gather_requirements_at;
+    /** @var  Carbon */
+    protected $request_quote_at;
+    /** @var  Carbon */
+    protected $send_quote_at;
 
     protected function createTasks($zendesk_ticket_id, User $requester) {
-        return $this->createTasksForPrintPiece($zendesk_ticket_id, $requester);
-    }
-
-    protected function createTasksForPrintPiece($zendesk_ticket_id, $requester) {
-
-        // Create default tasks
-        if (!$this->ticket['deliver_by']) {
-            return;
-        }
-
-        $now = Carbon::now()->endOfDay();
-
-        // Change these
-        $days_to_design = 14;
-        $days_to_iterate_proof = 2;
-        $days_to_deliver = 7;
-        $days_to_meet = 2;
-        $days_to_quote_turnaround = 2;
-
-        // Work backwards from delivery date
-        $deliver_at = $this->ticket['deliver_by']->endOfDay();
-        $place_order_at = $deliver_at->copy()->subWeekdays($days_to_deliver)->endOfDay();
-        $sign_off_at = $place_order_at->copy();
-        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof)->endOfDay();
-        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design)->endOfDay();
-        $copy_due_at = $start_design_at->copy();
-
-        // Work forwards from now
-        $schedule_meeting_at = $now->copy();
-        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet)->endOfDay();
-        $request_quote_at = $now->copy()->addWeekdays($days_to_meet)->endOfDay();
-        $send_quote_at = $request_quote_at->copy()->addWeekdays($days_to_quote_turnaround)->endOfDay();
-
-        // If starting project in the past, adjust our dates
-        if ($start_design_at->isPast()) {
-            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1)->endOfDay();
-            $gather_requirements_at = $schedule_meeting_at;
-            $request_quote_at = $schedule_meeting_at;
-            $send_quote_at = $schedule_meeting_at;
-            $copy_due_at = $schedule_meeting_at;
-        }
 
         Task::create([
-            'title'             => 'Schedule Meeting with ' . $requester->first_name,
-            'due_at'            => $schedule_meeting_at,
+            'title'             => 'Schedule Meeting with ' . $requester->{'first_name'},
+            'due_at'            => $this->getMeetingAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
             'title'             => 'Requirements Gathered',
-            'due_at'            => $gather_requirements_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Request Quote from Vendor',
-            'due_at'            => $request_quote_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Send Quote to ' . $requester->first_name,
-            'due_at'            => $send_quote_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Copy due',
-            'due_at'            => $copy_due_at,
+            'due_at'            => $this->getGatherRequirementsAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
             'title'             => 'Start design work',
-            'due_at'            => $start_design_at,
+            'due_at'            => $this->getStartDesignAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
             'title'             => 'Deliver Proof',
-            'due_at'            => $deliver_proof_at,
+            'due_at'            => $this->getDeliverProofAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
             'title'             => 'Proof Sign Off',
-            'due_at'            => $sign_off_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Place Order',
-            'due_at'            => $place_order_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Product Delivered',
-            'due_at'            => $deliver_at,
+            'due_at'            => $this->getSignOffAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
     }
 
-    protected function createTasksForDigitalPiece($zendesk_ticket_id, User $requester) {
-
-        // Create default tasks
-        if (!$this->ticket['deliver_by']) {
-            return;
-        }
-
-        $now = Carbon::now()->endOfDay();
-
-        // Change these
-        $days_to_design = 14;
-        $days_to_iterate_proof = 2;
-        $days_to_meet = 2;
-
-        // Work backwards from delivery date
-        $deliver_at = $this->ticket['deliver_by']->endOfDay();
-        $sign_off_at = $deliver_at->copy();
-        $deliver_proof_at = $sign_off_at->copy()->subWeekdays($days_to_iterate_proof)->endOfDay();
-        $start_design_at = $deliver_proof_at->copy()->subWeekdays($days_to_design)->endOfDay();
-        $copy_due_at = $start_design_at->copy();
-
-        // Work forwards from now
-        $schedule_meeting_at = $now->copy();
-        $gather_requirements_at = $now->copy()->addWeekdays($days_to_meet)->endOfDay();
-
-        // If starting project in the past, adjust our dates
-        if ($start_design_at->isPast()) {
-            $schedule_meeting_at = $start_design_at->copy()->subWeekdays(1)->endOfDay();
-            $gather_requirements_at = $schedule_meeting_at;
-        }
-
-        Task::create([
-            'title'             => 'Schedule Meeting with ' . $requester->first_name,
-            'due_at'            => $schedule_meeting_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Requirements Gathered',
-            'due_at'            => $gather_requirements_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Copy due',
-            'due_at'            => $copy_due_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Start design work',
-            'due_at'            => $start_design_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Deliver Proof',
-            'due_at'            => $deliver_proof_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Proof Sign Off',
-            'due_at'            => $sign_off_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
-        Task::create([
-            'title'             => 'Product Delivered',
-            'due_at'            => $deliver_at,
-            'zendesk_ticket_id' => $zendesk_ticket_id
-        ]);
-
+    protected function createRequirements($zendesk_ticket_id) {
+        // Currently no default requirements for graphics
     }
+
+    /**
+     * Place Order At
+     * @return Carbon
+     */
+    public function getPlaceOrderAt() {
+        return $this->place_order_at->copy();
+    }
+
+    public function setPlaceOrderAt($value) {
+        $this->place_order_at = $value;
+
+        return $this;
+    }
+
+    /**
+     * Sign Off At
+     * @return Carbon
+     */
+    public function getSignOffAt() {
+        return $this->sign_off_at->copy();
+    }
+
+    public function setSignOffAt($value) {
+        $this->sign_off_at = $value;
+
+        return $this;
+    }
+
+    /**
+     * Deliver Proof At
+     * @return Carbon
+     */
+    public function getDeliverProofAt() {
+        return $this->deliver_proof_at->copy();
+    }
+
+    public function setDeliverProofAt($value) {
+        $this->deliver_proof_at = $value;
+
+        return $this;
+    }
+
+    /**
+     * Start Design At
+     * @return Carbon
+     */
+    public function getStartDesignAt() {
+        return $this->start_design_at->copy();
+    }
+
+    public function setStartDesignAt($value) {
+        return $this->start_design_at = $value;
+    }
+
+    /**
+     * Copy Due At
+     * @return Carbon
+     */
+    public function getCopyDueAt() {
+        return $this->copy_due_at->copy();
+    }
+
+    public function setCopyDueAt($value) {
+        return $this->copy_due_at = $value;
+    }
+
+    /**
+     * Meeting At
+     * @return Carbon
+     */
+    public function getMeetingAt() {
+        return $this->meeting_at->copy();
+    }
+
+    public function setMeetingAt($value) {
+        return $this->meeting_at = $value;
+    }
+
+    /**
+     * Requirements At
+     * @return Carbon
+     */
+    public function getGatherRequirementsAt() {
+        return $this->gather_requirements_at->copy();
+    }
+
+    public function setGatherRequirementsAt($value) {
+        return $this->gather_requirements_at = $value;
+    }
+
+    /**
+     * Request Quote At
+     * @return Carbon
+     */
+    public function getRequestQuoteAt() {
+        return $this->request_quote_at->copy();
+    }
+
+    public function setRequestQuoteAt($value) {
+        return $this->request_quote_at = $value;
+    }
+
+    /**
+     * Send Quote At
+     * @return Carbon
+     */
+    public function getSendQuoteAt() {
+        return $this->send_quote_at->copy();
+    }
+
+    public function setSendQuoteAt($value) {
+        return $this->send_quote_at = $value;
+    }
+
 
 }

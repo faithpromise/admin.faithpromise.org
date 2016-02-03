@@ -2,9 +2,20 @@
 
 namespace App\FaithPromise\Zendesk\TicketTypes;
 
-class GraphicsInviteCard extends Graphics {
+use App\Models\User;
 
-    protected $deliver_to = 'heatherb@faithpromise.org';
-    protected $deliver_method = 'zendesk';
+class GraphicsInviteCard extends PrintGraphics {
+
+    protected function createTasks($zendesk_ticket_id, User $requester) {
+
+        parent::createTasks($zendesk_ticket_id, $requester);
+
+    }
+
+    protected function createRequirements($zendesk_ticket_id) {
+
+        parent::createRequirements($zendesk_ticket_id);
+
+    }
 
 }

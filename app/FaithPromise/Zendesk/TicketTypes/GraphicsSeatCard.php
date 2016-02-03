@@ -2,9 +2,27 @@
 
 namespace App\FaithPromise\Zendesk\TicketTypes;
 
-class GraphicsSeatCard extends Graphics {
+use App\Models\User;
+use FaithPromise\Shared\Models\TicketTask as Task;
 
-    protected $deliver_to = 'heatherb@faithpromise.org';
-    protected $deliver_method = 'zendesk';
+class GraphicsSeatCard extends PrintGraphics {
+
+    protected function createTasks($zendesk_ticket_id, User $requester) {
+
+        parent::createTasks($zendesk_ticket_id, $requester);
+
+        Task::create([
+            'title'             => 'Approval',
+            'due_at'            => $this->getMeetingAt(),
+            'zendesk_ticket_id' => $zendesk_ticket_id
+        ]);
+
+    }
+
+    protected function createRequirements($zendesk_ticket_id) {
+
+        parent::createRequirements($zendesk_ticket_id);
+
+    }
 
 }

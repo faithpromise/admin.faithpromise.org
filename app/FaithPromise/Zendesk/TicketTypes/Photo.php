@@ -2,55 +2,61 @@
 
 namespace App\FaithPromise\Zendesk\TicketTypes;
 
+use App\FaithPromise\Zendesk\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
 use FaithPromise\Shared\Models\TicketTask as Task;
 use FaithPromise\Shared\Models\TicketRequirement as Requirement;
 
-class Photo extends Graphics {
+class Photo extends Ticket {
 
     protected $deliver_to = 'kyleg@faithpromise.org';
     protected $deliver_method = 'zendesk';
 
+    /** @var  Carbon */
+    protected $meeting_at;
+    /** @var  Carbon */
+    protected $communicate_with_leader_at;
+    /** @var  Carbon */
+    protected $update_requester_at;
+    /** @var  Carbon */
+    protected $confirm_photographer_at;
+    /** @var  Carbon */
+    protected $deliver_photos_at;
+
     protected function createTasks($zendesk_ticket_id, User $requester) {
 
-        // Create default tasks
-        if (!$this->ticket['deliver_by']) {
+        if (!$this->getDeliverAt()) {
             return;
         }
 
-        $today = Carbon::now()->endOfDay();
-
-        // Work backwards from delivery date
-        $deliver_at = $this->ticket['deliver_by']->endOfDay();
-
         Task::create([
-            'title'             => 'Schedule Meeting with ' . $requester->first_name,
-            'due_at'            => $today,
+            'title'             => 'Schedule Meeting with ' . $requester->{'first_name'},
+            'due_at'            => $this->getMeetingAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
             'title'             => 'Communicate with photography team leader',
-            'due_at'            => $today,
+            'due_at'            => $this->getCommunicateWithTeamLeaderAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
             'title'             => 'Confirm photographer',
-            'due_at'            => $deliver_at->copy()->subWeekdays(7)->endOfDay(),
+            'due_at'            => $this->getConfirmPhotographerAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
-            'title'             => 'Send update to ' . $requester->first_name,
-            'due_at'            => $deliver_at->copy()->subWeekdays(7)->endOfDay(),
+            'title'             => 'Send update to ' . $requester->{'first_name'},
+            'due_at'            => $this->getUpdateRequesterAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
 
         Task::create([
-            'title'             => 'Deliver photos to ' . $requester->first_name,
-            'due_at'            => $deliver_at->copy()->addDays(3)->endOfDay(),
+            'title'             => 'Deliver photos to ' . $requester->{'first_name'},
+            'due_at'            => $this->getDeliverPhotosAt(),
             'zendesk_ticket_id' => $zendesk_ticket_id
         ]);
     }
@@ -66,4 +72,63 @@ class Photo extends Graphics {
 
     }
 
+    protected function setDueDates() {
+        $today = Carbon::now()->endOfDay();
+
+        $this->setMeetingAt($today);
+        $this->setCommunicateWithTeamLeaderAt($today);
+        $this->setConfirmPhotographerAt($this->getDeliverAt()->subWeekdays(7)->endOfDay());
+        $this->setUpdateRequesterAt($this->getDeliverAt()->subWeekdays(7)->endOfDay());
+        $this->setDeliverPhotosAt($this->getDeliverAt()->addDays(3)->endOfDay());
+    }
+
+    private function getMeetingAt() {
+        return $this->meeting_at;
+    }
+
+    private function setMeetingAt($value) {
+        $this->meeting_at = $value;
+
+        return $this;
+    }
+
+    private function getCommunicateWithTeamLeaderAt() {
+        return $this->communicate_with_leader_at->copy();
+    }
+
+    private function setCommunicateWithTeamLeaderAt($value) {
+        $this->communicate_with_leader_at = $value;
+
+        return $this;
+    }
+
+    private function getConfirmPhotographerAt() {
+        return $this->confirm_photographer_at->copy();
+    }
+
+    private function setConfirmPhotographerAt($value) {
+        $this->confirm_photographer_at = $value;
+
+        return $this;
+    }
+
+    private function getUpdateRequesterAt() {
+        return $this->update_requester_at->copy();
+    }
+
+    private function setUpdateRequesterAt($value) {
+        $this->update_requester_at = $value;
+
+        return $this;
+    }
+
+    private function getDeliverPhotosAt() {
+        return $this->deliver_photos_at->copy();
+    }
+
+    private function setDeliverPhotosAt($value) {
+        $this->deliver_photos_at = $value;
+
+        return $this;
+    }
 }

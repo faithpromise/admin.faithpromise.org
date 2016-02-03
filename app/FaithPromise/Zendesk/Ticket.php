@@ -13,15 +13,17 @@ abstract class Ticket {
     protected $deliver_method = 'email';
     private $zendesk_agent_ids = [];
 
-    public function __construct($ticket, User $requester) {
+    /** @var Carbon */
+    protected $deliver_at;
 
+    public function __construct($ticket, User $requester) {
         $this->ticket = $ticket;
         $this->requester = $requester;
-
-        // Carbonize the deliver_by date.
-        $this->ticket['deliver_by'] = array_key_exists('deliver_by', $ticket) ? $this->ticket['deliver_by'] = Carbon::parse($ticket['deliver_by'], 'UTC')->setTimezone('America/New_York') : null;
-
+        $this->setDeliverAt(array_key_exists('deliver_by', $ticket) ? $ticket['deliver_by'] : null);
+        $this->setDueDates();
     }
+
+    abstract protected function setDueDates();
 
     abstract protected function createTasks($zendesk_ticket_id, User $requester);
 
@@ -51,15 +53,16 @@ abstract class Ticket {
             'comment'      => [
                 'body' => $this->buildDescription()
             ],
-            'requester_id' => $this->requester->zendesk_user_id,
+            'requester_id' => $this->requester->{'zendesk_user_id'},
             'assignee_id'  => $zendesk_agent_id,
             'priority'     => 'normal'
         ];
 
-        if ($this->ticket['deliver_by']) {
-            $ticket['due_at'] = $this->ticket['deliver_by']->format('Y-m-d');
+        if ($this->getDeliverAt()) {
+            $ticket['due_at'] = $this->getDeliverAt()->format('Y-m-d');
         }
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $zendesk_ticket = Zendesk::tickets()->create($ticket);
 
         $this->createTasks($zendesk_ticket->ticket->id, $this->requester);
@@ -73,6 +76,7 @@ abstract class Ticket {
 
         if (!array_key_exists($this->deliver_to, $this->zendesk_agent_ids)) {
 
+            /** @noinspection PhpUndefinedMethodInspection */
             $zendesk_user_search = Zendesk::users()->search(['query' => $this->deliver_to]);
 
             if (!count($zendesk_user_search)) {
@@ -89,10 +93,11 @@ abstract class Ticket {
 
     private function sendViaEmail() {
 
-        $recipient = Staff::findByEmail($this->deliver_to);
+        /** @noinspection PhpUndefinedMethodInspection */
+        $recipient = Staff::whereEmail($this->deliver_to)->first();
 
         if ($recipient) {
-
+            // TODO: Implement sendViaEmail
         }
 
         return true;
@@ -108,14 +113,28 @@ abstract class Ticket {
             $description[] = $desc . PHP_EOL;
         }
 
-        if ($this->ticket['deliver_by']) {
-            $description[] = 'Deliver by: ' . $this->ticket['deliver_by']->format('D, M j, Y');
+        if ($this->getDeliverAt()) {
+            $description[] = 'Deliver by: ' . $this->getDeliverAt()->format('D, M j, Y');
         }
 
         $description[] = 'Submitted by: ' . $this->requester->getNameAttribute();
 
         return implode(PHP_EOL, $description);
 
+    }
+
+    /**
+     * @return Carbon
+     */
+    protected function getDeliverAt() {
+        return $this->deliver_at->copy();
+    }
+
+    public function setDeliverAt($value) {
+        $carbonized_value = Carbon::parse($value, 'UTC');
+        $this->deliver_at = $carbonized_value ? $carbonized_value->setTimezone('America/New_York') : null;
+
+        return $this;
     }
 
 }

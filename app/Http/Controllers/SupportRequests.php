@@ -13,6 +13,8 @@ class SupportRequests extends BaseController {
     public function index(Request $request) {
 
         $user = $request->user();
+
+        /** @noinspection PhpUndefinedMethodInspection */
         $tickets = Zendesk::users($user->zendesk_user_id)->tickets()->findAll();
 
         return response()->json($tickets);
