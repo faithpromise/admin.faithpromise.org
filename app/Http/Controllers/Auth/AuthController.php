@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests;
 use App\Models\User;
-use App\FaithPromise\FellowshipOne\ClientFacade;
+use App\FaithPromise\FellowshipOne\FellowshipOneFacade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
@@ -24,11 +24,11 @@ class AuthController extends BaseController {
 
         // First step for request token
         if (!$request->has('oauth_token')) {
-            return ClientFacade::login();
+            return FellowshipOneFacade::login();
         }
 
         // Second step for access token
-        $auth = ClientFacade::obtainAccessToken($request->input('oauth_token'));
+        $auth = FellowshipOneFacade::obtainAccessToken($request->input('oauth_token'));
         $user = User::whereFellowshipOneUserId($auth['user_id'])->first();
         $claims = [
             'oauth_token'            => $auth['oauth_token'],
@@ -104,7 +104,7 @@ class AuthController extends BaseController {
                 $user->password = 'login_via_f1_' . str_random(35);
             }
 
-            $f1_user = ClientFacade::setAccessToken($data['oauth_token'], $data['oauth_token_secret'])->getPerson($data['fellowship_one_user_id']);
+            $f1_user = FellowshipOneFacade::setAccessToken($data['oauth_token'], $data['oauth_token_secret'])->getPerson($data['fellowship_one_user_id']);
             $user->fellowship_one_user_id = $data['fellowship_one_user_id'];
             $user->first_name = $f1_user['firstName'];
             $user->last_name = $f1_user['lastName'];
