@@ -4,6 +4,7 @@ namespace App\FaithPromise\FellowshipOne;
 
 use App\FaithPromise\FellowshipOne\Resources\Activities\Activities;
 use App\FaithPromise\FellowshipOne\Resources\Activities\Assignments;
+use App\FaithPromise\FellowshipOne\Resources\Activities\Attendances;
 use App\FaithPromise\FellowshipOne\Resources\Activities\HeadCounts;
 use App\FaithPromise\FellowshipOne\Resources\Activities\Instances;
 use App\FaithPromise\FellowshipOne\Resources\Activities\Ministries;
@@ -11,6 +12,7 @@ use App\FaithPromise\FellowshipOne\Resources\Activities\Rooms;
 use App\FaithPromise\FellowshipOne\Resources\Activities\RosterFolders;
 use App\FaithPromise\FellowshipOne\Resources\Activities\Rosters;
 use App\FaithPromise\FellowshipOne\Resources\Activities\Schedules as ActivitySchedules;
+use App\FaithPromise\FellowshipOne\Resources\Groups\MemberTypes;
 use App\FaithPromise\FellowshipOne\Resources\People\Addresses;
 use App\FaithPromise\FellowshipOne\Resources\People\Communications;
 use App\FaithPromise\FellowshipOne\Resources\People\Denominations;
@@ -110,6 +112,10 @@ class FellowshipOne implements FellowshipOneInterface {
 
     public function groupMembers($group_id) {
         return new Members($this, $group_id);
+    }
+
+    public function groupMemberTypes() {
+        return new MemberTypes($this);
     }
 
     public function households() {

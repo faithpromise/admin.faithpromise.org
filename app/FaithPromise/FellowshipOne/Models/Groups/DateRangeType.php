@@ -5,7 +5,7 @@ use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
  * Class DateRangeType
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\Groups
  *
  * @method string getId()
  * @method string getUri()

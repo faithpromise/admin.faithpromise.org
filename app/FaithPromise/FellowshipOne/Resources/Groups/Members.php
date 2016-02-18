@@ -45,12 +45,14 @@ class Members extends BaseResource {
     private function addPeople(&$collection) {
 
         $ids = [];
+        /** @var Member $item */
         foreach ($collection as $item) {
             $ids[] = $item->getPerson()->getId();
         }
 
-        $people = $this->client->people()->whereId($ids);
+        $people = $this->client->people()->byId($ids);
 
+        /** @var Member $item */
         foreach ($collection as $item) {
             $id = $item->getPerson()->getId();
             $item->setPerson($people->get($id));

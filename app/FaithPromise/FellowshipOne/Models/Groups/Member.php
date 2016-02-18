@@ -7,13 +7,13 @@ use App\FaithPromise\FellowshipOne\Models\People\Person;
 
 /**
  * Class Member
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\Groups
  *
  * @method string getId()
  * @method string getUri()
  * @method Group getGroup()
  * @method Person getPerson()
- * @method string getMemberType()
+ * @method MemberType getMemberType()
  * @method string getCreatedDate()
  * @method Person getCreatedByPerson()
  * @method string getLastUpdatedDate()
@@ -37,11 +37,15 @@ class Member extends Base {
         'uri'                 => '@uri',
         'group'               => ['group', Group::class],
         'person'              => ['person', Person::class],
-        'memberType'          => 'memberType',
+        'memberType'          => ['memberType', MemberType::class],
         'createdDate'         => 'createdDate',
         'createdByPerson'     => ['createdByPerson', Person::class],
         'lastUpdatedDate'     => 'lastUpdatedDate',
         'lastUpdatedByPerson' => ['lastUpdatedByPerson', Person::class],
     ];
+
+    public function isLeader() {
+        return $this->getMemberType()->isLeader();
+    }
 
 }

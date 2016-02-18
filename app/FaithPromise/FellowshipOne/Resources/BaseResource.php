@@ -20,6 +20,7 @@ class BaseResource {
         if (array_key_exists($results_property, $data)) {
             foreach ($data[$results_property] as $record) {
                 $item = new $model($this->client, $record);
+                // Using put because we need to be able to reference the record - ex: Groups/Members::withPeople
                 $collection->put($record['@id'], $item);
             }
         }

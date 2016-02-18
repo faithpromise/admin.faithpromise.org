@@ -5,7 +5,7 @@ use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
  * Class Campus
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\Groups
  *
  * @method string getId()
  * @method string getUri()

@@ -7,7 +7,7 @@ use App\FaithPromise\FellowshipOne\Models\People\Person;
 
 /**
  * Class Address
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\Groups
  *
  * @method string getAddress1()
  * @method string getAddress2()

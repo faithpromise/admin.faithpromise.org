@@ -3,13 +3,12 @@
 namespace App\FaithPromise\FellowshipOne\Models\Groups;
 
 use App\FaithPromise\FellowshipOne\Models\Base;
-use App\FaithPromise\FellowshipOne\Models\People\Household;
 use App\FaithPromise\FellowshipOne\Models\People\Person;
 use Illuminate\Support\Collection;
 
 /**
  * Class Group
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\Groups
  *
  * @method string getId()
  * @method string getUri()
@@ -109,7 +108,13 @@ class Group extends Base {
     public function getMembers($with_people = false) {
         $result = $this->getClient()->groupMembers($this->getId())->withPeople($with_people)->all();
 
-        return $result->all();
+        return $result;
+    }
+
+    public function getLeaders($with_people = false) {
+        return $this->getMembers($with_people)->filter(function(Member $member) {
+            return $member->isLeader();
+        });
     }
 
     public function getAverageAge() {
@@ -127,7 +132,7 @@ class Group extends Base {
     }
 
     public function getHouseHolds() {
-        return $this->getClient()->households()->whereId($this->getUniqueHouseholdIds());
+        return $this->getClient()->households()->byId($this->getUniqueHouseholdIds());
     }
 
     public function getChildAges() {
@@ -138,7 +143,7 @@ class Group extends Base {
         /** @var \App\FaithPromise\FellowshipOne\Models\People\Household $household */
         foreach ($households as $household) {
 
-            /** @var \App\FaithPromise\FellowshipOne\Models\Events\\App\FaithPromise\FellowshipOne\Models\People\Person $person */
+            /** @var \App\FaithPromise\FellowshipOne\Models\People\Person $person */
             foreach ($household->getChildren() as $person) {
                 if ($person->hasDateOfBirth()) {
                     $ages->push($person->getAge());
