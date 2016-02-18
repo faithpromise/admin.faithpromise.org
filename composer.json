@@ -12,13 +12,15 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle": "^6.0",
         "tymon/jwt-auth": "0.5.*",
         "huddledigital/zendesk-laravel": "~1.0",
         "faithpromise/fp-shared": "dev-master",
         "barryvdh/laravel-ide-helper": "^2.1",
-        "barryvdh/laravel-cors": "0.7.x"
+        "barryvdh/laravel-cors": "0.7.x",
+        "symfony/dom-crawler": "~3.0",
+        "symfony/css-selector": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -48,7 +50,6 @@
             "php artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php artisan ide-helper:generate",
             "php artisan optimize"
         ],
         "post-root-package-install": [

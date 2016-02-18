@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\FaithPromise\FellowshipOne\FellowshipOneFacade;
+use App\FaithPromise\FellowshipOne\Models\Groups\Group;
+use App\FaithPromise\FellowshipOne\Models\Groups\Type;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -12,12 +14,12 @@ class MainController extends BaseController {
         return view('index');
     }
 
-    public function test(Request $request) {
+    public function test() {
 
         /** @var \App\FaithPromise\FellowshipOne\FellowshipOne $f1 */
         $f1 = FellowshipOneFacade::authenticate(
-            env('F1_USERNAME'),
-            env('F1_PASSWORD')
+            config('fellowshipone.username'),
+            config('fellowshipone.password')
         );
 
         /**
@@ -35,7 +37,30 @@ class MainController extends BaseController {
 //                return stripos($item->getName(), 'Gilbert') !== false;
 //            });
 
-            $test = $f1->activityHeadCounts(81562843)->all();
+            $test = $f1->groups()->perPage(5)->whereCategory(7079)->get();
+
+            /** @var Group $group */
+            foreach($test as $group) {
+                echo $group->getName() . $group->getGroupType()->getName() . '<br>';
+            }
+            dd('done');
+
+
+            $test = $f1->groupCategories()->all();
+            /** @var Type $type */
+            foreach($test as $type) {
+                echo $type->getId() . ' - ' . $type->getName() . '<br>';
+            }
+            dd('done');
+
+            /** @var Group $group */
+            foreach($test as $group) {
+                echo $group->getName() . $group->getGroupType()->getName() . '<br>';
+            }
+
+            dd('done');
+            $test = $f1->groups()->find(1906648)->getLeaders(true);
+//            $test = $f1->groupMemberTypes()->all();
 
             dd($test);
 
