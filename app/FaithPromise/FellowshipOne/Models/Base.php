@@ -3,6 +3,7 @@
 namespace App\FaithPromise\FellowshipOne\Models;
 
 use App\FaithPromise\FellowshipOne\FellowshipOne;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
@@ -12,6 +13,7 @@ abstract class Base implements \ArrayAccess, Arrayable {
     protected $values = [];
     protected $client;
     protected $context_id;
+    protected $dates = [];
 
     public function __construct(FellowshipOne $client, $data = null) {
 
@@ -36,6 +38,8 @@ abstract class Base implements \ArrayAccess, Arrayable {
 
     public function load($data) {
 
+        $date_fields = array_merge($this->dates, ['createdDate','lastUpdatedDate']);
+
         foreach ($this->attributes as $model_property => $f1_field) {
 
             $data_field = is_array($f1_field) ? $f1_field[0] : $f1_field;
@@ -54,16 +58,20 @@ abstract class Base implements \ArrayAccess, Arrayable {
 
                         $collection = new Collection();
 
-                        foreach(array_values($data[$data_field])[0] as $item) {
+                        foreach (array_values($data[$data_field])[0] as $item) {
                             $value = new $model_class($this->getClient(), $item);
                             $collection->push($value);
                         }
                         $this->$method($collection);
 
-                    /* Otherwise it's a single record */
+                        /* Otherwise it's a single record */
                     } else {
                         $this->$method(new $model_class($this->getClient(), $data[$data_field]));
                     }
+
+                } else if (array_search($model_property, $date_fields) !== false) {
+
+                    $this->$method(Carbon::parse($data[$data_field]));
 
                 /* Otherwise, property value is to be used as is - a string or array */
                 } else {
