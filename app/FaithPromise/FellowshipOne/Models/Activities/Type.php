@@ -12,9 +12,9 @@ use App\FaithPromise\FellowshipOne\Models\Base;
  * @method string getUri()
  * @method string getName()
  *
- * @method Ministry setId($value)
- * @method Ministry setUri($value)
- * @method Ministry setName($value)
+ * @method Type setId($value)
+ * @method Type setUri($value)
+ * @method Type setName($value)
  *
  */
 class Type extends Base {
