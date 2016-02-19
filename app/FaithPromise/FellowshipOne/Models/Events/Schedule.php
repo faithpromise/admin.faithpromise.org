@@ -43,6 +43,8 @@ use App\FaithPromise\FellowshipOne\Models\Base;
 
 class Schedule extends Base {
 
+    protected $dates = ['startDate', 'endDate', 'startTime', 'endTime'];
+
     protected $attributes = [
         'id'                  => '@id',
         'uri'                 => '@uri',
