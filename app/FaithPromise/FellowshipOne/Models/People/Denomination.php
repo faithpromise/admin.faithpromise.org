@@ -5,7 +5,7 @@ use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
  * Class Denomination
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\People
  *
  * @method string getId()
  * @method string getUri()

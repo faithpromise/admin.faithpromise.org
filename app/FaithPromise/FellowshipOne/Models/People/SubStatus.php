@@ -5,7 +5,7 @@ use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
  * Class SubStatus
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\People
  *
  * @method string getId()
  * @method string getUri()

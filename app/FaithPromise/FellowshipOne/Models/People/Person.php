@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 /**
  * Class Person
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\People
  *
  * @method string getId()
  * @method string getUri()

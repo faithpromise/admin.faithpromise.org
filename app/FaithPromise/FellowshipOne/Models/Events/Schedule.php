@@ -5,7 +5,7 @@ use App\FaithPromise\FellowshipOne\Models\Base;
 
 /**
  * Class Schedule
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\Events
  *
  * @method string getId()
  * @method string getUri()
@@ -16,7 +16,7 @@ use App\FaithPromise\FellowshipOne\Models\Base;
  * @method string getNumberRecurrences()
  * @method string getStartDate()
  * @method string getEndDate()
- * @method string getRecurrenceType()
+ * @method RecurrenceType getRecurrenceType()
  * @method string getRecurrences()
  * @method string getCreatedDate()
  * @method string getCreatedByPerson()

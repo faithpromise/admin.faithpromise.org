@@ -6,7 +6,7 @@ use App\FaithPromise\FellowshipOne\Models\People\Person;
 
 /**
  * Class Event
- * @package App\FaithPromise\FellowshipOne\Models
+ * @package App\FaithPromise\FellowshipOne\Models\Events
  *
  * @method string getId()
  * @method string getUri()
