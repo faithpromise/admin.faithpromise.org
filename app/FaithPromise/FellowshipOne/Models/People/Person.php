@@ -20,7 +20,6 @@ use Illuminate\Support\Collection;
  * @method string getTitle()
  * @method string getSalutation()
  * @method string getPrefix()
- * @method string getFirstName()
  * @method string getLastName()
  * @method string getSuffix()
  * @method string getMiddleName()
@@ -129,16 +128,16 @@ class Person extends Base {
         'thank'               => 'thank',
         'firstRecord'         => 'firstRecord',
         'attributes'          => 'attributes',
-        'addresses'           => ['addresses', Address::class],
-        'communications'      => ['communications', Communication::class],
+        'addresses'           => ['addresses', Address::class, true],
+        'communications'      => ['communications', Communication::class, true],
         'lastMatchDate'       => 'lastMatchDate',
         'createdDate'         => 'createdDate',
         'lastUpdatedDate'     => 'lastUpdatedDate',
     ];
 
-//    public function getGroups() {
-//        return $this->getClient()->groupMembers()->wherePersonId($this->getId());
-//    }
+    public function getFirstName($use_goes_by = true) {
+        return ($use_goes_by && !empty($this->getGoesByName())) ? $this->getGoesByName() : $this->values['firstname'];
+    }
 
     public function getName() {
         return array_key_exists('name', $this->values) ? $this->values['name'] : trim($this->getFirstName() . ' ' . $this->getLastName());
@@ -222,16 +221,20 @@ class Person extends Base {
 
     public function getPreferredPhone() {
         /** @noinspection PhpUnusedParameterInspection */
-        return $this->getCommunications()->first(function($key, Communication $communication) {
+        $phone = $this->getCommunications()->first(function($key, Communication $communication) {
             return $communication->isPhone() && $communication->isPreferred();
         });
+
+        return is_null($phone) ? null : $phone->getCommunicationValue();
     }
 
     public function getMobilePhone() {
         /** @noinspection PhpUnusedParameterInspection */
-        return $this->getCommunications()->first(function($key, Communication $communication) {
+        $phone = $this->getCommunications()->first(function($key, Communication $communication) {
             return $communication->isMobilePhone();
         });
+
+        return is_null($phone) ? null : $phone->getCommunicationValue();
     }
 
     public function getEmails() {
@@ -242,9 +245,20 @@ class Person extends Base {
 
     public function getPreferredEmail() {
         /** @noinspection PhpUnusedParameterInspection */
-        return $this->getCommunications()->first(function($key, Communication $communication) {
+        $email = $this->getCommunications()->first(function($key, Communication $communication) {
             return $communication->isEmail() && $communication->isPreferred();
         });
+
+        return is_null($email) ? $this->getLoginEmail() : $email->getCommunicationValue();
+    }
+
+    public function getLoginEmail() {
+        /** @noinspection PhpUnusedParameterInspection */
+        $email = $this->getCommunications()->first(function($key, Communication $communication) {
+            return $communication->isLoginEmail();
+        });
+
+        return is_null($email) ? null : $email->getCommunicationValue();
     }
 
 }
