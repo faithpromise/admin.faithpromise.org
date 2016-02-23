@@ -14,6 +14,7 @@ abstract class Base implements \ArrayAccess, Arrayable {
     protected $client;
     protected $context_id;
     protected $dates = [];
+    protected $booleans = [];
 
     public function __construct(FellowshipOne $client, $data = null) {
 
@@ -43,25 +44,49 @@ abstract class Base implements \ArrayAccess, Arrayable {
         foreach ($this->attributes as $model_property => $f1_field) {
 
             $data_field = is_array($f1_field) ? $f1_field[0] : $f1_field;
-            $model_class = is_array($f1_field) ? $f1_field[1] : null;
+            $model_class = is_array($f1_field) && count($f1_field) > 1 ? $f1_field[1] : null;
+            $is_collection = is_array($f1_field) && count($f1_field) > 2 ? $f1_field[2] : false;
 
             if (array_key_exists($data_field, $data)) {
 
                 /* Define the set method to set the property */
                 $method = 'set' . $model_property;
 
+                /* If boolean */
+                if (array_search($model_property, $this->booleans) !== false) {
+
+                    $says_false = strcasecmp($data[$data_field], 'false') === 0;
+                    $this->$method($says_false ? false : $data[$data_field] ? true : false);
+
+                /* If null */
+                } else if (is_null($data[$data_field])) {
+
+                    $this->$method($data[$data_field]);
+
                 /* If property value is to be a model */
-                if ($model_class) {
+                } else if ($model_class) {
 
                     /* If we have a collection of values, define a collection */
-                    if (is_array($data[$data_field]) && is_array(array_values($data[$data_field])[0])) {
+                    if ($is_collection) {
 
                         $collection = new Collection();
+                        $ary_values = array_values($data[$data_field]);
 
-                        foreach (array_values($data[$data_field])[0] as $item) {
-                            $value = new $model_class($this->getClient(), $item);
+                        /* If we have an ordered numerical array, add each item */
+                        if (array_keys($ary_values[0])[0] === 0) {
+
+                            foreach ($ary_values[0] as $item) {
+                                $value = new $model_class($this->getClient(), $item);
+                                $collection->push($value);
+                            }
+
+                        /* Otherwise, there's only one record */
+                        } else {
+
+                            $value = new $model_class($this->getClient(), $ary_values[0]);
                             $collection->push($value);
                         }
+
                         $this->$method($collection);
 
                         /* Otherwise it's a single record */
@@ -69,6 +94,7 @@ abstract class Base implements \ArrayAccess, Arrayable {
                         $this->$method(new $model_class($this->getClient(), $data[$data_field]));
                     }
 
+                /* If date field */
                 } else if (array_search($model_property, $date_fields) !== false) {
 
                     $this->$method(Carbon::parse($data[$data_field]));
@@ -94,7 +120,7 @@ abstract class Base implements \ArrayAccess, Arrayable {
         $result = $this->values;
 
         foreach($result as &$value) {
-            if (is_object($value)) {
+            if (is_object($value) AND property_exists($value, 'toArray')) {
                 /** @noinspection PhpUndefinedMethodInspection */
                 $value = $value->toArray();
             }
