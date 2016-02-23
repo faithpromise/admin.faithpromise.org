@@ -3,7 +3,10 @@
 namespace App\FaithPromise\FellowshipOne\Models\Groups;
 
 use App\FaithPromise\FellowshipOne\Models\Base;
+use App\FaithPromise\FellowshipOne\Models\Events\Event;
+use App\FaithPromise\FellowshipOne\Models\Events\Schedule;
 use App\FaithPromise\FellowshipOne\Models\People\Person;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 /**
@@ -32,7 +35,7 @@ use Illuminate\Support\Collection;
  * @method string getLeadersCount()
  * @method string getMembersCount()
  * @method string getOpenProspectsCount()
- * @method string getEvent()
+ * @method Event getEvent()
  * @method Location getLocation()
  * @method string getCreatedDate()
  * @method Person getCreatedByPerson()
@@ -73,6 +76,9 @@ use Illuminate\Support\Collection;
  */
 class Group extends Base {
 
+    protected $dates = ['startDate','expirationDate'];
+    protected $booleans = ['isOpen','isPublic','hasChildcare','isSearchable','isLocationPrivate'];
+
     protected $attributes = [
         'id'                  => '@id',
         'uri'                 => '@uri',
@@ -96,7 +102,7 @@ class Group extends Base {
         'leadersCount'        => 'leadersCount',
         'membersCount'        => 'membersCount',
         'openProspectsCount'  => 'openProspectsCount',
-        'event'               => 'event',
+        'event'               => ['event', Event::class],
         'location'            => ['location', Location::class],
         'createdDate'         => 'createdDate',
         'createdByPerson'     => ['createdByPerson', Person::class],
@@ -105,14 +111,39 @@ class Group extends Base {
         'isLocationPrivate'   => 'isLocationPrivate',
     ];
 
+    public function getIsLocationPublic() {
+        return !$this->getIsLocationPrivate();
+    }
+
+    public function getStartTime() {
+        return $this->getSchedule()->getStartTime()->year(1970)->month(1)->day(1);
+    }
+
+    public function getEndDate() {
+        return $this->getSchedule()->getEndDate();
+    }
+
+    public function getRecurrenceRule() {
+        return $this->getSchedule()->getRecurrenceRule();
+    }
+
+    /**
+     * @param bool $with_people
+     * @return Collection
+     */
     public function getMembers($with_people = false) {
         $result = $this->getClient()->groupMembers($this->getId())->withPeople($with_people)->all();
 
         return $result;
     }
 
+    /**
+     * @param bool $with_people
+     * @return Collection
+     *
+     */
     public function getLeaders($with_people = false) {
-        return $this->getMembers($with_people)->filter(function(Member $member) {
+        return $this->getMembers($with_people)->filter(function (Member $member) {
             return $member->isLeader();
         });
     }
@@ -135,7 +166,14 @@ class Group extends Base {
         return $this->getClient()->households()->byId($this->getUniqueHouseholdIds());
     }
 
+    /**
+     * @return Collection
+     */
     public function getChildAges() {
+
+        if (isset($this->child_ages)) {
+            return $this->child_ages;
+        }
 
         $ages = new Collection();
         $households = $this->getHouseHolds();
@@ -152,8 +190,40 @@ class Group extends Base {
 
         }
 
-        return collect($ages)->sort()->values();
+        return $this->child_ages = collect($ages)->sort()->values();
 
+    }
+
+    public function getMinChildAge() {
+        return $this->getChildAges()->min();
+    }
+
+    public function getMaxChildAge() {
+        return $this->getChildAges()->max();
+    }
+
+    public function getAddress() {
+        return $this->getLocation()->getAddress()->getAddress1();
+    }
+
+    public function getCity() {
+        return $this->getLocation()->getAddress()->getCity();
+    }
+
+    public function getState() {
+        return $this->getLocation()->getAddress()->getStProvince();
+    }
+
+    public function getZip() {
+        return $this->getLocation()->getAddress()->getPostalCode();
+    }
+
+    public function getLatitude() {
+        return $this->getLocation()->getAddress()->getLatitude();
+    }
+
+    public function getLongitude() {
+        return $this->getLocation()->getAddress()->getLongitude();
     }
 
     private function getUniqueHouseholdIds() {
@@ -167,6 +237,19 @@ class Group extends Base {
         }
 
         return $household_ids->values()->unique()->toArray();
+    }
+
+    /**
+     * @return Schedule
+     */
+    private function getSchedule() {
+
+        $schedules = $this->getClient()->eventSchedules($this->getEvent()->getId())->all();
+
+        if (is_null($schedules)) {
+            return null;
+        }
+        return $this->getClient()->eventSchedules($this->getEvent()->getId())->all()->first();
     }
 
 }
