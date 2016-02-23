@@ -41,4 +41,9 @@ class CommunicationType extends Base {
         return intval($this->getId()) === self::MOBILE;
     }
 
+    public function isLoginEmail() {
+        // TODO: Refactor - not sure if these ids are common or specific to Faith Promise
+        return intval($this->getId()) === 6;
+    }
+
 }
