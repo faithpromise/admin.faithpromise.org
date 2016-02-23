@@ -273,7 +273,7 @@ class FellowshipOne implements FellowshipOneInterface {
             $data = json_encode($data);
         }
 
-        $cache_key = md5($uri . $data . $method . $retryCount . '3');
+        $cache_key = md5($uri . $data . $method . $retryCount);
 
         if (Cache::has($cache_key)) {
             var_dump($uri . ' (cached)');
