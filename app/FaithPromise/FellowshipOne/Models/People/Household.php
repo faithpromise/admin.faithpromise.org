@@ -40,7 +40,7 @@ class Household extends Base {
     ];
 
     public function getPeople() {
-        return $this->getClient()->people()->byHousehold($this->getId());
+        return $this->getClient()->people()->noIncludes()->byHousehold($this->getId());
     }
 
     public function getFamilyMembers() {
