@@ -28,7 +28,7 @@ class Activities extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/activities/' . $id);
 
-        return new Activity($this->client, $result);
+        return $result ? new Activity($this->client, $result) : null;
     }
 
     public function byMinistry($id) {

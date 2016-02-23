@@ -33,7 +33,7 @@ class People extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/v1/People/' . $id);
 
-        return new Person($this->client, $result['person']);
+        return $result ? new Person($this->client, $result['person']) : null;
     }
 
 

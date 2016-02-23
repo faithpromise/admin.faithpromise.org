@@ -30,7 +30,7 @@ class Instances extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/schedules/' . $this->schedule_id . '/instances/' . $id);
 
-        return new Instance($this->client, $result);
+        return $result ? new Instance($this->client, $result) : null;
     }
 
     public function byDate($value) {

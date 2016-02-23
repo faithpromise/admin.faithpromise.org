@@ -25,7 +25,7 @@ class Groups extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/groups/v1/groups/' . $id);
 
-        return new Group($this->client, $result['group']);
+        return $result ? new Group($this->client, $result['group']) : null;
     }
 
 

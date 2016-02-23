@@ -31,7 +31,7 @@ class Rosters extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/activities/' . $this->activity_id . '/rosters/' . $id);
 
-        return new Roster($this->client, $result);
+        return $result ? new Roster($this->client, $result) : null;
     }
 
     public function byName($value) {

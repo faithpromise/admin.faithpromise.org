@@ -24,7 +24,7 @@ class Schedules extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/activities/' . $this->activity_id . '/schedules/' . $id);
 
-        return new Schedule($this->client, $result);
+        return $result ? new Schedule($this->client, $result) : null;
     }
 
 }

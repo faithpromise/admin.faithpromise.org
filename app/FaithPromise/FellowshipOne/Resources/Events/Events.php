@@ -18,7 +18,7 @@ class Events extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/events/v1/events/' . $id);
 
-        return new Event($this->client, $result['event']);
+        return $result ? new Event($this->client, $result['event']) : null;
     }
 
 }

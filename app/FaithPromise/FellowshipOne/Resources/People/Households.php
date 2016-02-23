@@ -23,7 +23,7 @@ class Households extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/v1/Households/' . $id);
 
-        return new Household($this->client, $result['household']);
+        return $result ? new Household($this->client, $result['household']) : null;
     }
 
     /**

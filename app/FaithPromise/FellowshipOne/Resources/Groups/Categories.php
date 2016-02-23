@@ -21,7 +21,7 @@ class Categories extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/groups/v1/categories/' . $id);
 
-        return new Category($this->client, $result['category']);
+        return $result ? new Category($this->client, $result['category']) : null;
     }
 
 }

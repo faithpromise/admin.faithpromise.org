@@ -16,7 +16,7 @@ class Rooms extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/rooms/' . $id);
 
-        return new Room($this->client, $result);
+        return $result ? new Room($this->client, $result) : null;
     }
 
 }

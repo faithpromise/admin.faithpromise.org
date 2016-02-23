@@ -22,7 +22,7 @@ class Assignments extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/activities/' . $this->activity_id . '/assignments/' . $id);
 
-        return new Assignment($this->client, $result);
+        return $result ? new Assignment($this->client, $result) : null;
     }
 
 //        $assignmentApi = $f1->assignments();

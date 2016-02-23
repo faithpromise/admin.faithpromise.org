@@ -16,7 +16,7 @@ class Ministries extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/ministries/' . $id);
 
-        return new Ministry($this->client, $result);
+        return $result ? new Ministry($this->client, $result) : null;
     }
 
 }

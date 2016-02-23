@@ -21,7 +21,7 @@ class MemberTypes extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/groups/v1/membertypes/' . $id);
 
-        return new MemberType($this->client, $result['memberType']);
+        return $result ? new MemberType($this->client, $result['memberType']) : null;
     }
 
 }

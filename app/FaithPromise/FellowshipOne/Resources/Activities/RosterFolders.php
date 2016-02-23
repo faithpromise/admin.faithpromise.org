@@ -27,7 +27,7 @@ class RosterFolders extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/activities/' . $this->activity_id . '/rosterfolders/' . $id);
 
-        return new RosterFolder($this->client, $result);
+        return $result ? new RosterFolder($this->client, $result) : null;
     }
 
 }

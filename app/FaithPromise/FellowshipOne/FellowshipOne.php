@@ -296,6 +296,10 @@ class FellowshipOne implements FellowshipOneInterface {
 
         } catch (\OAuthException $e) {
 
+            if ($e->getCode() === 404) {
+                return null;
+            }
+
             // TODO: Retry like F1api-php5? They look for 400 though, which means don't try again without modifications
 
             $extra = [

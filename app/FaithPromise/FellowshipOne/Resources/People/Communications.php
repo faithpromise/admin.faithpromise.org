@@ -27,7 +27,7 @@ class Communications extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch($this->url . '/' . $id);
 
-        return new Communication($this->client, $result['communication']);
+        return $result ? new Communication($this->client, $result['communication']) : null;
     }
 
 }

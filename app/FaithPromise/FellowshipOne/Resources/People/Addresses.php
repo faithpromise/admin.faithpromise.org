@@ -25,7 +25,7 @@ class Addresses extends BaseResource {
 
     public function find($id) {
         $result = $this->client->fetch($this->url . '/' . $id);
-        return new Address($this->client, $result['address']);
+        return $result ? new Address($this->client, $result['address']) : null;
     }
 
 }

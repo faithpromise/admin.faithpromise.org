@@ -24,7 +24,7 @@ class Attendances extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/activities/' . $this->activity_id . '/attendances/' . $id);
 
-        return new Attendance($this->client, $result);
+        return $result ? new Attendance($this->client, $result) : null;
     }
 
     public function paginate() {

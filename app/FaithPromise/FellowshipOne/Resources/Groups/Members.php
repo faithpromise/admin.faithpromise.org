@@ -21,7 +21,7 @@ class Members extends BaseResource {
     public function find($member_id) {
         $result = $this->client->fetch('/groups/v1/groups/' . $this->group_id . '/members/' . $member_id);
 
-        return new Member($this->client, $result['member']); // TODO: test
+        return $result ? new Member($this->client, $result['member']) : null; // TODO: test
     }
 
     public function withPeople($with_people = true) {

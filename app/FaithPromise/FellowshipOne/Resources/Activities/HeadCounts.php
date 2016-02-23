@@ -26,7 +26,7 @@ class HeadCounts extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/instances/' . $this->instance_id . '/headcounts/' . $id);
 
-        return new HeadCount($this->client, $result);
+        return $result ? new HeadCount($this->client, $result) : null;
     }
 
 }

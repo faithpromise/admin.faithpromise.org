@@ -16,7 +16,7 @@ class Types extends BaseResource {
     public function find($id) {
         $result = $this->client->fetch('/activities/v1/types/' . $id);
 
-        return new Type($this->client, $result);
+        return $result ? new Type($this->client, $result) : null;
     }
 
 }
