@@ -1,7 +1,11 @@
 <?php
 
 namespace App\FaithPromise\FellowshipOne\Models\Events;
+
 use App\FaithPromise\FellowshipOne\Models\Base;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Recurr\Rule;
 
 /**
  * Class Schedule
@@ -11,13 +15,13 @@ use App\FaithPromise\FellowshipOne\Models\Base;
  * @method string getUri()
  * @method string getName()
  * @method string getDescription()
- * @method string getStartTime()
- * @method string getEndTime()
+ * @method Carbon getStartTime()
+ * @method Carbon getEndTime()
  * @method string getNumberRecurrences()
- * @method string getStartDate()
- * @method string getEndDate()
+ * @method Carbon getStartDate()
+ * @method Carbon getEndDate()
  * @method RecurrenceType getRecurrenceType()
- * @method string getRecurrences()
+ * @method Collection getRecurrences()
  * @method string getCreatedDate()
  * @method string getCreatedByPerson()
  * @method string getLastUpdatedDate()
@@ -40,7 +44,6 @@ use App\FaithPromise\FellowshipOne\Models\Base;
  * @method Schedule setLastUpdatedByPerson($value)
  *
  */
-
 class Schedule extends Base {
 
     protected $dates = ['startDate', 'endDate', 'startTime', 'endTime'];
@@ -55,12 +58,50 @@ class Schedule extends Base {
         'numberRecurrences'   => 'numberRecurrences',
         'startDate'           => 'startDate',
         'endDate'             => 'endDate',
-        'recurrenceType'      => 'recurrenceType',
-        'recurrences'         => 'recurrences',
+        'recurrenceType'      => ['recurrenceType', RecurrenceType::class],
+        'recurrences'         => ['recurrences', Recurrence::class, true],
         'createdDate'         => 'createdDate',
         'createdByPerson'     => 'createdByPerson',
         'lastUpdatedDate'     => 'lastUpdatedDate',
         'lastUpdatedByPerson' => 'lastUpdatedByPerson',
     ];
+
+    public function getRecurrenceRule() {
+
+        $rule = new Rule();
+        $rule->setFreq(strtoupper($this->getRecurrenceType()->getName()));
+        $rule->setInterval($this->getFrequency());
+        $rule->setStartDate($this->getStartDate());
+        $rule->setEndDate($this->getEndDate());
+        $rule->setByDay($this->getByDay());
+
+        return $rule->getString();
+    }
+
+    private function getFrequency() {
+
+        if ($this->getRecurrenceType()->isWeekly()) {
+            return intval($this->getRecurrences()->first()->getRecurrenceWeekly()->getRecurrenceFrequency());
+        }
+
+        // Otherwise, monthly
+        return intval($this->getRecurrences()->first()->getRecurrenceMonthly()->getRecurrenceFrequency());
+    }
+
+    private function getByDay() {
+
+        if ($this->getRecurrenceType()->isWeekly()) {
+            $days = $this->getRecurrences()->first()->getRecurrenceWeekly()->getByDay();
+        } else {
+            $days = [];
+
+            /** @var Recurrence $recurrence */
+            foreach($this->getRecurrences() as $recurrence) {
+                $days[] = $recurrence->getRecurrenceMonthly()->getRecurrenceOffset() . strtoupper(substr($recurrence->getRecurrenceMonthly()->getMonthWeekDayName(), 0, 2));
+            }
+        }
+
+        return $days;
+    }
 
 }
