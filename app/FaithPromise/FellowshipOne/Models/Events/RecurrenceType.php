@@ -25,8 +25,8 @@ class RecurrenceType extends Base {
     const YEARLY = 4;
 
     protected $attributes = [
-        'id'   => 'id',
-        'uri'  => 'uri',
+        'id'   => '@id',
+        'uri'  => '@uri',
         'name' => 'name',
     ];
 
