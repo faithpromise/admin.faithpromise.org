@@ -15,7 +15,7 @@ use App\FaithPromise\FellowshipOne\Models\People\Person;
  * @method string getDescription()
  * @method string getIsOnline()
  * @method string getUrl()
- * @method string getAddress()
+ * @method Address getAddress()
  * @method string getCreatedDate()
  * @method string getCreatedByPerson()
  * @method string getLastUpdatedDate()
