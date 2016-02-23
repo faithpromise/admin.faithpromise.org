@@ -86,7 +86,6 @@ class Households extends BaseResource {
 
         $this->addSearchParam('page', $this->page);
         $this->addSearchParam('recordsPerPage', $this->per_page);
-//        $params = array_merge($this->search_params, ['include' => implode(',', $this->include_params)]);
         $result = $this->client->fetch('/v1/Households/Search?' . http_build_query($this->search_params));
 
         return $this->buildCollection($result['results'], 'household', Household::class);
