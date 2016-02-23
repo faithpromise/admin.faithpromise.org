@@ -15,6 +15,10 @@ class BaseResource {
 
     protected function buildCollection($data, $results_property, $model) {
 
+        if (is_null($data)) {
+            return null;
+        }
+
         $collection = new Collection;
 
         if (array_key_exists($results_property, $data)) {
