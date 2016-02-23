@@ -166,6 +166,14 @@ class People extends BaseResource {
         return $this->toggleInclude('communications', $include);
     }
 
+    public function noIncludes() {
+        $this->loadAddresses(false);
+        $this->loadAttributes(false);
+        $this->loadCommunications(false);
+
+        return $this;
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -228,7 +236,7 @@ class People extends BaseResource {
         $this->addSearchParam('page', $this->page);
         $this->addSearchParam('recordsPerPage', $this->per_page);
 
-        $params = array_merge($this->search_params, ['include' => implode(',', $this->include_params)]);
+        $params = empty($this->include_params) ? $this->search_params : array_merge($this->search_params, ['include' => implode(',', $this->include_params)]);
 
         return '/v1/People/Search?' . http_build_query($params);
     }
