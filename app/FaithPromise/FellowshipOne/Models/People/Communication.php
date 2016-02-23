@@ -68,4 +68,8 @@ class Communication extends Base {
         return strcasecmp($this->getPreferred(), 'true') === 0;
     }
 
+    public function isLoginEmail() {
+        return strcasecmp($this->getCommunicationGeneralType(), 'Email') === 0 && $this->getCommunicationType()->isLoginEmail();
+    }
+
 }
