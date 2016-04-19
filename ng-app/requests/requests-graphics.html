@@ -29,7 +29,7 @@
         </div>
         <div class="StepForm-group">
           <label class="StepForm-label">When does your event start (if applicable)?</label>
-          <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.event_date">
+          <input class="StepForm-input StepForm-input--date" type="text" placeholder="e.g. 3/21/2016" ng-model="vm.event_date" pikaday="YYYY-MM-DD">
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
           <div class="StepForm-group">
             <label class="StepForm-label">{{ item.deliver_label || 'When do you need it delivered?' }}
               <span class="StepForm-required">*</span></label>
-            <input class="StepForm-input StepForm-input--date" name="{{ key }}_deliver_by" type="date" placeholder="e.g. 3/21/2016" ng-model="item.deliver_by">
+            <input class="StepForm-input StepForm-input--date" name="{{ key }}_deliver_by" type="text" placeholder="e.g. 3/21/2016" ng-model="item.deliver_by" pikaday="YYYY-MM-DD" ng-required="item.meta.selected">
             <delivery-dates
                     dates="vm.helper_dates"
                     event-date="vm.event_date"
