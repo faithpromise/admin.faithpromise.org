@@ -101,10 +101,10 @@
 
         function update_helper_dates() {
             var helper_dates = [];
-            angular.forEach(vm.items, function (value) {
+            angular.forEach(vm.items, function (value, key) {
                 if (value.deliver_by && value.meta.selected) {
                     helper_dates.push({
-                        slug: value.slug,
+                        slug: key,
                         title: value.title,
                         deliver_by: value.deliver_by
                     });
