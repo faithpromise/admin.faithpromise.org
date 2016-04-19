@@ -12,6 +12,7 @@ module.exports = function (grunt) {
     });
     grunt.option('js', {
         src:                 [
+            'bower_components/angular-pikaday/angular-pikaday.js',
             'bower_components/angular-jwt/dist/angular-jwt.js',
             'bower_components/angular-ui-bootstrap/src/position/position.js',
             'bower_components/angular-ui-bootstrap/src/dropdown/dropdown.js',

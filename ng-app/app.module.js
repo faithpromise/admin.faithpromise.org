@@ -8,7 +8,8 @@
         'ui.bootstrap.dropdown',
         'angular-jwt',
         'toastr',
-        'siteConfig'
+        'siteConfig',
+        'angular-pikaday'
     ]);
 
 })(angular);
