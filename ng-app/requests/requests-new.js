@@ -78,16 +78,14 @@
                 title: 'Facility',
                 description: 'Repairs and replacements for common items.',
                 image: '',
-                staffer: 'marti-willen',
-                submit_link: 'http://www.faithpromiseweb.com/request/facilities-request/'
+                staffer: 'marti-willen'
             },
             {
                 type: 'construction',
                 title: 'Construction',
                 description: 'Renovation, remodeling, and building projects.',
                 image: '',
-                staffer: 'sid-spiva',
-                submit_link: 'http://www.faithpromiseweb.com/request/construction-request/'
+                staffer: 'sid-spiva'
             }
         ];
 

@@ -10,8 +10,8 @@
 
   <div class="Hero-container">
     <div class="Hero-content">
-      <h1 class="Hero-title">{{ vm.header }}</h1>
-      <p class="Hero-text"></p>
+      <h1 class="Hero-title" ng-bind-html="vm.hero_header"></h1>
+      <p class="Hero-text">{{ vm.subtitle }}</p>
     </div>
   </div>
 </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="StepForm-group">
           <label class="StepForm-label">{{ vm.dateLabel || 'When is it due?' }}</label>
-          <input class="StepForm-input StepForm-input--date" type="date" placeholder="e.g. 3/21/2016" ng-model="vm.ticket.deliver_by" required>
+          <input class="StepForm-input StepForm-input--date" type="text" placeholder="e.g. 2016-03-09" ng-model="vm.ticket.deliver_by" pikaday="YYYY-MM-DD" required>
         </div>
         <div class="StepForm-group">
           <label class="StepForm-label">{{ vm.descriptionLabel || 'Please provide details (if applicable).' }}</label>

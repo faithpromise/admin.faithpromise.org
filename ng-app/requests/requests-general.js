@@ -13,6 +13,7 @@
             scope:            {
                 type:               '@',
                 title:              '@',
+                subtitle:           '@',
                 header:             '@',
                 subjectLabel:       '@',
                 subjectPlaceholder: '@',
@@ -23,13 +24,14 @@
         };
     }
 
-    Controller.$inject = ['$scope', '$state', 'requestsService', 'toastr'];
+    Controller.$inject = ['$scope', '$sce', '$state', 'requestsService', 'toastr'];
 
-    function Controller($scope, $state, requestsService, Notification) {
+    function Controller($scope, $sce, $state, requestsService, Notification) {
 
-        var vm    = this;
-        vm.ticket = { type: vm.type };
-        vm.submit = submit;
+        var vm         = this;
+        vm.ticket      = { type: vm.type };
+        vm.submit      = submit;
+        vm.hero_header = $sce.trustAsHtml(this.header);
 
         function submit() {
 
@@ -40,7 +42,7 @@
             requestsService.save(data).success(function () {
                 Notification.success('Request sent. Thank you!');
                 $state.go('main.requests_new');
-            }).error(function() {
+            }).error(function () {
                 Notification.error('An error occurred. Your request could not be sent.');
                 vm.is_sending = false;
             });

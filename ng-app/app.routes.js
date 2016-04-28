@@ -60,6 +60,10 @@
             .state('main.requests_website', {
                 url: '^/requests/website',
                 template: '<requests-website></requests-website>'
+            })
+            .state('main.requests_facility', {
+                url: '^/requests/facility',
+                template: '<requests-facility></requests-facility>'
             });
 
     }
