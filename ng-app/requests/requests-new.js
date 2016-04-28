@@ -76,16 +76,9 @@
             {
                 type: 'facility',
                 title: 'Facility',
-                description: 'Repairs and replacements for common items.',
+                description: 'From repairs and replacements to construction. We\'ve got you covered.',
                 image: '',
                 staffer: 'marti-willen'
-            },
-            {
-                type: 'construction',
-                title: 'Construction',
-                description: 'Renovation, remodeling, and building projects.',
-                image: '',
-                staffer: 'sid-spiva'
             }
         ];
 
