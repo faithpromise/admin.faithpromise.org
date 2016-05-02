@@ -77,7 +77,7 @@
             angular.forEach(vm.items, function (item, key) {
                 if (item.meta.selected) {
                     item.meta.type = key;
-                    item.subject = vm.subject + ' [' + item.title + ']';
+                    item.subject = vm.subject;
                     result.push(item);
                 }
             });
