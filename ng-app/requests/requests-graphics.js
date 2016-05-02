@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            templateUrl: '/build/ng-app/requests/requests-graphics.html',
+            templateUrl: '/build/ng-app/requests/requests-graphics.html?v=1',
             restrict: 'E',
             controller: Controller,
             controllerAs: 'vm',
