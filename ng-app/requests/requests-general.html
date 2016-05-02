@@ -25,11 +25,18 @@
       <div class="StepForm-fields">
         <div class="StepForm-group">
           <label class="StepForm-label">{{ vm.subjectLabel || 'What\’s the name of your event or project?' }}</label>
-          <input class="StepForm-input" name="raw_subject" maxlength="40" type="text" placeholder="{{ vm.subjectPlaceholder || 'e.g. &quot;Haiti Trip,&quot; &quot;Kids Camp&quot;' }}" ng-model="vm.raw_subject" required>
+          <input class="StepForm-input" name="subject" maxlength="40" type="text" placeholder="{{ vm.subjectPlaceholder || 'e.g. &quot;Haiti Trip,&quot; &quot;Kids Camp&quot;' }}" ng-model="vm.ticket.subject" required>
         </div>
         <div class="StepForm-group">
           <label class="StepForm-label">{{ vm.dateLabel || 'When is it due?' }}</label>
           <input class="StepForm-input StepForm-input--date" type="text" placeholder="e.g. 2016-03-09" ng-model="vm.ticket.deliver_by" pikaday="YYYY-MM-DD" required>
+        </div>
+        <div class="StepForm-group" ng-if="vm.showCampus">
+          <label class="StepForm-label">Which Campus?</label>
+          <select class="StepForm-input StepForm-input--date" ng-model="vm.ticket.campus_id" ng-required="vm.showCampus">
+            <option value="">Select a Campus</option>
+            <option ng-repeat="campus in vm.campuses" value="{{ campus.id }}">{{ campus.name }}</option>
+          </select>
         </div>
         <div class="StepForm-group">
           <label class="StepForm-label">{{ vm.descriptionLabel || 'Please provide details (if applicable).' }}</label>

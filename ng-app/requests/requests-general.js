@@ -19,19 +19,28 @@
                 subjectPlaceholder: '@',
                 dateLabel:          '@',
                 descriptionLabel:   '@',
-                image:              '@'
+                image:              '@',
+                showCampus:         '@'
             }
         };
     }
 
-    Controller.$inject = ['$scope', '$sce', '$state', 'requestsService', 'toastr'];
+    Controller.$inject = ['$scope', '$sce', '$state', 'requestsService', 'campusesService', 'toastr'];
 
-    function Controller($scope, $sce, $state, requestsService, Notification) {
+    function Controller($scope, $sce, $state, requestsService, campusesService, Notification) {
 
         var vm         = this;
-        vm.ticket      = { type: vm.type };
+        vm.ticket      = { type: vm.type, title: vm.title };
         vm.submit      = submit;
         vm.hero_header = $sce.trustAsHtml(this.header);
+
+        init();
+
+        function init() {
+            campusesService.all().then(function (data) {
+                vm.campuses = data.data;
+            });
+        }
 
         function submit() {
 
@@ -47,12 +56,6 @@
                 vm.is_sending = false;
             });
         }
-
-        function update_subject(newValue) {
-            vm.ticket.subject = newValue + ' [' + vm.title + ']';
-        }
-
-        $scope.$watch('vm.raw_subject', update_subject);
 
     }
 
