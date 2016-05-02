@@ -39,6 +39,8 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::patch('/ticket-requirements/{id}', 'TicketRequirementsController@update');
     Route::delete('/ticket-requirements/{id}', 'TicketRequirementsController@destroy');
 
+    Route::get('/campuses', 'CampusesController@index');
+
 });
 
 /**
