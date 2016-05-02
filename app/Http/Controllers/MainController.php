@@ -8,6 +8,7 @@ use App\FaithPromise\FellowshipOne\Models\Groups\Type;
 use App\Models\Group;
 use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
+use Phaza\LaravelPostgis\Geometries\Point;
 
 class MainController extends BaseController {
 
@@ -23,20 +24,48 @@ class MainController extends BaseController {
             config('fellowshipone.password')
         );
 
-        // Get all searchable groups
-        $f1_groups = $f1->groups()->whereSearchable()->get();
+        $groups = Group::stale()->limit(1)->get();
 
-        // Delete groups that do not appear in results
-        Group::whereNotIn('id', array_pluck($f1_groups->toArray(), 'id'));
+        /** @var Group $group */
+        foreach ($groups as $group) {
 
-        /** @var FellowshipOneGroup $f1_group */
-        foreach ($f1_groups as $f1_group) {
-            $group = Group::firstOrNew(['id' => $f1_group->getId()]);
+            $f1_group = $f1->groups()->find($group->id);
+
+            if (is_null($f1_group)) {
+                Group::whereId($group->id)->delete();
+                continue;
+            }
+
+            $leaders = [];
+            foreach ($f1_group->getLeaders(true) as $leader) {
+                $leaders[] = [
+                    'first_name' => $leader->getPerson()->getFirstName(),
+                    'last_name'  => $leader->getPerson()->getLastName(),
+                    'name'       => $leader->getPerson()->getName(),
+                    'email'      => $leader->getPerson()->getPreferredEmail(),
+                    'phone'      => $leader->getPerson()->getMobilePhone()
+                ];
+            }
+
             $group->name = $f1_group->getName();
-            $group->save();
-        }
+            $group->leaders = json_encode($leaders);
+            $group->description = $f1_group->getDescription();
+            $group->kids_welcome = $f1_group->getHasChildcare();
+            $group->average_age = $f1_group->getAverageAge();
+            $group->kids_min_age = $f1_group->getMinChildAge();
+            $group->kids_max_age = $f1_group->getMaxChildAge();
+            $group->location = new Point($f1_group->getLatitude(), $f1_group->getLongitude());
+            $group->recurrence_rule = $f1_group->getRecurrenceRule();
+            $group->address = $f1_group->getAddress();
+            $group->city = $f1_group->getCity();
+            $group->state = $f1_group->getState();
+            $group->zip = substr($f1_group->getZip(), 0, 5);
+            $group->is_location_public = $f1_group->getIsLocationPublic();
+//            $group->detail_last_updated = Carbon::now();
 
-        dd('done');
+            $group->save();
+
+        }
 
     }
 

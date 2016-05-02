@@ -4,6 +4,7 @@ namespace App\FaithPromise\Zendesk;
 
 use App\Models\User;
 use Carbon\Carbon;
+use FaithPromise\Shared\Models\Campus;
 use FaithPromise\Shared\Models\Staff;
 use Huddle\Zendesk\Facades\Zendesk;
 
@@ -15,12 +16,15 @@ abstract class Ticket {
 
     /** @var Carbon */
     protected $deliver_at;
+    /** @var  Campus|null */
+    protected $campus;
 
     public function __construct($ticket, User $requester) {
         $this->ticket = $ticket;
         $this->requester = $requester;
         $this->setDeliverAt(array_key_exists('deliver_by', $ticket) ? $ticket['deliver_by'] : null);
         $this->setDueDates();
+        $this->setCampus();
     }
 
     abstract protected function setDueDates();
@@ -49,7 +53,7 @@ abstract class Ticket {
 
         $ticket = [
             'type'         => 'task',
-            'subject'      => $this->ticket['subject'],
+            'subject'      => $this->buildSubject(),
             'comment'      => [
                 'body' => $this->buildDescription()
             ],
@@ -74,27 +78,31 @@ abstract class Ticket {
 
     private function getZendeskAgentId() {
 
-        if (!array_key_exists($this->deliver_to, $this->zendesk_agent_ids)) {
+        $deliver_to = $this->getDeliverTo();
+
+        if (!array_key_exists($deliver_to, $this->zendesk_agent_ids)) {
 
             /** @noinspection PhpUndefinedMethodInspection */
-            $zendesk_user_search = Zendesk::users()->search(['query' => $this->deliver_to]);
+            $zendesk_user_search = Zendesk::users()->search(['query' => $deliver_to]);
 
             if (!count($zendesk_user_search)) {
-                $this->zendesk_agent_ids[$this->deliver_to] = null;
+                $this->zendesk_agent_ids[$deliver_to] = null;
             } else {
-                $this->zendesk_agent_ids[$this->deliver_to] = $zendesk_user_search->users[0]->id;
+                $this->zendesk_agent_ids[$deliver_to] = $zendesk_user_search->users[0]->id;
             }
 
         }
 
-        return $this->zendesk_agent_ids[$this->deliver_to];
+        return $this->zendesk_agent_ids[$deliver_to];
 
     }
 
     private function sendViaEmail() {
 
+        $deliver_to = $this->getDeliverTo();
+
         /** @noinspection PhpUndefinedMethodInspection */
-        $recipient = Staff::whereEmail($this->deliver_to)->first();
+        $recipient = Staff::whereEmail($deliver_to)->first();
 
         if ($recipient) {
             // TODO: Implement sendViaEmail
@@ -102,6 +110,10 @@ abstract class Ticket {
 
         return true;
 
+    }
+
+    protected function buildSubject() {
+        return $this->ticket['subject'];
     }
 
     private function buildDescription() {
@@ -135,6 +147,18 @@ abstract class Ticket {
         $this->deliver_at = $carbonized_value ? $carbonized_value->setTimezone('America/New_York') : null;
 
         return $this;
+    }
+
+    public function getDeliverTo() {
+        return $this->deliver_to;
+    }
+
+    private function setCampus() {
+        if (array_key_exists('campus_id', $this->ticket)) {
+            $this->campus = Campus::find($this->ticket['campus_id']);
+        } else {
+            $this->campus = null;
+        }
     }
 
 }

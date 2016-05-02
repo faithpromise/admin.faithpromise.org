@@ -185,5 +185,9 @@ abstract class Graphics extends Ticket {
         return $this->send_quote_at = $value;
     }
 
+    protected function buildSubject() {
+        return $this->ticket['subject'] . ' [' . $this->ticket['title'] . ']';
+    }
+
 
 }
