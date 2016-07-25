@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use FaithPromise\Shared\Models\Campus;
 use FaithPromise\Shared\Models\Staff;
 use Huddle\Zendesk\Facades\Zendesk;
+use Illuminate\Support\Facades\Mail;
 
 abstract class Ticket {
 
@@ -101,11 +102,21 @@ abstract class Ticket {
 
         $deliver_to = $this->getDeliverTo();
 
+        // ilike for case sensitive Postgres
         /** @noinspection PhpUndefinedMethodInspection */
-        $recipient = Staff::whereEmail($deliver_to)->first();
+        $recipient = Staff::where('email', 'ilike', '%' . $deliver_to . '%')->first();
+        $requester = $this->requester;
+        $subject = $this->ticket['subject'];
+        if (array_key_exists('title', $this->ticket)) {
+            $subject = $this->ticket['subject'] . ' [' . $this->ticket['title'] . ']';
+        }
 
         if ($recipient) {
-            // TODO: Implement sendViaEmail
+            Mail::send('emails.ticket', ['comment' => $this->buildDescription()], function($m) use ($recipient, $requester, $subject) {
+                $m->subject($subject);
+                $m->to($recipient->email, $recipient->name);
+                $m->from($requester->email, $requester->name);
+            });
         }
 
         return true;
