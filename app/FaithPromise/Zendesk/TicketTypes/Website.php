@@ -9,7 +9,7 @@ use FaithPromise\Shared\Models\TicketTask as Task;
 class Website extends Ticket {
 
     protected $deliver_to = 'bradr@faithpromise.org';
-    protected $deliver_method = 'zendesk';
+    protected $deliver_method = 'email';
 
     protected function setDueDates() {
         // Currently no need to set due dates for website updates

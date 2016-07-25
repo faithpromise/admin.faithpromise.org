@@ -7,7 +7,7 @@ use App\Models\User;
 class GraphicsWebsite extends DigitalGraphics {
 
     protected $deliver_to = 'bradr@faithpromise.org';
-    protected $deliver_method = 'zendesk';
+    protected $deliver_method = 'email';
 
     protected function createTasks($zendesk_ticket_id, User $requester) {
 
