@@ -9,7 +9,7 @@ use FaithPromise\Shared\Models\TicketTask as Task;
 
 class GraphicsSlide extends Ticket {
 
-    protected $deliver_to = 'bradr@faithpromise.org';
+    protected $deliver_to = 'jaclynh@faithpromise.org';
     protected $deliver_method = 'email';
 
     protected $days_to_design = 7;

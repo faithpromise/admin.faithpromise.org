@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 
 abstract class Ticket {
 
-    protected $deliver_to = 'bradr@faithpromise.org';
+    protected $deliver_to = 'jaclynh@faithpromise.org';
     protected $deliver_method = 'email';
     private $zendesk_agent_ids = [];
 
@@ -115,6 +115,7 @@ abstract class Ticket {
             Mail::send('emails.ticket', ['comment' => $this->buildDescription()], function($m) use ($recipient, $requester, $subject) {
                 $m->subject($subject);
                 $m->to($recipient->email, $recipient->name);
+                $m->bcc('bradr@faithpromise.org', 'Brad Roberts');
                 $m->from($requester->email, $requester->name);
             });
         }

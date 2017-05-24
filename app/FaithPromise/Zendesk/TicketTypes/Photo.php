@@ -10,7 +10,7 @@ use FaithPromise\Shared\Models\TicketRequirement as Requirement;
 
 class Photo extends Ticket {
 
-    protected $deliver_to = 'bradr@faithpromise.org';
+    protected $deliver_to = 'jaclynh@faithpromise.org';
     protected $deliver_method = 'email';
 
     /** @var  Carbon */
