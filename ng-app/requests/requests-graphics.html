@@ -1,0 +1,90 @@
+<div class="Breadcrumbs">
+  <div class="Breadcrumbs-container">
+    <a class="Breadcrumbs-link" href="/requests">Requests</a> /
+    <a class="Breadcrumbs-link" href="/requests/new">New Request</a> / Graphics
+  </div>
+</div>
+
+<div class="Hero Hero--white">
+  <img class="Hero-image" src="//d16gqslxckkrrx.cloudfront.net/xl/full/images/requests/graphics-wide.jpg">
+
+  <div class="Hero-container">
+    <div class="Hero-content">
+      <h1 class="Hero-title">Hi {{ vm.user.first_name }}. Let’s Make Something Superfly!</h1>
+      <p class="Hero-text">We’re excited about helping you take your project to the next level!</p>
+    </div>
+  </div>
+</div>
+
+<form class="StepForm" name="request_form" ng-submit="! vm.is_sending && vm.submit()">
+
+  <div class="StepForm-section">
+    <div class="StepForm-fieldset">
+      <h2 class="StepForm-legend">What's cookin'?</h2>
+
+      <div class="StepForm-fields">
+        <div class="StepForm-group">
+          <label class="StepForm-label">What’s the name of your event or project?</label>
+          <input class="StepForm-input" name="subject" type="text" placeholder="e.g. &quot;Haiti Trip,&quot; &quot;Kids Camp&quot;" ng-model="vm.subject" required>
+        </div>
+        <div class="StepForm-group">
+          <label class="StepForm-label">When does your event start (if applicable)?</label>
+          <input class="StepForm-input StepForm-input--date" type="text" placeholder="e.g. 3/21/2016" ng-model="vm.event_date" pikaday="YYYY-MM-DD">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="StepForm-section">
+    <div class="StepForm-fieldset">
+      <h2 class="StepForm-legend">
+        How can we help?
+        <span class="StepForm-legendHelp">Check what you need, then scroll down and give us a few details...</span>
+      </h2>
+
+      <div class="StepForm-fields">
+        <ul class="StepForm-checkboxList">
+          <li class="StepForm-checkboxItem" ng-repeat="(key, item) in vm.items" ng-click="vm.toggle_item(item)">
+            <i class="StepForm-checkbox icon-check-empty" ng-hide="item.meta.selected"></i>
+            <i class="StepForm-checkbox icon-check" ng-show="item.meta.selected"></i>
+            {{ item.title }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-toggle ng-hide" ng-repeat="(key, item) in vm.items" ng-show="item.meta.selected">
+    <div class="StepForm-section">
+      <div class="StepForm-fieldset">
+        <h2 class="StepForm-legend">Tell us about your <strong>{{ item.title }}</strong></h2>
+
+        <div class="StepForm-fields">
+          <div class="StepForm-group">
+            <label class="StepForm-label">{{ item.deliver_label || 'When do you need it delivered?' }}
+              <span class="StepForm-required">*</span></label>
+            <input class="StepForm-input StepForm-input--date" name="{{ key }}_deliver_by" type="text" placeholder="e.g. 2016-03-09" ng-model="item.deliver_by" pikaday="YYYY-MM-DD" ng-required="item.meta.selected">
+            <delivery-dates
+                    dates="vm.helper_dates"
+                    event-date="vm.event_date"
+                    exclude="{{ key }}"
+                    deliver-by="item.deliver_by">
+            </delivery-dates>
+          </div>
+          <div class="StepForm-group">
+            <label class="StepForm-label">{{ item.description_label || 'What should it say?' }}</label>
+            <textarea class="StepForm-textarea" ng-model="item.description"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="StepForm-submitSection" ng-show="vm.has_items_selected()">
+    <button class="StepForm-submit" type="submit" ng-disabled="vm.is_sending">
+      <span ng-hide="vm.is_sending">Send Your Request <i class="icon-right-open"></i></span>
+      <span ng-show="vm.is_sending">Sending...</span>
+    </button>
+  </div>
+</form>

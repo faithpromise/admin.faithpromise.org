@@ -1,0 +1,13 @@
+<div class="Container Strip">
+
+  <h2>Your Requests</h2>
+
+  <table>
+    <tr ng-repeat="ticket in vm.tickets">
+      <td>{{ ticket.subject }}</td>
+      <td>{{ ticket.status }}</td>
+      <td>{{ ticket.due_at }}</td>
+    </tr>
+  </table>
+
+</div>

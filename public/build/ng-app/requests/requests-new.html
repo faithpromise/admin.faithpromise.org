@@ -1,0 +1,24 @@
+<div class="Container Strip">
+
+  <ul class="RequestCard-list">
+
+    <li class="RequestCard-item" ng-repeat="card in vm.cards">
+      <a class="RequestCard" href="{{ card.submit_link || '/requests/' + card.type }}">
+        <div class="RequestCard-header">
+          <!-- TODO: Link to optimized image -->
+          <img class="RequestCard-image" ng-src="//d16gqslxckkrrx.cloudfront.net/lg/third/images/requests/{{ card.type }}-tall.jpg">
+          <!--<img class="RequestCard-staffImage" ng-src="//d16gqslxckkrrx.cloudfront.net/sm/quarter/images/staff/{{ card.staffer }}-square.jpg">-->
+        </div>
+        <div class="RequestCard-body">
+          <h2 class="RequestCard-title">{{ card.title }}</h2>
+          <p class="RequestCard-description">{{ card.description }}</p>
+        </div>
+        <div class="RequestCard-footer">
+          <span class="RequestCard-action">{{ card.submit_text || 'Submit Request' }} <i class="icon-right-open"></i></span>
+        </div>
+      </a>
+    </li>
+
+  </ul>
+
+</div>

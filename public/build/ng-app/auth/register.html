@@ -1,0 +1,17 @@
+<div class="Auth-register" ng-hide="vm.email_sent">
+
+  <p class="Auth-registerIntro">Since this is your first time logging in, we need to verify your email address.</p>
+
+  <form class="Auth-registerForm" method="post" ng-submit="vm.send()">
+    <input class="Auth-email" type="text" ng-model="vm.email_username" required autofocus>
+    <span class="Auth-domain">@faithpromise.org</span>
+    <button class="Auth-registerButton" type="submit">Next <i class="icon-angle-double-right"></i></button>
+  </form>
+
+</div>
+
+<div ng-show="vm.email_sent">
+
+  We've sent you an email. Please click the link provided in the email to verify your account.
+
+</div>
